@@ -20,6 +20,16 @@ test:
   <<: *default
   database: db/test.sqlite3
 
+# production:
+#   <<: *default
+#   database: db/production.sqlite3
+
 production:
   <<: *default
-  database: db/production.sqlite3
+  host: localhost
+  adapter: postgresql
+  encoding: utf8
+  database: appname_production
+  pool: 5
+  username: <%= ENV['CHINGARI_DATABASE_USER'] %>
+  password: <%= ENV['CHINGARI_DATABASE_PASSWORD'] %>
