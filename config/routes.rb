@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
 
-  # Routes pertaining to users
+  # Routes regarding users
   get '/signup', to: 'users#new' # Nicer route name than /users/new
 	resources :users
 end
