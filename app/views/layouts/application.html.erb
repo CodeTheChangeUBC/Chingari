@@ -1,9 +1,36 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Chingari</title>
+    <!-- Remote libraries -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- -->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Favicon and touch icons -->
+    <%= favicon_link_tag 'favicon.png', rel: 'shortcut icon', type: 'image/png' %>
+    <%= favicon_link_tag 'apple-touch-icon-144-precomposed.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', sizes: "144x144" %>
+    <%= favicon_link_tag 'apple-touch-icon-114-precomposed.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', sizes: "114x114"  %>
+    <%= favicon_link_tag 'apple-touch-icon-72-precomposed.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', sizes: "72x72"  %>
+    <%= favicon_link_tag 'apple-touch-icon-57-precomposed.png', rel: 'apple-touch-icon-precomposed', type: 'image/png' %>
+
+    <title><%= full_title(yield(:title)) %></title>
+
     <%= csrf_meta_tags %>
 
+    <%= stylesheet_link_tag "form-elements.css" %>
+    <%= stylesheet_link_tag "style.css" %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
