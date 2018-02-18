@@ -8,8 +8,10 @@
 }
 
 
-/* Universal 
-*/
+/* ==================================
+========== UNIVERSAL ================
+=================================== */
+
 section {
   overflow: auto;
 }
@@ -39,7 +41,10 @@ body {
   @include box_sizing;
 }
 
-/* forms */
+/* ==================================
+========== FORMS ===================
+=================================== */
+
 
 input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
@@ -78,8 +83,53 @@ input, textarea, select, .uneditable-input {
   z-index: 999;
 }
 
+/* ==================================
+========== HEADER ===================
+=================================== */
 
-/* User signup */
+/* ==================================
+========== FOOTER ===================
+=================================== */
+
+footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid #eaeaea;
+  color: #777;
+  a {
+    color: #555;
+    &:hover {
+      color: #222;
+    }
+  }
+  small {
+    float: left;
+  }
+  ul {
+    float: right;
+    list-style: none;
+    li {
+      float: left;
+      margin-left: 15px;
+    }
+  }
+}
+
+
+/* ==================================
+========== HOME ===================
+=================================== */
+
+
+h1 {
+  text-align: center;
+}
+
+
+/* ==================================
+========== USER SIGNUP ==============
+=================================== */
+
 
 #error_explanation {
   color: red;

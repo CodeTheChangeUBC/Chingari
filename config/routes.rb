@@ -8,12 +8,15 @@ Rails.application.routes.draw do
   get  '/about',    to: 'static_pages#about'
   get  '/resources',to: 'static_pages#resources'
 
+	# Set root of application
+  root 'static_pages#home'
+
 	# Routes handled by Sessions
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
 
-  # Routes regarding users
+  # Routes pertaining to users
   get '/signup', to: 'users#new' # Nicer route name than /users/new
 	resources :users
 end
