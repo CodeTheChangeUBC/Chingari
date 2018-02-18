@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= yield(:title) %> | Chingari </title>
+    <title><%= full_title(yield(:title)) %></title>
     <%= csrf_meta_tags %>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -9,7 +9,9 @@
   </head>
 
   <body>
-  	<!-- Render error messages for forms (if any) -->
+  	<!-- Render header -->
+    <%= render 'layouts/header' %>
+    <!-- Render error messages for forms (if any) -->
 	  <div id="error-container">
 	    <div class="container">
 	      <% flash.each do |message_type, message| %>
@@ -21,5 +23,7 @@
 	    </div>
 	  </div>
     <%= yield %>
+    <!-- Render footer -->
+    <%= render 'layouts/footer' %>
   </body>
 </html>
