@@ -1,6 +1,7 @@
-<% provide(:title, "New User") %>
+<% provide(:title, "Edit User") %>
 <div class='container text-center'>
-	<h3>User signup</h3>
+	<h3>User Edit</h3>
+	<p><%= link_to "Delete my account", user_path(user), method: destroy %></p>
 
 	<div class="row">
 	  <div class="col-md-6 col-md-offset-3">
@@ -21,7 +22,7 @@
 	      <%= f.label :password_confirmation, "Confirmation" %>
 	      <%= f.password_field :password_confirmation, class: 'form-control' %>
 
-	      <%= f.submit "Create my account", class: "btn btn-primary" %>
+	      <%= f.submit "Edit my account", class: "btn btn-primary" %>
 	    <% end %>
 	  </div>
 	</div>

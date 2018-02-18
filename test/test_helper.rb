@@ -13,4 +13,11 @@ class ActiveSupport::TestCase
   def is_logged_in?
   	!session[:user_id].nil?
   end
+
+  # Log in a test user
+  def log_in_user(user, password)
+  	post login_path, params: { session: { email: user.email, password: password } }
+  	follow_redirect!
+  	assert_template 'users/show'
+  end
 end
