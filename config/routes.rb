@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
 	# Set root of application
   root 'static_pages#coming_soon'
-
+  
     # Static pages roots
   get  '/home',     to: 'static_pages#index'
   get  '/index',    to: 'static_pages#index'
