@@ -11,6 +11,10 @@
 // about supported directives.
 //
 //= require jquery
+//= require wow
+//= require owl.carousel
+
+
 //= require bootstrap
 //= require rails-ujs
 //= require turbolinks
