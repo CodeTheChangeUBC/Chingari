@@ -10,12 +10,14 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
- *= require_self
  */
 
+$icon-font-path: "bootstrap-sass/assests/fonts/bootstrap/";
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "font-awesome";
+//= require owl.carousel
+//= require owl.theme
 
 // Site.css
 
@@ -379,7 +381,7 @@ input[type="submit"],.w3l_banner_info_left_grid_left h3 a,.w3agile_footer_copy p
 
 /* ========= Challenges ==========*/
     .challenges{
-        background-image: url(../images/challenges.jpg);
+        background-image: url(challenges.jpg);
         background-size: cover;
         overflow: auto;
         background-position: -490px 29%;
@@ -412,7 +414,7 @@ input[type="submit"],.w3l_banner_info_left_grid_left h3 a,.w3agile_footer_copy p
 
 /* ========= Featur-story ==========*/
     .featur-story{
-        background-image: url(../images/featur-story.jpg);
+        background-image: url(featur-story.jpg);
         background-size: cover;
         height: 100vh;
         padding: 200px 0px;
