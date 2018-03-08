@@ -1,0 +1,15 @@
+current directory: /home/rails/rails_project/vendor/bundle/ruby/2.4.0/gems/bindex-0.5.0/ext/bindex
+/usr/local/rvm/rubies/ruby-2.4.0/bin/ruby -r ./siteconf20170417-9741-tzirin.rb extconf.rb
+creating Makefile
+
+current directory: /home/rails/rails_project/vendor/bundle/ruby/2.4.0/gems/bindex-0.5.0/ext/bindex
+make "DESTDIR=" clean
+
+current directory: /home/rails/rails_project/vendor/bundle/ruby/2.4.0/gems/bindex-0.5.0/ext/bindex
+make "DESTDIR="
+compiling cruby.c
+linking shared-object bindex/cruby.so
+
+current directory: /home/rails/rails_project/vendor/bundle/ruby/2.4.0/gems/bindex-0.5.0/ext/bindex
+make "DESTDIR=" install
+/usr/bin/install -m 0755 cruby.so ./.gem.20170417-9741-o2rru7/bindex

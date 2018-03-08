@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+if
+  [[ -s "/home/rails/rails_project/vendor/bundle/environment" ]]
+then
+  source "/home/rails/rails_project/vendor/bundle/environment"
+  exec unicorn_rails "$@"
+else
+  echo "ERROR: Missing RVM environment file: '/home/rails/rails_project/vendor/bundle/environment'" >&2
+  exit 1
+fi
