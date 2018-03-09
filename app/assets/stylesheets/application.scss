@@ -381,7 +381,7 @@ input[type="submit"],.w3l_banner_info_left_grid_left h3 a,.w3agile_footer_copy p
 
 /* ========= Challenges ==========*/
     .challenges{
-        background-image: url(challenges.jpg);
+        background-image: asset_url("challenges.jpg");
         background-size: cover;
         overflow: auto;
         background-position: -490px 29%;
@@ -414,7 +414,7 @@ input[type="submit"],.w3l_banner_info_left_grid_left h3 a,.w3agile_footer_copy p
 
 /* ========= Featur-story ==========*/
     .featur-story{
-        background-image: url(featur-story.jpg);
+        background-image: asset_url("featur-story.jpg");
         background-size: cover;
         height: 100vh;
         padding: 200px 0px;
@@ -844,7 +844,7 @@ input[type="submit"],.w3l_banner_info_left_grid_left h3 a,.w3agile_footer_copy p
     #accordion .panel-title > a.accordion-toggle::before, #accordion a[data-toggle="collapse"]::before {
         content: "\e113";
         float: left;
-        background-image: url(collapse-close.png);
+        background-image: asset_url("collapse-close.png");
         margin-right: 1em;
         background-size: contain;
         height: 49px;
@@ -857,7 +857,7 @@ input[type="submit"],.w3l_banner_info_left_grid_left h3 a,.w3agile_footer_copy p
         margin-top: -18px;
     }
     #accordion .panel-title > a.accordion-toggle.collapsed::before, #accordion a.collapsed[data-toggle="collapse"]::before  {
-        background-image: url(collapse-open.png);
+        background-image: asset_url("collapse-open.png");
     }
     /*========== //Resources ==========*/
     .logo{position:relative;z-index:123;padding:10px;font:18px verdana;color:#6DDB07;float:left;width:15%}
@@ -1154,7 +1154,7 @@ input[type="submit"],.w3l_banner_info_left_grid_left h3 a,.w3agile_footer_copy p
             background-position: unset;
         }
         .featur-story {
-            background-image: url(featur-story.jpg);
+            background-image: asset_url("featur-story.jpg");
             background-size: cover;
             height: 337px;
             padding: 27px;
