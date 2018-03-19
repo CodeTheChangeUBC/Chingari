@@ -19,6 +19,11 @@ Rails.application.routes.draw do
     get '/signup', to: 'users#new' # Nicer route name than /users/new
     get '/preview_profile', to: 'users#preview_profile'
     resources :users
+
+    # Api routes
+    get '/auth/:provider/callback', to: 'sessions#create_with_api'
+    get '/auth/failure', to: redirect('/')
+
   end
 
   # Catch-all route
