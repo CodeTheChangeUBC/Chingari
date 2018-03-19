@@ -28,6 +28,8 @@ gem 'jbuilder', '2.7.0'
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
+# For google oauth
+gem 'omniauth-google-oauth2'
 
 gem 'wow-rails'
 gem 'owl_carousel-rails'
