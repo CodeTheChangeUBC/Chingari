@@ -218,4 +218,8 @@ GitHub.sublime-settings
 /node_modules
 /yarn-error.log
 
+# Ignore compiled assets
+/public/assets
+/public/assets/*
+
 .byebug_history
