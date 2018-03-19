@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 	# Set root of application
   root 'static_pages#coming_soon'
-
+  
   # Hidden routes for in-progress pages
   if Rails.env == 'development' || Rails.env == 'test'
     # Static pages roots
