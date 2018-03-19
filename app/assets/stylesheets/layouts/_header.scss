@@ -1,0 +1,267 @@
+// Site.css
+
+ h1 {
+  font-size:     72px;
+  line-height:   1.5;
+  color: #2c3e50;
+  font-weight:   100;
+}
+
+#container {
+  width:  980px;
+  margin: 0 auto;
+}
+
+/*section {
+  height: 300px;
+  margin: 60px 0;
+}*/
+
+.section--purple {
+  background-color: #9b59b6;
+}
+
+.section--blue {
+  background-color: #3498db;
+}
+
+.section--green {
+  background-color: #2ecc71;
+}
+
+#main {
+  text-align: center;
+}
+
+#more {
+  margin: 20px auto 48px;
+}
+
+// Styles.css
+
+@import url('https://fonts.googleapis.com/css?family=Muli:300i,400,400i,600,600i,700,700i');
+@import url('https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i');
+
+body {
+  padding: 0;
+  margin: 0;
+  background: #FFF;
+  font-family: 'Muli', sans-serif;
+  overflow-x: hidden;
+}
+body a {
+  transition: 0.5s all;
+  -webkit-transition: 0.5s all;
+  -moz-transition: 0.5s all;
+  -o-transition: 0.5s all;
+  -ms-transition: 0.5s all;
+  text-decoration: none;
+  font-family: 'Muli', sans-serif;
+  color: #ffffff;
+}
+body a:hover {
+  text-decoration: none;
+}
+body a:focus, a:hover {
+  text-decoration: none;
+}
+input[type="button"], input[type="submit"] {
+  transition: 0.5s all;
+  -webkit-transition: 0.5s all;
+  -moz-transition: 0.5s all;
+  -o-transition: 0.5s all;
+  -ms-transition: 0.5s all;
+}
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+  font-family: 'Muli', sans-serif!important;
+}
+p {
+  margin: 0;
+    font-family: 'Lora', serif;
+}
+ul {
+  margin: 0;
+  padding: 0;
+}
+label {
+  margin: 0;
+}
+img {
+    vertical-align: middle;
+    width: 100%;
+}
+a:focus, a:hover {
+  text-decoration: none;
+  outline: none;
+}
+
+.wrap{
+    padding: 0px!important;
+    margin: 0px!important;
+}
+/*-- //Reset-Code --*/
+
+/*-- header --*/
+input[type="submit"],.w3l_banner_info_left_grid_left h3 a,.w3agile_footer_copy p a,.reply a,.agile_cat_grid_tags ul li a:hover,.agile_cat_grid ul.categories li a,.w3l_admin a,.w3ls_single_left_grid_right ul li a,.wthree_features_services_grid h4 a,.agile_services_bottom_grid_left_grid a,.simplefilter li,.agileinfo_footer_grid ul li a,.w3l_banner_info_left_grid1,.agile_blog_grid h4 a{
+  transition: .5s ease-in;
+  -webkit-transition: .5s ease-in;
+  -moz-transition: .5s ease-in;
+  -o-transition: .5s ease-in;
+  -ms-transition: .5s ease-in;
+}
+
+/* ============ On Hover Menu ============ */
+    .navbar-default .navbar-nav > li.dropdown:hover > a,
+    .navbar-default .navbar-nav > li.dropdown:hover > a:hover,
+    .navbar-default .navbar-nav > li.dropdown:hover > a:focus {
+        background-color: rgb(231, 231, 231);
+        color: rgb(85, 85, 85);
+    }
+    li.dropdown:hover > .dropdown-menu {
+        display: block;
+    }
+    .nav > li > a:hover, .nav > li > a:focus {
+        text-decoration: none;
+        background-color: #4DD1DB;
+        color: #ffffff;
+        width: 164px!important;
+        text-align: center;
+    }
+    .dropdown-menu {
+        left: 7px !important;
+        min-width: 220px!important;
+    }
+    .dropdown-menu > li > a {
+        padding: 12px 20px;
+        background-color: #4DD1DB;
+        color: #fff;
+        font-size: 18px;
+    }
+    .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+        color: #fff;
+        background-color: #4DD1DB;
+        padding: 12px 10px;
+    }
+    .navbar-nav > li > .dropdown-menu {
+        margin-top: 6px;
+    }
+    .dropdown-menu {
+        padding: 0px 0;
+    }
+    .navbar {
+        margin-bottom: 0px;
+        border: 1px solid transparent;
+        background-color: #4DD1DB;
+        border-radius: 0;
+    }
+    .navbar-nav {
+        float: none;
+    }
+    .navbar-right {
+        float: none !important;
+        margin-right: none;
+        margin: auto;
+        width: 700px;
+        display: block;
+    }
+    .nav > li > a {
+        position: relative;
+        display: block;
+        padding: 8px 0;
+        font-size: 18px;
+        color: #fff;
+        text-align: center;
+    }
+    .navbar-nav > li {
+        float: left !important;
+        margin-top: 5px;
+        width: 164px !important;
+        display: inline-block !important;
+        z-index: 01;
+    }
+    .navbar-nav {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: unset;
+        -webkit-box-direction: unset;
+        -ms-flex-direction: column;
+        flex-direction: inherit;
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+        height: 42px!important;
+    }
+/* ============ // On Hover Menu ============ */
+
+/* ============ Header ============ */
+    header .logo{
+        width: 100px;
+        padding: 5px;
+    }
+    .banner-res img{
+        display: none;
+    }
+    .main-banner{
+        margin-top: 0px;
+        position: relative;
+    }
+    .main-banner img{
+        display: block;
+    }
+    .header-right{
+        position: relative;
+    }
+    .header-right ul {
+        float: right;
+        margin-top: 50px;
+    }
+    .header-right ul li{
+        list-style: none;
+        float: left;
+    }
+    .header-right i.fa-search{
+        position: absolute;
+        right: 22%;
+        top: 56px;
+        font-size: 19px;
+        color: #F5961F;
+    }
+    .get-help {
+        background-color: #F5961F;
+        height: 34px;
+        width: 200px;
+        color: #fff;
+        text-align: center;
+        padding: 5px;
+        text-transform: uppercase;
+        font-size: 15px;
+    }
+    .get-help i{
+        font-weight: 900;
+        font-size: 20px;
+        margin-right: 20px;
+    }
+    .get-help p{
+        display: inline-block;
+        font-family: 'Muli', sans-serif;
+    }
+    .fa-caret-down::before {
+        content: "\f107"!important;
+    }
+    header .header-right input[type=text]{
+        height: 34px;
+        width: 200px;
+        border: 2px solid #F5961F;
+        margin-left: 25px;
+        padding: 0px 50px;
+        font-size: 17px;
+    }
+    header .header-right input::placeholder {
+        color: #F5961F!important;
+        -ms-color: #F5961F;
+    }
+
+/* ============ // Header ============ */
