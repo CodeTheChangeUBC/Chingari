@@ -10,28 +10,74 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180216024515) do
+ActiveRecord::Schema.define(version: 20180318234913) do
 
   create_table "courses", force: :cascade do |t|
-    t.string "title"
+    t.string "title", default: "Untitled", null: false
+    t.integer "users_id", null: false
+    t.text "description", default: "No Description", null: false
+    t.integer "visibility", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "tier", default: 0, null: false
+    t.index ["users_id"], name: "index_courses_on_users_id"
+    t.index ["visibility"], name: "index_courses_on_visibility"
+  end
+
+  create_table "embeds", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "attacheable_type", null: false
+    t.integer "attacheable_id", null: false
+    t.text "content", default: "", null: false
+    t.integer "display_index", default: 0, null: false
+    t.index ["attacheable_type", "attacheable_id"], name: "index_embeds_on_attacheable_type_and_attacheable_id"
+    t.index ["attacheable_type"], name: "index_embeds_on_attacheable_and_attacheable_type"
+    t.index ["user_id"], name: "index_embeds_on_user_id"
   end
 
   create_table "enrollments", force: :cascade do |t|
+    t.integer "course_id", null: false
+    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_enrollments_on_course_id"
+    t.index ["user_id", "course_id"], name: "index_enrollments_on_user_id_and_course_id", unique: true
+    t.index ["user_id"], name: "index_enrollments_on_user_id"
+  end
+
+  create_table "files", force: :cascade do |t|
+    t.string "title", default: "Untitled", null: false
+    t.integer "user_id", null: false
+    t.string "attacheable_type", null: false
+    t.integer "attacheable_id", null: false
+    t.integer "display_index", default: 0, null: false
+    t.index ["attacheable_type", "attacheable_id"], name: "index_files_on_attacheable_type_and_attacheable_id"
+    t.index ["attacheable_type"], name: "index_files_on_attacheable_and_attacheable_type"
+    t.index ["user_id"], name: "index_files_on_user_id"
+  end
+
+  create_table "texts", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "attacheable_type", null: false
+    t.integer "attacheable_id", null: false
+    t.text "content", default: "", null: false
+    t.integer "display_index", default: 0, null: false
+    t.index ["attacheable_type", "attacheable_id"], name: "index_texts_on_attacheable_type_and_attacheable_id"
+    t.index ["attacheable_type"], name: "index_texts_on_attacheable_and_attacheable_type"
+    t.index ["user_id"], name: "index_texts_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
-    t.string "username"
-    t.string "password_digest"
+    t.string "username", default: "Anonymous", null: false
+    t.string "password_digest", null: false
     t.string "email"
-    t.integer "role"
+    t.integer "role", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "tier", default: 0, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["role"], name: "index_users_on_role"
   end
 
 end
