@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180318234913) do
+ActiveRecord::Schema.define(version: 20180319005023) do
 
   create_table "courses", force: :cascade do |t|
     t.string "title", default: "Untitled", null: false
@@ -76,6 +76,8 @@ ActiveRecord::Schema.define(version: 20180318234913) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "tier", default: 0, null: false
+    t.string "provider"
+    t.string "uid"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["role"], name: "index_users_on_role"
   end
