@@ -23,5 +23,4 @@ Rails.application.routes.draw do
 
   # Catch-all route
   get '*path', to: 'static_pages#coming_soon'
-  
 end
