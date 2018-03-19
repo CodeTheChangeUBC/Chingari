@@ -2,7 +2,7 @@ class Role
   # List of User Roles translated into their database encoding
 
   # Description: Cannot make any state changes to database (create, update, delete)
-  def Role.deactivated
+  def self.deactivated
     -1
   end
 
@@ -12,7 +12,7 @@ class Role
   # Can view all self-created content
   # Can view all submitted and published content
   # Can change roles of any user
-  def Role.admin
+  def self.admin
     10
   end
 
@@ -21,7 +21,7 @@ class Role
   # Can create, submit, and publish content
   # Can view all self-created content
   # Can view all submitted and published content
-  def Role.moderator
+  def self.moderator
     8
   end
 
@@ -30,7 +30,7 @@ class Role
   # Can create and submit content
   # Can view all self-created content 
   # Can view all published content of qualified tier
-  def Role.user
+  def self.user
     0
   end
 end
