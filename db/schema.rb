@@ -30,9 +30,9 @@ ActiveRecord::Schema.define(version: 20180319020156) do
     t.string "attacheable_type", null: false
     t.integer "attacheable_id", null: false
     t.integer "display_index"
+    t.index ["attacheable_id", "attacheable_type"], name: "index_documents_on_attacheable_id_and_attacheable_type"
     t.index ["attacheable_type", "attacheable_id"], name: "index_documents_on_attacheable_type_and_attacheable_id"
     t.index ["user_id"], name: "index_documents_on_user_id"
-    t.index [nil, "attacheable_type"], name: "index_documents_on_attacheable_and_attacheable_type"
   end
 
   create_table "embeds", force: :cascade do |t|
@@ -41,8 +41,8 @@ ActiveRecord::Schema.define(version: 20180319020156) do
     t.integer "attacheable_id", null: false
     t.text "content", default: "", null: false
     t.integer "display_index", default: 0, null: false
+    t.index ["attacheable_id", "attacheable_type"], name: "index_embeds_on_attacheable_id_and_attacheable_type"
     t.index ["attacheable_type", "attacheable_id"], name: "index_embeds_on_attacheable_type_and_attacheable_id"
-    t.index ["attacheable_type"], name: "index_embeds_on_attacheable_and_attacheable_type"
     t.index ["user_id"], name: "index_embeds_on_user_id"
   end
 
@@ -62,8 +62,8 @@ ActiveRecord::Schema.define(version: 20180319020156) do
     t.integer "attacheable_id", null: false
     t.text "content", default: "", null: false
     t.integer "display_index", default: 0, null: false
+    t.index ["attacheable_id", "attacheable_type"], name: "index_texts_on_attacheable_id_and_attacheable_type"
     t.index ["attacheable_type", "attacheable_id"], name: "index_texts_on_attacheable_type_and_attacheable_id"
-    t.index ["attacheable_type"], name: "index_texts_on_attacheable_and_attacheable_type"
     t.index ["user_id"], name: "index_texts_on_user_id"
   end
 

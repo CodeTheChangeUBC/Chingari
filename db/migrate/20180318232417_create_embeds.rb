@@ -6,6 +6,6 @@ class CreateEmbeds < ActiveRecord::Migration[5.1]
       t.text :content
       t.integer :display_index
     end
-    add_index(:embeds, [:attacheable, :attacheable_type])
+    add_index(:embeds, [:attacheable_id, :attacheable_type])
   end
 end
