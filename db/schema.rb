@@ -27,20 +27,20 @@ ActiveRecord::Schema.define(version: 20180320021915) do
   create_table "documents", force: :cascade do |t|
     t.string "title", default: "Untitled", null: false
     t.integer "user_id", null: false
-    t.string "attacheable_type", null: false
-    t.integer "attacheable_id", null: false
+    t.string "attachable_type", null: false
+    t.integer "attachable_id", null: false
     t.integer "display_index"
-    t.index ["attacheable_type", "attacheable_id"], name: "index_documents_on_attacheable_type_and_attacheable_id"
+    t.index ["attachable_type", "attachable_id"], name: "index_documents_on_attachable_type_and_attachable_id"
     t.index ["user_id"], name: "index_documents_on_user_id"
   end
 
   create_table "embeds", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.string "attacheable_type", null: false
-    t.integer "attacheable_id", null: false
+    t.string "attachable_type", null: false
+    t.integer "attachable_id", null: false
     t.text "content", default: "", null: false
     t.integer "display_index", default: 0, null: false
-    t.index ["attacheable_type", "attacheable_id"], name: "index_embeds_on_attacheable_type_and_attacheable_id"
+    t.index ["attachable_type", "attachable_id"], name: "index_embeds_on_attachable_type_and_attachable_id"
     t.index ["user_id"], name: "index_embeds_on_user_id"
   end
 
@@ -56,11 +56,11 @@ ActiveRecord::Schema.define(version: 20180320021915) do
 
   create_table "texts", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.string "attacheable_type", null: false
-    t.integer "attacheable_id", null: false
+    t.string "attachable_type", null: false
+    t.integer "attachable_id", null: false
     t.text "content", default: "", null: false
     t.integer "display_index", default: 0, null: false
-    t.index ["attacheable_type", "attacheable_id"], name: "index_texts_on_attacheable_type_and_attacheable_id"
+    t.index ["attachable_type", "attachable_id"], name: "index_texts_on_attachable_type_and_attachable_id"
     t.index ["user_id"], name: "index_texts_on_user_id"
   end
 

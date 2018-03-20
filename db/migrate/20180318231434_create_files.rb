@@ -3,9 +3,9 @@ class CreateFiles < ActiveRecord::Migration[5.1]
     create_table :files do |t|
       t.string :title, default: "Untitled", null: false
       t.references :user, null: false, index: true
-      t.references :attacheable, null: false, polymorphic: true
+      t.references :attachable, null: false, polymorphic: true
       t.integer :display_index
     end
-    add_index(:files, [:attacheable_id, :attacheable_type], name: "index_files_on_attacheable_and_attacheable_type")
+    add_index(:files, [:attachable_id, :attachable_type], name: "index_files_on_attachable_and_attachable_type")
   end
 end
