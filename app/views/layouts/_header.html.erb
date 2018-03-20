@@ -13,10 +13,10 @@
                 <!-- Modal -->
                 <div class="modal fade" id="myModal" role="dialog">
                   <div class="modal-dialog">
-                    
+
                     <!-- Modal content-->
                     <div class="modal-content">
-                  
+
                       <div class="modal-body">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <br>
@@ -27,28 +27,30 @@
                         (xxx) xxx-xxxx</p>
                         <p>Other</p>
                       </div>
-                      
+
                     </div>
-                    
+
                   </div>
                 </div>
-                
+
               </div>
             <!-- ================ -->
             <li>
               <div class="get-help" data-toggle="modal" data-target="#myModal"><i class="fa fa-phone"></i><p>Get Help Now</p></div>
             </li>
-            <li data-toggle="modal" data-target="#myModal1">
-              <i class="fa fa-search"></i><input type="text" name="" placeholder="SEARCH">
+            <li>
+              <div class="search-header" data-toggle="modal" data-target="#myModal1">
+                <i class="fa fa-search"></i><input type="text" name="" placeholder="SEARCH">
+              </div>
             </li>
             <!-- ================ -->
             <!-- Modal -->
               <div class="modal fade search-box" id="myModal1" role="dialog">
                 <div class="modal-dialog">
-                
+
                   <!-- Modal content-->
                   <div class="modal-content">
-                   
+
                     <div class="modal-body">
                       <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
                       <br>
@@ -56,15 +58,15 @@
                         <i class="fa fa-search"></i><input type="text"  name="" placeholder="Search" class="form-control">
                       </form>
                     </div>
-                  
+
                   </div>
-                  
+
                 </div>
               </div>
             <!-- ================ -->
           </ul>
         </div>
-        
+
       </div>
     </div>
   </header>
@@ -108,7 +110,7 @@
                     <li><a href='#'>Professional Development </a></li>
                </ul>
         </li>
-              
+
 
             <li><a href='#'>Events <i class="fa fa-caret-down" aria-hidden="true"></i>
         </a>
@@ -123,7 +125,7 @@
 
 <script type="text/javascript">
   (function($) {
-$.fn.menumaker = function(options) {  
+$.fn.menumaker = function(options) {
  var cssmenu = $(this), settings = $.extend({
    format: "dropdown",
    sticky: false
@@ -132,7 +134,7 @@ $.fn.menumaker = function(options) {
    $(this).find(".button").on('click', function(){
      $(this).toggleClass('menu-opened');
      var mainmenu = $(this).next('ul');
-     if (mainmenu.hasClass('open')) { 
+     if (mainmenu.hasClass('open')) {
        mainmenu.slideToggle().removeClass('open');
      }
      else {
