@@ -6,6 +6,6 @@ class CreateFiles < ActiveRecord::Migration[5.1]
       t.references :attacheable, null: false, polymorphic: true
       t.integer :display_index
     end
-    add_index(:files, [:attacheable, :attacheable_type])
+    add_index(:files, [:attacheable_id, :attacheable_type], name: "index_files_on_attacheable_and_attacheable_type")
   end
 end
