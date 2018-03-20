@@ -3,11 +3,11 @@ class Tier
   # This is meant to support various monetization plans
   # Eg. upgrade user to a new tier to access new content
 
-  def Tier.free
+  def self.free
     0
   end
 
-  def Tier.premium
+  def self.premium
     1
   end
 end

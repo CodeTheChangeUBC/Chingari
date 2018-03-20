@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180318234913) do
+ActiveRecord::Schema.define(version: 20180319020156) do
 
   create_table "courses", force: :cascade do |t|
     t.string "title", default: "Untitled", null: false
@@ -22,6 +22,17 @@ ActiveRecord::Schema.define(version: 20180318234913) do
     t.integer "tier", default: 0, null: false
     t.index ["users_id"], name: "index_courses_on_users_id"
     t.index ["visibility"], name: "index_courses_on_visibility"
+  end
+
+  create_table "documents", force: :cascade do |t|
+    t.string "title", default: "Untitled", null: false
+    t.integer "user_id", null: false
+    t.string "attacheable_type", null: false
+    t.integer "attacheable_id", null: false
+    t.integer "display_index"
+    t.index ["attacheable_type", "attacheable_id"], name: "index_documents_on_attacheable_type_and_attacheable_id"
+    t.index ["user_id"], name: "index_documents_on_user_id"
+    t.index [nil, "attacheable_type"], name: "index_documents_on_attacheable_and_attacheable_type"
   end
 
   create_table "embeds", force: :cascade do |t|
@@ -43,17 +54,6 @@ ActiveRecord::Schema.define(version: 20180318234913) do
     t.index ["course_id"], name: "index_enrollments_on_course_id"
     t.index ["user_id", "course_id"], name: "index_enrollments_on_user_id_and_course_id", unique: true
     t.index ["user_id"], name: "index_enrollments_on_user_id"
-  end
-
-  create_table "files", force: :cascade do |t|
-    t.string "title", default: "Untitled", null: false
-    t.integer "user_id", null: false
-    t.string "attacheable_type", null: false
-    t.integer "attacheable_id", null: false
-    t.integer "display_index", default: 0, null: false
-    t.index ["attacheable_type", "attacheable_id"], name: "index_files_on_attacheable_type_and_attacheable_id"
-    t.index ["attacheable_type"], name: "index_files_on_attacheable_and_attacheable_type"
-    t.index ["user_id"], name: "index_files_on_user_id"
   end
 
   create_table "texts", force: :cascade do |t|
