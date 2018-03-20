@@ -7,6 +7,6 @@ class DropFiles < ActiveRecord::Migration[5.1]
       t.references :attacheable, null: false, polymorphic: true
       t.integer :display_index
     end
-    add_index(:documents, [:attacheable, :attacheable_type])
+    add_index(:documents, [:attacheable_id, :attacheable_type])
   end
 end
