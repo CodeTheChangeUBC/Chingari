@@ -1,5 +1,5 @@
 class Course < ApplicationRecord
-  has_many :attachments, as: :attachables, dependent: :destroy
+  has_many :attachments, as: :attacheables, dependent: :destroy
   belongs_to :user
   alias_attribute :creator, :user
   has_many :enrollments, dependent: :destroy
