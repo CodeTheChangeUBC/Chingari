@@ -9,6 +9,9 @@ class User < ApplicationRecord
     				allow_nil: true
 	has_secure_password
 
+  has_many :enrollments, dependent: :destroy
+  has_many :courses, through: :enrollments
+
 	# Returns the hash digest of the given string.
 	def User.digest(string)
 		cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :

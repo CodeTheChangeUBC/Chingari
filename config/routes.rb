@@ -22,8 +22,16 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
 
+<<<<<<< HEAD
   # Courses Routes
   get '/test_courses', to: 'courses#view'
+=======
+    # Routes pertaining to users
+    get '/signup', to: 'users#new' # Nicer route name than /users/new
+    get '/preview_profile', to: 'users#preview_profile'
+    resources :users
+  end
+>>>>>>> 3d6a30f5c2a36cb4e91fa516dae431dd93336f64
 
   # Routes pertaining to users
   get '/signup', to: 'users#new' # Nicer route name than /users/new
