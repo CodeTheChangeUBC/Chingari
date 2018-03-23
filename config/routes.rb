@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     get  '/index',    to: 'static_pages#index'
     get  '/about',    to: 'static_pages#about'
     get  '/resources',to: 'static_pages#resources'
+    get '/policies',  to: 'static_pages#policies'
   
     # Routes handled by Sessions
     get    '/login',   to: 'sessions#new'
