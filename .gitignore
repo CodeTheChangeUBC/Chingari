@@ -223,3 +223,6 @@ GitHub.sublime-settings
 /public/assets/*
 
 .byebug_history
+
+# Ignore application configuration
+/config/application.yml

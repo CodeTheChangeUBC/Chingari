@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     get  '/index',    to: 'static_pages#index'
     get  '/about',    to: 'static_pages#about'
     get  '/resources',to: 'static_pages#resources'
+    get '/policies',  to: 'static_pages#policies'
   
     # Routes handled by Sessions
     get    '/login',   to: 'sessions#new'
@@ -19,6 +20,11 @@ Rails.application.routes.draw do
     get '/signup', to: 'users#new' # Nicer route name than /users/new
     get '/preview_profile', to: 'users#preview_profile'
     resources :users
+
+    # Api routes
+    get '/auth/:provider/callback', to: 'sessions#create_with_api'
+    get '/auth/failure', to: redirect('/')
+
   end
 
   # Catch-all route

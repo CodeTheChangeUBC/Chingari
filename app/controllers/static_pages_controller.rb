@@ -13,4 +13,7 @@ class StaticPagesController < ApplicationController
 
   def resources
   end
+
+  def policies
+  end
 end
