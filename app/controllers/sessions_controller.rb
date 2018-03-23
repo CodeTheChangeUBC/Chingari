@@ -17,6 +17,7 @@ class SessionsController < ApplicationController
   def destroy
   	log_out
   	redirect_to root_url
+    flash.now[:info] = "Successfully signed out"
   end
 
   # Create user from third party API 

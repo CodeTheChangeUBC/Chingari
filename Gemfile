@@ -30,6 +30,8 @@ gem 'jbuilder', '2.7.0'
 gem 'bcrypt', '~> 3.1.7'
 # For google oauth
 gem 'omniauth-google-oauth2'
+# For secure ENV variables 
+gem 'figaro'
 
 gem 'wow-rails'
 gem 'owl_carousel-rails'
