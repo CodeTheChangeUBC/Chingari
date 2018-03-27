@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root 'static_pages#coming_soon'
   
   # Hidden routes for in-progress pages
-  if Rails.env == 'development' || Rails.env == 'test'
+  if Rails.env == 'development' || Rails.env == 'test' || Rails.env == 'stage'
     # Static pages roots
     get  '/home',     to: 'static_pages#index'
     get  '/index',    to: 'static_pages#index'
