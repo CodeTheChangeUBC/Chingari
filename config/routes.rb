@@ -1,12 +1,13 @@
 Rails.application.routes.draw do
-	# Set root of application
-  root 'static_pages#coming_soon'
+
   
   # Hidden routes for in-progress pages
-  if Rails.env == 'development' || Rails.env == 'test'
+  if Rails.env == 'development' || Rails.env == 'test' || Rails.env == 'stage'
+    # Set root of application
+    root 'static_pages#home'
+
     # Static pages roots
-    get  '/home',     to: 'static_pages#index'
-    get  '/index',    to: 'static_pages#index'
+    get  '/home',     to: 'static_pages#home'
     get  '/about',    to: 'static_pages#about'
     get  '/resources',to: 'static_pages#resources'
   
@@ -19,6 +20,9 @@ Rails.application.routes.draw do
     get '/signup', to: 'users#new' # Nicer route name than /users/new
     get '/preview_profile', to: 'users#preview_profile'
     resources :users
+  else
+    # Set root of application
+    root 'static_pages#coming_soon'
   end
 
   # Catch-all route
