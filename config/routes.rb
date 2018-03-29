@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  
   # Hidden routes for in-progress pages
   if Rails.env == 'development' || Rails.env == 'test' || Rails.env == 'stage'
     # Set root of application
@@ -10,6 +9,7 @@ Rails.application.routes.draw do
     get  '/home',     to: 'static_pages#home'
     get  '/about',    to: 'static_pages#about'
     get  '/resources',to: 'static_pages#resources'
+    get '/policies',  to: 'static_pages#policies'
   
     # Routes handled by Sessions
     get    '/login',   to: 'sessions#new'
@@ -23,6 +23,10 @@ Rails.application.routes.draw do
   else
     # Set root of application
     root 'static_pages#coming_soon'
+    
+    # Api routes
+    get '/auth/:provider/callback', to: 'sessions#create_with_api'
+    get '/auth/failure', to: redirect('/')
   end
 
   # Catch-all route

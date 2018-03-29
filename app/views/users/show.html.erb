@@ -1,2 +1,10 @@
-<h3>User show page</h3>
-<%= @user.name %>, <%= @user.email %>
+<% provide(:title, "#{@user.name}") %>
+
+<div class='container'>
+	<h4><%= @user.name %> </h4>
+	<% if @user == current_user %>
+		<%= link_to "Sign out", logout_path, method: 'delete' %>
+	<% end %>
+
+</div>
+	

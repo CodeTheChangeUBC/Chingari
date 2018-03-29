@@ -28,6 +28,11 @@ gem 'jbuilder', '2.7.0'
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
+# For google oauth
+gem 'omniauth-google-oauth2'
+# For secure ENV variables 
+gem 'figaro'
+gem 'omniauth-facebook'
 
 gem 'wow-rails'
 gem 'owl_carousel-rails'
@@ -60,7 +65,7 @@ group :development do
   gem 'web-console', '3.5.1'
   gem 'listen', '3.1.5'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring', '2.0.2'
+  gem 'spring'
   gem 'spring-watcher-listen', '2.0.1'
 end
 
