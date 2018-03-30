@@ -41,6 +41,7 @@ gem "font-awesome-rails"
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+### Development tools
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '3.5.1'
@@ -50,7 +51,8 @@ group :development do
   gem 'spring-watcher-listen', '2.0.1'
 end
 
-group :development, :test do
+### Test Libraries
+group :development, :test, :stage do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '9.0.6', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rails-controller-testing', '1.0.2'
@@ -62,8 +64,7 @@ group :development, :test do
   gem 'selenium-webdriver'
 end
 
-# Database 
-
+### Database 
 group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3', '1.3.13'
@@ -74,8 +75,7 @@ group :stage, :production do
   gem 'pg', '0.18'
 end
 
-# Application Server
-
+### Application Server
 group :development, :test, :stage do
   # Use Puma as the app server
   gem 'puma', '3.9.1'
