@@ -30,7 +30,6 @@ ActiveRecord::Schema.define(version: 20180327011655) do
     t.string "attachable_type", null: false
     t.integer "attachable_id", null: false
     t.integer "display_index"
-    t.index ["attachable_id", "attachable_type"], name: "index_documents_on_attacheable_and_attacheable_type"
     t.index ["attachable_type", "attachable_id"], name: "index_documents_on_attachable_type_and_attachable_id", unique: true
     t.index ["user_id"], name: "index_documents_on_user_id"
   end
@@ -42,7 +41,6 @@ ActiveRecord::Schema.define(version: 20180327011655) do
     t.text "content", default: "", null: false
     t.integer "display_index", default: 0, null: false
     t.index ["attachable_type", "attachable_id"], name: "index_embeds_on_attachable_type_and_attachable_id", unique: true
-    t.index ["attachable_type"], name: "index_embeds_on_attacheable_and_attacheable_type"
     t.index ["user_id"], name: "index_embeds_on_user_id"
   end
 
@@ -63,7 +61,6 @@ ActiveRecord::Schema.define(version: 20180327011655) do
     t.text "content", default: "", null: false
     t.integer "display_index", default: 0, null: false
     t.index ["attachable_type", "attachable_id"], name: "index_texts_on_attachable_type_and_attachable_id", unique: true
-    t.index ["attachable_type"], name: "index_texts_on_attacheable_and_attacheable_type"
     t.index ["user_id"], name: "index_texts_on_user_id"
   end
 
