@@ -115,16 +115,16 @@ a:focus, a:hover {
 
 /*-- //Reset-Code --*/
 
-#chingari-header {
-    /*-- header --*/
-    input[type="submit"], .w3l_banner_info_left_grid_left h3 a, .w3agile_footer_copy p a, .reply a, .agile_cat_grid_tags ul li a:hover, .agile_cat_grid ul.categories li a, .w3l_admin a, .w3ls_single_left_grid_right ul li a, .wthree_features_services_grid h4 a, .agile_services_bottom_grid_left_grid a, .simplefilter li, .agileinfo_footer_grid ul li a, .w3l_banner_info_left_grid1, .agile_blog_grid h4 a {
-        transition: .5s ease-in;
-        -webkit-transition: .5s ease-in;
-        -moz-transition: .5s ease-in;
-        -o-transition: .5s ease-in;
-        -ms-transition: .5s ease-in;
-    }
+/*-- header --*/
+input[type="submit"], .w3l_banner_info_left_grid_left h3 a, .w3agile_footer_copy p a, .reply a, .agile_cat_grid_tags ul li a:hover, .agile_cat_grid ul.categories li a, .w3l_admin a, .w3ls_single_left_grid_right ul li a, .wthree_features_services_grid h4 a, .agile_services_bottom_grid_left_grid a, .simplefilter li, .agileinfo_footer_grid ul li a, .w3l_banner_info_left_grid1, .agile_blog_grid h4 a {
+    transition: .5s ease-in;
+    -webkit-transition: .5s ease-in;
+    -moz-transition: .5s ease-in;
+    -o-transition: .5s ease-in;
+    -ms-transition: .5s ease-in;
+}
 
+#cssmenu {
     /* ============ On Hover Menu ============ */
     .navbar-default .navbar-nav > li.dropdown:hover > a,
     .navbar-default .navbar-nav > li.dropdown:hover > a:hover,
@@ -222,7 +222,9 @@ a:focus, a:hover {
     }
 
     /* ============ // On Hover Menu ============ */
+}
 
+#chingari-header {
     /* ============ Header ============ */
     header .logo {
         width: 100px;
