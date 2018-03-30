@@ -51,15 +51,8 @@ group :development do
 end
 
 group :development, :test do
-  # Use Puma as the app server
-  gem 'puma', '3.9.1'
-  # Use sqlite3 as the database for Active Record
-  gem 'sqlite3', '1.3.13'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '9.0.6', platforms: [:mri, :mingw, :x64_mingw]
-end
-
-group :test, :stage do
   gem 'rails-controller-testing', '1.0.2'
   gem 'minitest-reporters',       '1.1.14'
   gem 'guard',                    '2.13.0'
@@ -69,18 +62,28 @@ group :test, :stage do
   gem 'selenium-webdriver'
 end
 
-group :stage do
-  # Use Puma as the app server
-  gem 'puma', '3.9.1'
+# Database 
+
+group :development, :test do
+  # Use sqlite3 as the database for Active Record
+  gem 'sqlite3', '1.3.13'
+end
+
+group :stage, :production do
   # Use postgresql as the database for Active Record
   gem 'pg', '0.18'
+end
+
+# Application Server
+
+group :development, :test, :stage do
+  # Use Puma as the app server
+  gem 'puma', '3.9.1'
 end
 
 group :production do
   # Use Unicorn as the app server
   gem 'unicorn', '5.4.0'
-  # Use postgresql as the database for Active Record
-  gem 'pg', '0.18'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
