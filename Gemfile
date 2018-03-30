@@ -69,7 +69,7 @@ group :development do
   gem 'spring-watcher-listen', '2.0.1'
 end
 
-group :production do
+group :production, :test do
   # Use Unicorn as the app server
   gem 'unicorn', '5.4.0'
   # Use postgresql as the database for Active Record
