@@ -69,7 +69,14 @@ group :test, :stage do
   gem 'selenium-webdriver'
 end
 
-group :production, :stage do
+group :stage do
+  # Use Puma as the app server
+  gem 'puma', '3.9.1'
+  # Use postgresql as the database for Active Record
+  gem 'pg', '0.18'
+end
+
+group :production do
   # Use Unicorn as the app server
   gem 'unicorn', '5.4.0'
   # Use postgresql as the database for Active Record
