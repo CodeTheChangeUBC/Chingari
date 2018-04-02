@@ -65,16 +65,14 @@ group :development, :test, :stage do
 end
 
 ### Ruby version
-ruby '2.5.0'
+ruby '>=2.3.4'
 
 # group :development, :test do
 #   ruby '2.5.0'
 # end
-
 # group :stage do
 #   ruby '2.3.4'
 # end
-
 # group :production do
 #   ruby '2.4.0'
 # end
