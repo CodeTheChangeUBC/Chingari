@@ -10,17 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180327011655) do
+ActiveRecord::Schema.define(version: 20180330035537) do
 
   create_table "courses", force: :cascade do |t|
     t.string "title", default: "Untitled", null: false
-    t.integer "users_id", null: false
+    t.integer "user_id", null: false
     t.text "description", default: "No Description", null: false
     t.integer "visibility", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "tier", default: 0, null: false
-    t.index ["users_id"], name: "index_courses_on_users_id"
+    t.index ["user_id"], name: "index_courses_on_user_id"
     t.index ["visibility"], name: "index_courses_on_visibility"
   end
 
@@ -73,6 +73,8 @@ ActiveRecord::Schema.define(version: 20180327011655) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "tier", default: 0, null: false
+    t.string "provider"
+    t.string "uid"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["role"], name: "index_users_on_role"
   end

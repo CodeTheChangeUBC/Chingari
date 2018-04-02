@@ -18,7 +18,12 @@ ActiveSupport.to_time_preserves_timezone = true
 Rails.application.config.active_record.belongs_to_required_by_default = true
 
 # Do not halt callback chains when a callback returns false. Previous versions had true.
-ActiveSupport.halt_callback_chains_on_return_false = false
+# This is a switch to allow old validations to halt the chain when returning false.
+# Now this will no longer be an option, and will always be false.
+# This does not affect our configuration since we didn't have it set to true
+# to begin with so we will continue developing under the assumption
+# that validations need to throw an error to signal an invalid transaction
+# ActiveSupport.halt_callback_chains_on_return_false = false
 
 # Configure SSL options to enable HSTS with subdomains. Previous versions had false.
 Rails.application.config.ssl_options = { hsts: { subdomains: true } }

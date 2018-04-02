@@ -223,3 +223,5 @@ GitHub.sublime-settings
 /public/assets/*
 
 .byebug_history
+
+.unicorn
