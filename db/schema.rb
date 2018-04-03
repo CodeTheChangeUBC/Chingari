@@ -10,39 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180319020156) do
+ActiveRecord::Schema.define(version: 20180330035537) do
 
   create_table "courses", force: :cascade do |t|
     t.string "title", default: "Untitled", null: false
-    t.integer "users_id", null: false
+    t.integer "user_id", null: false
     t.text "description", default: "No Description", null: false
     t.integer "visibility", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "tier", default: 0, null: false
-    t.index ["users_id"], name: "index_courses_on_users_id"
+    t.index ["user_id"], name: "index_courses_on_user_id"
     t.index ["visibility"], name: "index_courses_on_visibility"
   end
 
   create_table "documents", force: :cascade do |t|
     t.string "title", default: "Untitled", null: false
     t.integer "user_id", null: false
-    t.string "attacheable_type", null: false
-    t.integer "attacheable_id", null: false
+    t.string "attachable_type", null: false
+    t.integer "attachable_id", null: false
     t.integer "display_index"
-    t.index ["attacheable_type", "attacheable_id"], name: "index_documents_on_attacheable_type_and_attacheable_id"
+    t.index ["attachable_type", "attachable_id"], name: "index_documents_on_attachable_type_and_attachable_id", unique: true
     t.index ["user_id"], name: "index_documents_on_user_id"
-    t.index [nil, "attacheable_type"], name: "index_documents_on_attacheable_and_attacheable_type"
   end
 
   create_table "embeds", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.string "attacheable_type", null: false
-    t.integer "attacheable_id", null: false
+    t.string "attachable_type", null: false
+    t.integer "attachable_id", null: false
     t.text "content", default: "", null: false
     t.integer "display_index", default: 0, null: false
-    t.index ["attacheable_type", "attacheable_id"], name: "index_embeds_on_attacheable_type_and_attacheable_id"
-    t.index ["attacheable_type"], name: "index_embeds_on_attacheable_and_attacheable_type"
+    t.index ["attachable_type", "attachable_id"], name: "index_embeds_on_attachable_type_and_attachable_id", unique: true
     t.index ["user_id"], name: "index_embeds_on_user_id"
   end
 
@@ -58,12 +56,11 @@ ActiveRecord::Schema.define(version: 20180319020156) do
 
   create_table "texts", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.string "attacheable_type", null: false
-    t.integer "attacheable_id", null: false
+    t.string "attachable_type", null: false
+    t.integer "attachable_id", null: false
     t.text "content", default: "", null: false
     t.integer "display_index", default: 0, null: false
-    t.index ["attacheable_type", "attacheable_id"], name: "index_texts_on_attacheable_type_and_attacheable_id"
-    t.index ["attacheable_type"], name: "index_texts_on_attacheable_and_attacheable_type"
+    t.index ["attachable_type", "attachable_id"], name: "index_texts_on_attachable_type_and_attachable_id", unique: true
     t.index ["user_id"], name: "index_texts_on_user_id"
   end
 
@@ -76,6 +73,8 @@ ActiveRecord::Schema.define(version: 20180319020156) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "tier", default: 0, null: false
+    t.string "provider"
+    t.string "uid"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["role"], name: "index_users_on_role"
   end

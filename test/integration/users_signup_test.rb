@@ -25,7 +25,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
   				name: "bella bib",
   				email: "bella@gmail.ca",
   				password: "foobaz",
-  				password: "foobaz"
+  				password_confirmation: "foobaz"
   			}
   		}
   	end
