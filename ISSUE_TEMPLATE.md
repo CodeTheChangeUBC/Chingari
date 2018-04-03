@@ -16,13 +16,13 @@ Describe Prior Behaviour
 ##### New/Modified Behaviour:
 Describe New Behaviour
 
-## Validation:
+## Validation
 ##### Test Files:
 List Test Files Added/Modified
 ##### Manual Validation Procedure:
 List Manual Checks Needed
 
-## Follow-Up:
+## Follow-Up
 ##### Usage Documentation:
 [No Documentation](https://github.com/CodeTheChangeUBC/Chingari)
 ##### Requirements:
