@@ -10,6 +10,7 @@ Chingari is an organization dedicated to helping immigrant women escape abuse by
 - Eric Mikulin
 - Ben Chugg
 - Jordan Kroll
+- Rodica
 - Adil Imtiaz
 
 ## Dependencies
