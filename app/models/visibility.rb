@@ -1,6 +1,5 @@
 class Visibility
   # List of visibility levels used on content such as Courses
-
   # Policies:
   # Draft content is visible for edit by creator but does not clutter review pipeline
   def self.draft
