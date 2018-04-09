@@ -50,6 +50,24 @@ Eric:
   role: <%= Role.admin %>
   tier: <%= Tier.free %>
 
+Rody:
+  id: 3
+  name: Rody
+  username: Rody
+  password_digest: <%= User.digest("password") %>
+  email: rody@chingari.org
+  role: <%= Role.admin %>
+  tier: <%= Tier.free %>
+
+Jordan:
+  id: 3
+  name: Jordan
+  username: Jordan
+  password_digest: <%= User.digest("password") %>
+  email: jordan.kroll@chingari.org
+  role: <%= Role.admin %>
+  tier: <%= Tier.free %>
+
 Mona:
   id: 4
   name: Mona
