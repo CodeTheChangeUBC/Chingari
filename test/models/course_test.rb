@@ -3,7 +3,6 @@ require 'test_helper'
 class CourseTest < ActiveSupport::TestCase
   
   def setup
-    User.create(id: 1, name: "new user", email: "user@user.ca", password: "foobar", password_confirmation: "foobar")
     @course = Course.new(title: "Test Course", user_id: 1, description: "Test Description is this one", visibility: 0, tier: 0)
   end
 

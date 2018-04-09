@@ -67,7 +67,7 @@ class CoursesController < ApplicationController
     # Authorized access: Return a JSON of the course where course.id == course_id in the format { item: { title: "How to kill a mockingbird", description : "...", ... } }
     def getcourse
         c_user = current_user()
-        course = Course.where(course_id: params[:course_id]).order(:created_at)
+        course = Course.where(id: params[:course_id]).order(:created_at).first()
         redirect_to :root unless !course.nil?  # Ensure that the course exists
 
         # Public case:
@@ -124,7 +124,7 @@ class CoursesController < ApplicationController
         c_user = current_user()
         redirect_to :root unless logged_in?  # Ensure the user is logged in
         token = session[:_csrf_token]
-        course = Course.where(course_id: params[:course_id]).order(:created_at)
+        course = Course.where(id: params[:course_id]).order(:created_at).first()
 
         # Draft Course case
         if course.visibility == Visibility.draft and course.user_id == c_user.id
@@ -163,7 +163,7 @@ class CoursesController < ApplicationController
     def update
         c_user = current_user()
         redirect_to :root unless logged_in?  # Ensure the user is logged in
-        course = Course.where(course_id: params[:course_id]).order(:created_at)
+        course = Course.where(id: params[:course_id]).order(:created_at)
 
         # Draft Course case
         if course.visibility == Visibility.draft and course.user_id == c_user.id
@@ -188,7 +188,7 @@ class CoursesController < ApplicationController
     def delete
         c_user = current_user()
         redirect_to :root unless logged_in?  # Ensure the user is logged in
-        course = Course.where(course_id: params[:course_id]).order(:created_at)
+        course = Course.where(id: params[:course_id]).order(:created_at)
 
         # Draft Course case
         if course.visibility == Visibility.draft and course.user_id == c_user.id

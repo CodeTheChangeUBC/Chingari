@@ -20,4 +20,9 @@ class ActiveSupport::TestCase
   	follow_redirect!
   	assert_template 'users/show'
   end
+
+  # Log out a test user
+  def log_out_user()
+    delete logout_path
+  end
 end
