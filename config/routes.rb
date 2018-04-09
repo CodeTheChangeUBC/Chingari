@@ -20,6 +20,20 @@ Rails.application.routes.draw do
     get '/signup', to: 'users#new' # Nicer route name than /users/new
     get '/preview_profile', to: 'users#preview_profile'
     resources :users
+
+    # Routes pertaining to courses
+    get '/courses', to: 'courses#index'
+    post '/courses', to: 'courses#create'
+    get '/courses/review', to: 'courses#review'
+    get '/courses/drafts', to: 'courses#drafts'
+    get '/courses/published', to: 'courses#published'
+    get '/courses/new', to: 'courses#new'
+    get '/courses/:course_id', to: 'courses#getcourse'  # Should go last as it also catches most of the other routes
+    put '/courses/:course_id', to: 'courses#update' # ^^^^
+    delete '/courses/:course_id', to: 'courses#delete' # ^^^^
+    get '/courses/(:course_id)/edit', to: 'courses#edit'  # ^^^^
+    resources :courses
+
   else
     # Set root of application
     root 'static_pages#coming_soon'
