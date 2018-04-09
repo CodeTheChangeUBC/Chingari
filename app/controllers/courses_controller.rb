@@ -6,7 +6,7 @@ class CoursesController < ApplicationController
     # Authorized access: Return a JSON of all courses { items: [ course1, course2, ...] }
     def index
         c_user = current_user()
-        redirect_to :root unless logged_in?  # Ensure the user is logged in
+        return ( redirect_to :root ) unless logged_in?  # Ensure the user is logged in
 
         # Verify that they can access this API endpoint
         if c_user.role == Role.admin or c_user.role == Role.moderator
@@ -25,7 +25,7 @@ class CoursesController < ApplicationController
     # Authorized access: Return a JSON of all courses where course.visibility == Visibility.review in the format { items: [ course1, course2, ...] }
     def review
         c_user = current_user()
-        redirect_to :root unless logged_in?  # Ensure the user is logged in
+        return ( redirect_to :root ) unless logged_in?  # Ensure the user is logged in
 
         # Verify that they can access this API endpoint
         if c_user.role == Role.admin or c_user.role == Role.moderator
@@ -44,7 +44,7 @@ class CoursesController < ApplicationController
     # Authorized access: Return a JSON of all courses where course.visibility == Visibility.draft and @current_user.id == course.user_id in the format { items: [ course1, course2, ...] }
     def drafts
         c_user = current_user()
-        redirect_to :root unless logged_in?  # Ensure the user is logged in
+        return ( redirect_to :root ) unless logged_in?  # Ensure the user is logged in
 
         courses = Course.where({visibility: Visibility.draft, user_id: c_user.id}).order(:created_at)
         render :json => courses
@@ -99,7 +99,7 @@ class CoursesController < ApplicationController
     # - The template course with all its fields and fill in any fields with the appropriate existing values
     def new
         c_user = current_user()
-        redirect_to :root unless logged_in?  # Ensure the user is logged in
+        return ( redirect_to :root ) unless logged_in?  # Ensure the user is logged in
         token = session[:_csrf_token]
 
         course = Course.create(user_id: c_user.id)
@@ -122,7 +122,7 @@ class CoursesController < ApplicationController
     # - The template course with all its fields and fill in any fields with the appropriate existing values
     def edit
         c_user = current_user()
-        redirect_to :root unless logged_in?  # Ensure the user is logged in
+        return ( redirect_to :root ) unless logged_in?  # Ensure the user is logged in
         token = session[:_csrf_token]
         course = Course.where(id: params[:course_id]).order(:created_at).first()
 
@@ -147,7 +147,7 @@ class CoursesController < ApplicationController
     # Return a JSON containing the status result of creation
     def create
         c_user = current_user()
-        redirect_to :root unless logged_in?  # Ensure the user is logged in
+        return ( redirect_to :root ) unless logged_in?  # Ensure the user is logged in
         course = Course.create(JSON.parse(params))
 
         render :json => {"status": course.save}
@@ -162,7 +162,7 @@ class CoursesController < ApplicationController
     # Return a JSON containing the status result of creation
     def update
         c_user = current_user()
-        redirect_to :root unless logged_in?  # Ensure the user is logged in
+        return ( redirect_to :root ) unless logged_in?  # Ensure the user is logged in
         course = Course.where(id: params[:course_id]).order(:created_at)
 
         # Draft Course case
@@ -187,7 +187,7 @@ class CoursesController < ApplicationController
     # Authorized access: Remove the corresponding course from the database. Return message upon completion
     def delete
         c_user = current_user()
-        redirect_to :root unless logged_in?  # Ensure the user is logged in
+        return ( redirect_to :root ) unless logged_in?  # Ensure the user is logged in
         course = Course.where(id: params[:course_id]).order(:created_at)
 
         # Draft Course case

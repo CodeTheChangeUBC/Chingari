@@ -31,7 +31,7 @@ Rails.application.routes.draw do
     get '/courses/:course_id', to: 'courses#getcourse'  # Should go last as it also catches most of the other routes
     put '/courses/:course_id', to: 'courses#update' # ^^^^
     delete '/courses/:course_id', to: 'courses#delete' # ^^^^
-    get '/courses/(:course_id)/edit', to: 'courses#edit'  # ^^^^
+    get '/courses/:course_id/edit', to: 'courses#edit'  # ^^^^
     resources :courses
 
   else

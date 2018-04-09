@@ -16,6 +16,16 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :success
     end
 
+    test "should redirect to root" do
+        log_out_user()
+
+        get courses_path
+        assert_response :redirect
+
+        log_in_user(@user, "coursebar")
+    end
+
+
     test "should get review" do
         get courses_review_path
         assert_response :success
