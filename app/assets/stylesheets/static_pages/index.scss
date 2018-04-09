@@ -1,0 +1,341 @@
+#chingari-index {
+    /* ============ Banner ============ */
+    .main-banner {
+        position: relative;
+        height: auto;
+    }
+
+    .top-banner {
+        position: relative;
+        height: auto;
+    }
+
+    .banner-caption {
+        position: absolute;
+        top: 10px;
+        color: #ffffff;
+        z-index: 0;
+    }
+
+    .banner-caption p {
+        font-size: 30px;
+        text-align: center;
+        margin-left: 20px;
+        padding: 138px 10px;
+        width: 530px;
+    }
+
+    .banner-caption button {
+        width: 147px;
+        height: 45px;
+        text-align: center;
+        color: #ffffff;
+        background-color: #4DD1DB;
+        border: none;
+        position: absolute;
+        top: 76%;
+        left: 35%;
+        font-size: 20px;
+    }
+
+    .top-banner button {
+        width: 147px;
+        height: 45px;
+        text-align: center;
+        color: #ffffff;
+        background-color: #4DD1DB;
+        border: none;
+        position: absolute;
+        top: 63%;
+        left: 22%;
+        font-size: 20px;
+    }
+
+    /*.main-banner p{
+        position: absolute;
+        top: 5px;
+        color: #fff;
+        font-size: 35px;
+        width: 600px;
+        margin-left: 20px;
+        text-align: center;
+        padding: 160px 0px;
+        font-family: 'Lora', serif;
+    }
+    .main-banner button {
+        width: 147px;
+        height: 45px;
+        text-align: center;
+        color: #ffffff;
+        background-color: #4DD1DB;
+        border: none;
+        position: absolute;
+        top: 70%;
+        left: 26%;
+        font-size: 20px;
+    }*/
+    /* ============ // Banner ============ */
+
+    /* ============ Aim ============ */
+    .aim {
+        padding: 50px 0px;
+        margin-top: -35px;
+    }
+
+    .aim-div {
+        margin-bottom: 50px;
+    }
+
+    .aim-div h1 {
+        font-size: 35px;
+        text-align: center;
+        margin: 30px 0px;
+        color: #4DD1DB;
+    }
+
+    .aim ul li {
+        font-size: 23px;
+        color: #514d4d;
+        line-height: 40px;
+        font-family: 'Lora', serif;
+    }
+
+    /* ============ //Aim ============ */
+
+    /* ========= Challenges ==========*/
+    .challenges {
+        background-image: asset_url("challenges.jpg");
+        background-size: cover;
+        overflow: auto;
+        background-position: -490px 29%;
+    }
+
+    .challenges-right {
+        background-color: #4DD1DB;
+        padding: 100px 65px !important;
+    }
+
+    .challenges-right h3 {
+        width: 71%;
+        line-height: 55px;
+        font-size: 20px;
+        color: #fff;
+    }
+
+    .challenges-right ul {
+        padding-left: 85px;
+        margin-top: 35px;
+    }
+
+    .challenges-right ul li {
+        list-style: none;
+        color: #fff;
+        font-size: 20px;
+        margin: 25px 0px;
+    }
+
+    .challenges-right ul li p {
+        line-height: 40px;
+        font-family: 'Muli', sans-serif !important;
+    }
+
+    /* ========= // Challenges ==========*/
+
+    /* ========= Featur-story ==========*/
+    .featur-story {
+        background-image: asset_url("featur-story.jpg");
+        background-size: cover;
+        height: 100vh;
+        padding: 200px 0px;
+    }
+
+    .featur-story h3 {
+        text-align: center;
+        font-size: 36px;
+        color: #ffffff;
+        line-height: 50px;
+        margin-bottom: 40px;
+        font-family: "Lora", serif !important;
+    }
+
+    .featur-story button {
+        background-color: transparent;
+        padding: 10px 32px;
+        color: #fff;
+        font-size: 20px;
+        margin: auto;
+        display: block;
+        border: 2px solid #fff;
+    }
+
+    .featur-story button:hover {
+        background-color: #4DD1DB;
+        border-color: #4DD1DB;
+    }
+
+    /* ========= Featur-story ==========*/
+
+    /* ========= Online-Research ==========*/
+    .online-Resources {
+        padding: 50px 0px;
+        margin-top: -35px;
+    }
+
+    .online-Resources h1 {
+        font-size: 32px;
+        text-align: center;
+        margin: 30px 0px;
+        color: #4DD1DB;
+    }
+
+    .tips1 {
+        margin: auto;
+        display: block;
+        width: 120px;
+    }
+
+    .tips1 img, .tips2 img {
+        width: 90px;
+    }
+
+    .tips1 h2 {
+        text-align: center;
+        font-size: 20px;
+        color: #4DD1DB;
+        font-weight: 600;
+    }
+
+    .tips2 .icon1 {
+        float: right;
+        margin-right: 150px;
+        margin-top: 30px;
+        width: 100px;
+    }
+
+    .tips2 .icon2 {
+        float: left;
+        margin-left: 150px;
+        margin-top: 30px;
+        width: 100px;
+    }
+
+    .tips3 .icon1 {
+        float: right;
+        margin-right: 95px;
+        margin-top: 70px;
+        width: 100px;
+    }
+
+    .tips3 .icon2 {
+        float: left;
+        margin-left: 95px;
+        margin-top: 70px;
+        width: 100px;
+    }
+
+    .Legal-Rights {
+        color: #4CD0DA;
+        margin-top: 0px;
+        margin-left: 0px;
+    }
+
+    .Immigration {
+        text-align: right;
+        font-size: 20px;
+        margin-right: 144px;
+        color: #4DD1DB;
+        font-weight: 600;
+    }
+
+    .Womens-Rights {
+        text-align: left;
+        font-size: 20px;
+        margin-left: 138px;
+        color: #4DD1DB;
+        font-weight: 600;
+    }
+
+    .Personal-Development {
+        text-align: right;
+        font-size: 20px;
+        margin-right: 44px;
+        color: #4DD1DB;
+        font-weight: 600;
+    }
+
+    .Professional-Development {
+        text-align: left;
+        font-size: 20px;
+        margin-left: 35px;
+        color: #4DD1DB;
+        font-weight: 600;
+    }
+
+    .view-resources {
+        margin-bottom: 60px !important;
+    }
+
+    .view-resources button {
+        background-color: #f4951e;
+        border: medium none;
+        color: #ffffff;
+        display: block;
+        font-size: 18px;
+        height: 46px;
+        margin: 50px auto;
+        padding: 10px 30px;
+    }
+
+    .bottom-trip {
+        background-color: #4DD1DB;
+        height: 70px;
+        margin-bottom: -35px !important;
+    }
+
+    .bottom-trip ul {
+        padding: 23px 0px;
+    }
+
+    .bottom-trip ul li {
+        list-style: none;
+        float: left;
+        color: #ffffff;
+        font-size: 20px;
+        margin-right: 90px;
+    }
+
+    .bottom-trip ul li a {
+        color: #ffffff;
+    }
+
+    .back-to-top {
+        display: none;
+    }
+
+    .scrollup {
+        width: 40px;
+        height: 40px;
+        opacity: 0.5;
+        bottom: 55px;
+        position: relative;
+        right: unset;
+        text-indent: -999px;
+        background: url("../images/upwards-arrow.png") no-repeat;
+        display: none;
+        cursor: pointer;
+        margin: auto;
+    }
+
+    #navigation {
+        margin-bottom: -35px;
+    }
+
+    .footer-logo {
+        width: 70px;
+        float: right;
+    }
+
+    .dropdown-menu {
+        padding: 0 !important;
+    }
+}

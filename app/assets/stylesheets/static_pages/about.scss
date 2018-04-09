@@ -1,0 +1,198 @@
+#chingari-about {
+    /* ========= About us page =========*/
+    .about-page {
+        height: auto;
+    }
+
+    .about-banner-div {
+        position: relative;
+        height: auto;
+        margin-top: -35px;
+    }
+
+    .about-banner-div img {
+        margin-top: 35px;
+    }
+
+    .about-banner-div p {
+        position: absolute;
+        z-index: 1;
+        top: 50%;
+        text-align: center;
+        color: white;
+        left: 45%;
+        font-size: 30px;
+    }
+
+    .why-chingari {
+        padding: 40px 0px;
+    }
+
+    .why-chingari h1, .founder-story h1, .our-team h1 {
+        font-size: 35px;
+        text-align: center;
+        margin: 10px 0px 30px;
+        color: #4DD1DB;
+    }
+
+    .why-chingari p {
+        font-size: 22px;
+        color: #514d4d;
+        line-height: 40px;
+        font-family: 'Lora', serif;
+        text-align: center;
+    }
+
+    .testimonial {
+        padding: 40px 0px;
+    }
+
+    .testimonial p {
+        padding: 40px 35px;
+        color: #fff;
+        line-height: 28px;
+        font-size: 18px;
+        text-align: center;
+        font-family: 'Muli', sans-serif;
+        height: 250px;
+    }
+
+    .get-involved h1 {
+        text-align: center;
+        margin-bottom: 28px;
+        font-size: 30px;
+        color: #4DD1DB;
+    }
+
+    .testimonial .left {
+        background-color: #4DD1DB;
+        padding: 40px 75px;
+    }
+
+    .testimonial .right {
+        background-color: #F4951E;
+        padding: 40px 75px;
+    }
+
+    .testimonial h1 {
+        font-size: 35px;
+        text-align: center;
+        margin: 10px 0px 30px;
+        color: #4DD1DB;
+    }
+
+    .founder-story {
+        padding: 40px 0px;
+    }
+
+    .founder-story p {
+        font-size: 20px;
+        color: #514d4d;
+        line-height: 38px;
+        font-family: 'Lora', serif;
+        padding-left: 35px;
+    }
+
+    .founder-story h1 {
+        margin: 30px 0px;
+    }
+
+    .our-team h1 {}
+
+    #cssmenu ul.first-ul {
+        margin-bottom: 0px !important;
+        width: 660px;
+        margin: auto;
+    }
+
+    .our-team {
+        height: auto;
+        overflow: auto;
+        padding: 30px 0px;
+    }
+
+    .our-team img {
+        border-radius: 50%;
+        width: 140px;
+        margin: auto;
+    }
+
+    .our-team h2 {
+        font-size: 18px;
+        color: #4DD1DB;
+        text-align: center;
+        margin: 30px;
+        line-height: 35px;
+    }
+
+    .get-involved {
+        height: auto;
+        overflow: auto;
+        padding: 50px 0px;
+    }
+
+    .get-involved .get-involved-left {
+        width: 50%;
+        height: 100vh;
+        float: left;
+        background-color: #4DD1DB;
+        padding: 100px 100px;
+    }
+
+    .get-involved .get-involved-left h1 {
+        font-size: 38px;
+        color: #fff;
+        text-align: center;
+    }
+
+    .get-involved .get-involved-left ul {
+        padding: 65px 70px;
+    }
+
+    .get-involved .get-involved-left ul li {
+        color: #fff;
+        font-size: 20px;
+        line-height: 65px;
+    }
+
+    .get-involved .get-involved-right {
+        width: 50%;
+        height: auto;
+        float: left;
+    }
+
+    .get-involved .get-involved-right img {
+        height: 100vh;
+    }
+
+    .about-page-contact {
+        height: auto;
+        padding: 50px;
+    }
+
+    .about-page-contact h1 {
+        color: #42BBC3;
+        font-size: 30px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .about-page-contact img {
+        width: 30px;
+        margin-right: 25px;
+    }
+
+    .about-page-contact img:nth-child(1) {
+        margin-right: 35px;
+    }
+
+    .about-page-contact p {
+        text-align: center;
+        font-weight: 600;
+        font-size: 16px;
+        color: #4DD1DB;
+        font-family: 'Muli', sans-serif;
+    }
+
+    /* ========= // About us page =========*/
+}

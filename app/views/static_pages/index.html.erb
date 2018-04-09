@@ -1,0 +1,130 @@
+<% provide(:title, "Home") %>
+
+<!-- ==== Popup Js ==== -->
+	<!-- Banner -->
+	<div class="main-banner">
+		<div class="container">
+			<div class="banner-caption">
+				<p>Chingari is an international solidarity organization that provides resources to empower women</p>
+				<button>Learn More</button>
+			</div>
+		</div>
+		<div class="banner">
+			<%= image_tag("banner1.jpg") %>
+		</div>
+	</div>
+    <!-- // Banner -->
+
+	<!-- Our aim -->
+	<div class="aim">
+		<div class="container">
+			<div class="aim-div">
+				<h1>Our Aim is to:</h1>
+				<ul>
+					<li>Provide resources on personal security and crisis management in the event of abuse,harassment or rape.</li>
+					<li>Empower women by providing resources for business and enterpreneurial skills  so they can become self-sufficient.</li>
+					<li>Provide informationn on community resources in a centeralized location.</li>
+					<li>Supoort groups and networking events in the Vancouver metropolitan area.</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- // Our aim -->
+
+	<!-- challenges -->
+	<div class="challenges">
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 challenges-left"></div>
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 challenges-right">
+			<h3>Immigrant women face many challenges and 
+			barriers once they arrive on our shores
+			Here are just a few:</h3>
+			<ul>
+				<li><p>Difficulty speaking and learning English</p></li>
+				<li><p>Raising children</p></li>
+				<li><p>Security work</p></li>
+				<li><p>Securing housing</p></li>
+				<li><p>Accessing services</p></li>
+				<li><p>Transportation</p></li>
+				<li><p>Cultural barriers</p></li>
+			</ul>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hidden-sm hidden-md hidden-lg remove-padding">
+			<%= image_tag("challenges2.jpg", class: "img-responsive") %>
+		</div>
+	</div>
+	<!-- // challenges -->
+
+	<!-- Featur story -->
+	<div class="featur-story">
+		<div class="container">
+			<h3>Feature Story:<br>
+			Read about Fatima's story<br>
+			and learn how Chingari can help.</h3>
+			<button>Read More</button>
+		</div>
+	</div>
+	<!-- // Featur story -->
+
+	<!-- Online Research -->
+	<div class="online-Resources">
+		<div class="Resources">
+			<h1>Our Online Resources Cover Tips On...</h1>
+			<div class="tips">
+				<div class="tips1">
+					<%= image_tag("icon2.png") %>
+					<h2 class="Legal-Rights">Legal Rights</h2>
+				</div>
+				<div class="tips2">
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+						<%= image_tag("icon1.png", class: "icon1") %>
+						<div class="clearfix"></div>
+						<h2 class="Immigration">Immigration</h2>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+						<%= image_tag("icon3.png", class: "icon2") %>
+						<div class="clearfix"></div>
+						<h2 class="Womens-Rights">Womens Rights</h2>
+					</div>
+				</div>
+				<div class="tips3">
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+						<%= image_tag("icon4.png", class: "icon1") %>
+						<div class="clearfix"></div>
+						<h2 class="Personal-Development">Personal Development</h2>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+						<%= image_tag("icon5.png", class: "icon2") %>
+						<div class="clearfix"></div>
+						<h2 class="Professional-Development">Professional Development</h2>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="view-resources">
+				<button>View Free Resources</button>
+			</div>
+		</div>
+	</div>
+	<!-- // Online Research -->
+
+	<div class="container back-to-top">
+			<div class="row">
+	        	<span class="scrolltotop"><i class="fa fa-chevron-up"></i></span>
+					<p>Back to Top</p>
+				</div>
+		</div>
+		<script>
+		$('.scrolltotop').on('click', function() {
+		          $('html, body').animate({ scrollTop: 0 }, 800);
+		          return false;
+		      });
+
+		      $(document).scroll(function() {
+		          var y = $(this).scrollTop();
+		          if (y > 300) {
+		              $('.scrolltotop').fadeIn();
+		          } else {
+		              $('.scrolltotop').fadeOut();
+		          }
+		      });
+		</script>

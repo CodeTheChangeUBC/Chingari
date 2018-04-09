@@ -1,8 +1,10 @@
-<header>
+<%= stylesheet_link_tag    '/assets/layouts/_header', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+<header id="chingari-header">
   <div class="container remove-padding">
     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-      <a href="/home">
-        <%= image_tag("main-logo.png", class: "img-responsive logo") %>
+      <a href="index.html">
+        <img src="http://solutionsofts.com/nikhil/wp-content/themes/blank-theme/images/main-logo.png" class="img-responsive logo">
       </a>
     </div>
     <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 remove-padding">
@@ -10,121 +12,116 @@
         <ul>
           <!-- ================ -->
           <div class="container hidden-sm hidden-md hidden-lg">
-            <!-- Modal -->
-            <div class="modal fade" id="myModal" role="dialog">
-              <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-                  <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <br>
-                    <p>Chingari does not Provide emergency services</p>
-                    <p>If you are having a crisis<br>Cal 911</p>
-                    <p>Suggested Hotline<br>(xxx) xxx-xxxx</p>
-                    <p>Other</p>
+              <!-- Modal -->
+              <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                  
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                
+                    <div class="modal-body">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <br>
+                      <p>Chingari does not Provide emergency services</p>
+                      <p>If you are having a crisis<br>
+                      Cal 911</p>
+                      <p>Suggested Hotline<br>
+                      (xxx) xxx-xxxx</p>
+                      <p>Other</p>
+                    </div>
+                    
                   </div>
+                  
                 </div>
               </div>
+              
             </div>
-          </div>
           <!-- ================ -->
           <li>
-            <!-- <div class="get-help" data-toggle="modal" data-target="#myModal"><i class="fa fa-phone"></i><p>Get Help Now</p></div> -->
-            <a href="#contact"><div class="get-help"><i class="fa fa-phone"></i><p>Get Help Now</p></div></a>
+            <div class="get-help" data-toggle="modal" data-target="#myModal"><i class="fa fa-phone"></i><p>Get Help Now</p></div>
           </li>
-          <!--
-            <li data-toggle="modal" data-target="#myModal1">
-              <i class="fa fa-search"></i><input type="text" name="" placeholder="SEARCH">
-            </li>
-          -->
+          <li data-toggle="modal" data-target="#myModal1">
+            <i class="fa fa-search"></i><input type="text" name="" placeholder="SEARCH">
+          </li>
           <!-- ================ -->
           <!-- Modal -->
-          <div class="modal fade search-box" id="myModal1" role="dialog">
-            <div class="modal-dialog">
-              <!-- Modal content-->
-              <div class="modal-content">
-                <div class="modal-body">
-                  <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-                  <br>
-                  <form method="" action="" class="form-group">
-                    <i class="fa fa-search"></i><input type="text"  name="" placeholder="Search" class="form-control">
-                  </form>
+            <div class="modal fade search-box" id="myModal1" role="dialog">
+              <div class="modal-dialog">
+              
+                <!-- Modal content-->
+                <div class="modal-content">
+                 
+                  <div class="modal-body">
+                    <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                    <br>
+                    <form method="" action="" class="form-group">
+                      <i class="fa fa-search"></i><input type="text"  name="" placeholder="Search" class="form-control">
+                    </form>
+                  </div>
+                
                 </div>
+                
               </div>
             </div>
-          </div>
           <!-- ================ -->
         </ul>
       </div>
+      
     </div>
   </div>
 </header>
 
-<!-- Navagation Bar -->
 <nav id='cssmenu'>
-  <div id="head-mobile"></div>
-  <div class="button"></div>
-  <ul class="first-ul">
-    <li class='active'><a href='/home'>Home<i class="fa fa-caret-down" aria-hidden="true"></i></a>
-      <ul>
-        <li><a href='/home/#vision'>Vision</a></li>
-        <li><a href='/home/#challenges'>Challenges</a></li>
-        <li><a href='/home/#stories'>Stories</a></li>
-        <li><a href='/home/#services'>Products & services</a></li>
-      </ul>
-    </li>
+    <div id="head-mobile"></div>
+    <div class="button"></div>
+    <ul class="first-ul">
+      <li class='active'><a href='index.html'>Home <i class="fa fa-caret-down" aria-hidden="true"></i>
+    </a>
+    <ul>
+            <li><a href='#'>Mission</a></li>
+              <li><a href='#'>Vision </a></li>
+              <li><a href='#'>Why Chingari </a></li>
+              <li><a href='#'>Products & services </a></li>
+              <li><a href='#'>The Issues </a></li>
+         </ul>
+  </li>
 
-    <li class='active'><a href='/about'>About Us<i class="fa fa-caret-down" aria-hidden="true"></i></a>
-      <ul>
-        <li><a href='/about/#value'>Why Chingari</a></li>
-        <li><a href='/about/#testimonies'>Testimonies</a></li>
-        <li><a href='/about/#history'>Founder History</a></li>
-        <li><a href='/about/#team'>Our Team</a></li>
-        <li><a href='/about/#contribute'>Get Involved </a></li>
-        <li><a href='#contact'>Contact Us </a></li>
-        <!-- This link has no respective content -->
-        <%# <li><a href='#'>FAQ </a></li> %>
-      </ul>
-    </li>
 
-    <li class='active'><a href='/resources'>Resources<i class="fa fa-caret-down" aria-hidden="true"></i></a>
-      <ul>
-        <li><a href='/resources/#immigration'>Immigration</a></li>
-        <li><a href='/resources/#legal'>Legal Resources</a></li>
-        <li><a href='/resources/#women'>Women's Rights</a></li>
-        <li><a href='/resources/#personal'>Personal Development</a></li>
-        <li><a href='/resources/#professional'>Professional Development</a></li>
-        <li><a href='/resources/#external'>External Links </a></li>
-      </ul>
-    </li>   
+  <li class='active'><a href='about.html'>About Us <i class="fa fa-caret-down" aria-hidden="true"></i>
+    </a>
+    <ul>
+            <li><a href='#'>Founder History</a></li>
+            <li><a href='#'>Our Team </a></li>
+              <li><a href='#'>Testimonial </a></li>
+              <li><a href='#'>FAQ </a></li>
+              <li><a href='#'>Contact Us </a></li>
+              <li><a href='#'>Get Involved </a></li>
+         </ul>
+  </li>
 
-    <li><a href='/events'>Events<i class="fa fa-caret-down" aria-hidden="true"></i></a>
-      <ul>
-        <li><a href='/events/#networking'>Networking Events </a></li>
-        <li><a href='/enents/#upcoming'>Upcoming Events</a></li>
-      </ul>
-    </li>
 
-    <li><a href='/community'>Community</a>
-    </li>
+  <li class='active'><a href='resources.html'>Resources <i class="fa fa-caret-down" aria-hidden="true"></i>
+    </a>
+    <ul>
+            <li><a href='#'>Immigration</a></li>
+              <li><a href='#'>Legal Docs </a></li>
+              <li><a href='#'>Community </a></li>
+              <li><a href='#'>Self Development </a></li>
+              <li><a href='#'>External Links </a></li>
+              <li><a href='#'>Professional Development </a></li>
+         </ul>
+  </li>
+        
 
-    <% if logged_in? then %> <!-- Content for logged in user -->s
-      <li><a href='/users/<%= current_user.id %>'>My Account<i class="fa fa-caret-down" aria-hidden="true"></i></a>
-        <ul>
-          <li><a href='/users/<%= current_user.id %>'</a></li>
-          <li><a href='/logout'>Log Out</a></li>
-        </ul>
+      <li><a href='#'>Events <i class="fa fa-caret-down" aria-hidden="true"></i>
+  </a>
+         <ul>
+            <li><a href='#'>NetWorking Events </a></li>
+              <li><a href='#'>Upcoming Events</a></li>
+         </ul>
       </li>
-    <% else %> <!-- Login link -->
-      <li><a href='/login'>My Account<i class="fa fa-caret-down" aria-hidden="true"></i></a>
-        <ul>
-          <li><a href='/login'>Log In</a></li>
-          <li><a href='/signup'>Sign Up</a></li>
-        </ul>
-      </li>
-    <% end %>
 
-  </ul>
+    </ul>
 </nav>
 
 <script type="text/javascript">
