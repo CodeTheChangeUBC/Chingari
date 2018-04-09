@@ -1,4 +1,4 @@
-class Visbility
+class Visibility
   # List of visibility levels used on content such as Courses
 
   # Policies:

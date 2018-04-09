@@ -1,9 +1,41 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+  # create_table "enrollments", force: :cascade do |t|
+  #   t.integer "course_id", null: false
+  #   t.integer "user_id", null: false
+  #   t.datetime "created_at", null: false
+  #   t.datetime "updated_at", null: false
+  #   t.index ["course_id"], name: "index_enrollments_on_course_id"
+  #   t.index ["user_id", "course_id"], name: "index_enrollments_on_user_id_and_course_id", unique: true
+  #   t.index ["user_id"], name: "index_enrollments_on_user_id"
+  # end
 
-# one:
-#   course: one
-#   user: one
+jimmy_enrolled_in_cpsc310:
+  course_id: 310
+  user_id: 1
 
-# two:
-#   course: two
-#   user: two
+jimmy_enrolled_in_rhubarb_pie:
+  course_id: 314
+  user_id: 1
+
+jimmy_enrolled_in_cpsc340:
+  course_id: 340
+  user_id: 1
+
+jimmy_enrolled_in_cpsc406:
+  course_id: 406
+  user_id: 1
+
+jimmy_enrolled_in_cpsc418:
+  course_id: 418
+  user_id: 1
+
+jimmy_enrolled_in_cpsc420:
+  course_id: 420
+  user_id: 1
+
+jimmy_enrolled_in_cpsc322:
+  course_id: 322
+  user_id: 1
+
+ben_enrolled_in_cpsc310:
+  course_id: 310
+  user_id: 2

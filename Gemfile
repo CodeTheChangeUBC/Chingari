@@ -64,19 +64,19 @@ group :development, :test, :stage do
   gem 'selenium-webdriver'
 end
 
-### Ruby version
-group :development, :test do
-  # Use Puma as the app server
-  ruby '2.5.0'
-end
+# ### Ruby version
+# group :development, :test do
+#   # Use Puma as the app server
+#   ruby '2.5.0'
+# end
 
-group :stage do
-  ruby '2.3.4'
-end
+# group :stage do
+#   ruby '2.3.4'
+# end
 
-group :production do
-  ruby '2.4.0'
-end
+# group :production do
+#   ruby '2.4.0'
+# end
 
 ### Database 
 group :development, :test do
