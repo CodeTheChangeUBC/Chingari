@@ -29,14 +29,14 @@ gem 'jbuilder', '2.7.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '3.1.11'
 # For google oauth
-gem 'omniauth-google-oauth2'
+gem 'omniauth-google-oauth2', '0.5.3'
 # For secure ENV variables 
-gem 'figaro'
-gem 'omniauth-facebook'
+gem 'figaro', '1.1.1'
+gem 'omniauth-facebook', '4.0.0'
 
-gem 'wow-rails'
-gem 'owl_carousel-rails'
-gem "font-awesome-rails"
+gem 'wow-rails', '0.0.1'
+gem 'owl_carousel-rails', '0.0.1'
+gem "font-awesome-rails", '4.7.0.4'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -47,7 +47,7 @@ group :development do
   gem 'web-console', '3.5.1'
   gem 'listen', '3.1.5'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
+  gem 'spring', '2.0.2'
   gem 'spring-watcher-listen', '2.0.1'
 end
 
@@ -61,7 +61,7 @@ group :development, :test, :stage do
   gem 'guard-minitest',           '2.4.4'
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '2.13'
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '3.11.0'
 end
 
 # ### Ruby version
@@ -101,4 +101,4 @@ group :production do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', '1.2.5', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
