@@ -13,7 +13,7 @@ class CoursesController < ApplicationController
 
             # return the courses as a JSON file for the API
             courses = Course.all.order(updated_at: :desc)
-            render :json => courses
+            render :json => { "items": courses }
         else
              redirect_to :root
         end
@@ -32,7 +32,7 @@ class CoursesController < ApplicationController
 
             # return the courses as a JSON file for the API
             courses = Course.where(visibility: Visibility.reviewing).order(updated_at: :desc)
-            render :json => courses
+            render :json => { "items": courses }
         else
              redirect_to :root
         end
@@ -47,7 +47,7 @@ class CoursesController < ApplicationController
         return ( redirect_to :root ) unless logged_in?  # Ensure the user is logged in
 
         courses = Course.where(visibility: Visibility.draft, user_id: c_user.id).order(updated_at: :desc)
-        render :json => courses
+        render :json => { "items": courses }
     end
 
     # Request: GET /courses/published
@@ -56,7 +56,7 @@ class CoursesController < ApplicationController
     # Authorized access: Return a JSON of all courses where course.visibility == Visibility.published in the format { items: [ course1, course2, ...] }
     def published        
         courses = Course.where(visibility: Visibility.published).order(updated_at: :desc)
-        render :json => courses
+        render :json => { "items": courses }
     end
 
     # Request: GET /courses/(:course_id)
@@ -110,7 +110,7 @@ class CoursesController < ApplicationController
         course = Course.create(user_id: c_user.id)
 
         if course.save
-            render :json => {"token": token, "course": course}
+            render :json => { "token": token, "course": course }
         else
             redirect_to :root
         end
@@ -138,11 +138,11 @@ class CoursesController < ApplicationController
 
         # Draft Course case
         if course.visibility == Visibility.draft and course.user_id == c_user.id
-            render :json => {"token": token, "course": course}
+            render :json => { "token": token, "course": course }
 
         # Other Course case
         elsif c_user.role == Role.admin or c_user.role == Role.moderator
-            render :json => {"token": token, "course": course}
+            render :json => { "token": token, "course": course }
 
         # Not draft or authorized
         else
@@ -154,23 +154,26 @@ class CoursesController < ApplicationController
     # Authorization: Only available to logged in users
     # Unauthorized access: Should get redirected to root (/)
     # Authorized access: Create a new course in database based on the request body content.
-    # Return a JSON containing the status result of creation
+    # Return a JSON containing the status result of creation and the latest version of the course
     def create
         c_user = current_user()
         return ( redirect_to :root ) unless logged_in?  # Ensure the user is logged in
 
         # Privledged user case
         if c_user.role == Role.admin or c_user.role == Role.moderator
-            render :json => {"status": Course.new(course_params).save}
+            course = Course.new(course_params)
+            status = course.save
+            render :json => { "status": status, "course": course }
 
         # Other Course case
         else
             if course_params[:visibility].to_i == Visibility.draft
-                status = Course.new(course_params).save
+                course = Course.new(course_params)
+                status = course.save
+                render :json => { "status": status, "course": course }
             else                
-                status = false
+                render :json => { "status": 400 }, :status => 400
             end
-            render :json => {"status": status}
         end
     end
 
@@ -180,7 +183,7 @@ class CoursesController < ApplicationController
     # - If the course is not a draft then only available to moderator and admin
     # Unauthorized access: Should get redirected to root (/)
     # Authorized access: Replace the current course with that ID with the one submitted in the form. Return a message upon completion. Special note: only moderators and admins can set visibility to published.
-    # Return a JSON containing the status result of creation
+    # Return a JSON containing the status result of creation and the latest version of the course
     def update
         c_user = current_user()
         return ( redirect_to :root ) unless logged_in?  # Ensure the user is logged in
@@ -191,18 +194,19 @@ class CoursesController < ApplicationController
             return ( render :file => "#{Rails.root}/public/404.html", :status => 404 )
         end
 
-        # Draft Course case
-        if course.visibility == Visibility.draft and course.user_id == c_user.id
-            if not course_params[:visibility] == "0"
-                status = false
-            else                
-                status = course.update(course_params)
-            end
-            render :json => {"status": status}
-
         # Other Course case
-        elsif c_user.role == Role.admin or c_user.role == Role.moderator
-            render :json => {"status": course.update(course_params)}
+        if c_user.role == Role.admin or c_user.role == Role.moderator
+            status = course.update(course_params)
+            render :json => { "status": status, "course": course }
+
+        # Draft Course case
+        elsif course.visibility == Visibility.draft and course.user_id == c_user.id
+            if course_params[:visibility].to_i == Visibility.draft
+                status = course.update(course_params)
+                render :json => { "status": status, "course": course }
+            else
+                render :json => { "status": 400 }, :status => 400
+            end
 
         # Not draft or authorized
         else
@@ -228,11 +232,10 @@ class CoursesController < ApplicationController
 
         # Draft Course case
         if course.visibility == Visibility.draft and course.user_id == c_user.id
-            render :json => {"status": course.delete}
-
+            render :json => { "status": course.delete }
         # Other Course case
         elsif c_user.role == Role.admin or c_user.role == Role.moderator
-            render :json => {"status": course.delete}
+            render :json => { "status": course.delete }
 
         # Not draft or authorized
         else

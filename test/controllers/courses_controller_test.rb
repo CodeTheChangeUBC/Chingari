@@ -30,7 +30,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :success
 
         response = JSON.parse(@response.body)
-        response.each do |course|
+        response['items'].each do |course|
             assert_equal Visibility.reviewing, course['visibility'].to_i
         end
     end
@@ -47,7 +47,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :success
 
         response = JSON.parse(@response.body)
-        response.each do |course|
+        response['items'].each do |course|
             assert_equal Visibility.draft, course['visibility'].to_i
         end
     end
@@ -58,7 +58,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :success
 
         response = JSON.parse(@response.body)
-        response.each do |course|
+        response['items'].each do |course|
             assert_equal Visibility.published, course['visibility'].to_i
         end
     end
@@ -105,10 +105,10 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
     test "standard user unsuccessfully post new" do
         log_in_user(@user_std, "passwwd")
         post "/courses", params: { course: { title: "New Course B", user_id: 2, description: "Test Description is New", visibility: 2, tier: 0 } }
-        assert_response :success
+        assert_response(400)
 
         response = JSON.parse(@response.body)
-        assert_equal false, response['status']
+        assert_equal 400, response['status']
     end
 
     test "admin user successfully post new" do
@@ -141,10 +141,10 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
     test "standard user unsuccessfully put updated" do
         log_in_user(@user_std, "passwwd")
         put "/courses/416", params: { course: { title: "Updated Course B", user_id: 2, description: "Test Description is Updated", visibility: 2, tier: 0 } }
-        assert_response :success
+        assert_response(400)
 
         response = JSON.parse(@response.body)
-        assert_equal false, response['status']
+        assert_equal 400, response['status']
     end
 
     test "unauthorized standard user unsuccessfully put updated" do
