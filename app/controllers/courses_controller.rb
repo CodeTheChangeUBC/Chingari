@@ -6,7 +6,7 @@ class CoursesController < ApplicationController
     # Authorized access: Return a JSON of all courses { items: [ course1, course2, ...] }
     def index
         c_user = current_user()
-        return ( redirect_to :root ) unless logged_in?  # Ensure the user is logged in
+        return ( redirect_to :login ) unless logged_in?  # Ensure the user is logged in
 
         # Verify that they can access this API endpoint
         if c_user.role == Role.admin or c_user.role == Role.moderator
@@ -15,7 +15,7 @@ class CoursesController < ApplicationController
             courses = Course.all.order(updated_at: :desc)
             render :json => { "items": courses }
         else
-             redirect_to :root
+            redirect_to :root, :status => 401
         end
     end
 
@@ -25,7 +25,7 @@ class CoursesController < ApplicationController
     # Authorized access: Return a JSON of all courses where course.visibility == Visibility.review in the format { items: [ course1, course2, ...] }
     def review
         c_user = current_user()
-        return ( redirect_to :root ) unless logged_in?  # Ensure the user is logged in
+        return ( redirect_to :login ) unless logged_in?  # Ensure the user is logged in
 
         # Verify that they can access this API endpoint
         if c_user.role == Role.admin or c_user.role == Role.moderator
@@ -34,7 +34,7 @@ class CoursesController < ApplicationController
             courses = Course.where(visibility: Visibility.reviewing).order(updated_at: :desc)
             render :json => { "items": courses }
         else
-             redirect_to :root
+             redirect_to :root, :status => 401
         end
     end
 
@@ -44,7 +44,7 @@ class CoursesController < ApplicationController
     # Authorized access: Return a JSON of all courses where course.visibility == Visibility.draft and @current_user.id == course.user_id in the format { items: [ course1, course2, ...] }
     def drafts
         c_user = current_user()
-        return ( redirect_to :root ) unless logged_in?  # Ensure the user is logged in
+        return ( redirect_to :login ) unless logged_in?  # Ensure the user is logged in
 
         courses = Course.where(visibility: Visibility.draft, user_id: c_user.id).order(updated_at: :desc)
         render :json => { "items": courses }
@@ -67,12 +67,11 @@ class CoursesController < ApplicationController
     # Authorized access: Return a JSON of the course where course.id == course_id in the format { item: { title: "How to kill a mockingbird", description : "...", ... } }
     def getcourse
         c_user = current_user()
-        return ( redirect_to :root ) unless logged_in?  # Ensure the user is logged in
         course = Course.where(id: params[:course_id]).first()
 
         # Course not found case
         if course.nil?
-            return ( render :file => "#{Rails.root}/public/404.html", :status => 404 )
+            return ( render :json => {"status": 404},:status => 404 )
         end
 
         # Public case:
@@ -86,12 +85,12 @@ class CoursesController < ApplicationController
                     c_user.id == course.user_id then
                 render :json => course
             else
-                redirect_to :root
+                redirect_to :root, :status => 401
             end
 
-        # Otherwise If protected course and not logged in:
+        # Otherwise If protected course && not logged in:
         else
-            redirect_to :root
+            redirect_to :login
         end
     end
 
@@ -104,16 +103,11 @@ class CoursesController < ApplicationController
     # - The template course with all its fields and fill in any fields with the appropriate existing values
     def new
         c_user = current_user()
-        return ( redirect_to :root ) unless logged_in?  # Ensure the user is logged in
+        return ( redirect_to :login ) unless logged_in?  # Ensure the user is logged in
         token = session[:_csrf_token]
+        course = Course.new(user_id: c_user.id)
 
-        course = Course.create(user_id: c_user.id)
-
-        if course.save
-            render :json => { "token": token, "course": course }
-        else
-            redirect_to :root
-        end
+        render :json => { "token": token, "course": course }
     end
 
     # Request: GET /courses/(:course_id)/edit
@@ -127,13 +121,13 @@ class CoursesController < ApplicationController
     # - The template course with all its fields and fill in any fields with the appropriate existing values
     def edit
         c_user = current_user()
-        return ( redirect_to :root ) unless logged_in?  # Ensure the user is logged in
+        return ( redirect_to :login ) unless logged_in?  # Ensure the user is logged in
         token = session[:_csrf_token]
         course = Course.where(id: params[:course_id]).first()
 
         # Course not found case
         if course.nil?
-            return ( render :file => "#{Rails.root}/public/404.html", :status => 404 )
+            return ( render :json => {"status": 404},:status => 404 )
         end
 
         # Draft Course case
@@ -146,7 +140,7 @@ class CoursesController < ApplicationController
 
         # Not draft or authorized
         else
-            redirect_to :root
+            redirect_to :root, :status => 401
         end
     end
 
@@ -157,18 +151,22 @@ class CoursesController < ApplicationController
     # Return a JSON containing the status result of creation and the latest version of the course
     def create
         c_user = current_user()
-        return ( redirect_to :root ) unless logged_in?  # Ensure the user is logged in
+        return ( redirect_to :login ) unless logged_in?  # Ensure the user is logged in
 
         # Privledged user case
         if c_user.role == Role.admin or c_user.role == Role.moderator
-            course = Course.new(course_params)
+            course = Course.new(course_params.merge(user_id: c_user.id))
             status = course.save
-            render :json => { "status": status, "course": course }
+            if status
+                render :json => { "status": status, "course": course }
+            else
+                render :json => { "status": 400 }, :status => 400
+            end
 
-        # Other Course case
-        else
+        # Non priledged user case
+        else 
             if course_params[:visibility].to_i == Visibility.draft
-                course = Course.new(course_params)
+                course = Course.new(course_params.merge(user_id: c_user.id))
                 status = course.save
                 render :json => { "status": status, "course": course }
             else                
@@ -186,18 +184,22 @@ class CoursesController < ApplicationController
     # Return a JSON containing the status result of creation and the latest version of the course
     def update
         c_user = current_user()
-        return ( redirect_to :root ) unless logged_in?  # Ensure the user is logged in
+        return ( redirect_to :login ) unless logged_in?  # Ensure the user is logged in
         course = Course.where(id: params[:course_id]).first()
 
         # Course not found case
         if course.nil?
-            return ( render :file => "#{Rails.root}/public/404.html", :status => 404 )
+            return ( render :json => {"status": 404},:status => 404 )
         end
 
         # Other Course case
         if c_user.role == Role.admin or c_user.role == Role.moderator
             status = course.update(course_params)
-            render :json => { "status": status, "course": course }
+            if status
+                render :json => { "status": status, "course": course }
+            else
+                render :json => { "status": 400 }, :status => 400
+            end
 
         # Draft Course case
         elsif course.visibility == Visibility.draft and course.user_id == c_user.id
@@ -210,7 +212,7 @@ class CoursesController < ApplicationController
 
         # Not draft or authorized
         else
-            redirect_to :root
+            redirect_to :root, :status => 401
         end
     end
 
@@ -222,12 +224,12 @@ class CoursesController < ApplicationController
     # Authorized access: Remove the corresponding course from the database. Return message upon completion
     def delete
         c_user = current_user()
-        return ( redirect_to :root ) unless logged_in?  # Ensure the user is logged in
+        return ( redirect_to :login ) unless logged_in?  # Ensure the user is logged in
         course = Course.where(id: params[:course_id]).first()
 
         # Course not found case
         if course.nil?
-            return ( render :file => "#{Rails.root}/public/404.html", :status => 404 )
+            return ( render :json => {"status": 404},:status => 404 )
         end
 
         # Draft Course case
@@ -239,12 +241,12 @@ class CoursesController < ApplicationController
 
         # Not draft or authorized
         else
-            redirect_to :root
+            redirect_to :root, :status => 401
         end
     end
 
     private 
         def course_params
-            params.require(:course).permit(:title, :user_id, :description, :tier, :visibility)
+            params.require(:course).permit(:title, :description, :tier, :visibility)
         end
 end
