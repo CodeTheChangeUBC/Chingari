@@ -12,6 +12,10 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         log_out_user()
     end
 
+
+    # ########################################################################
+    # Tests for get /courses
+
     test "admin user get index" do
         log_in_user(@user_admin, "passwwd")
         get courses_path
@@ -40,6 +44,10 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         end
     end
 
+
+    # ########################################################################
+    # Tests for get /courses/review
+
     test "standard user get review" do
         log_in_user(@user_std, "passwwd")
         get courses_review_path
@@ -51,6 +59,10 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :redirect
     end
 
+
+    # ########################################################################
+    # Tests for get /courses/drafts
+
     test "standard user get drafts" do
         log_in_user(@user_std, "passwwd")
         get courses_drafts_path
@@ -61,6 +73,15 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
             assert_equal Visibility.draft, course['visibility'].to_i
         end
     end
+
+    test "no user get drafts" do
+        get courses_drafts_path
+        assert_response :redirect
+    end
+
+
+    # ########################################################################
+    # Tests for get /courses/published
 
     test "standard user get published" do
         log_in_user(@user_std, "passwwd")
@@ -82,6 +103,10 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
             assert_equal Visibility.published, course['visibility'].to_i
         end
     end
+
+
+    # ########################################################################
+    # Tests for get /courses/new
 
     test "admin user get new" do
         log_in_user(@user_admin, "passwwd")
@@ -106,6 +131,10 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :redirect
     end
 
+
+    # ########################################################################
+    # Tests for get /courses/:course_id/edit
+
     test "admin user get edit course 314" do
         log_in_user(@user_admin, "passwwd")
         get "/courses/314/edit"
@@ -125,6 +154,10 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         get "/courses/314/edit"
         assert_response :redirect
     end
+
+
+    # ########################################################################
+    # Tests for get /courses/:course_id
 
     test "admin user get course 314" do
         log_in_user(@user_admin, "passwwd")
@@ -172,6 +205,10 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :redirect
     end
 
+
+    # ########################################################################
+    # Tests for post /courses
+
     test "standard user successfully post new" do
         log_in_user(@user_std, "passwwd")
         post "/courses", params: { course: { title: "New Course A", description: "Test Description is New", visibility: 0, tier: 0 } }
@@ -212,6 +249,10 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         response = JSON.parse(@response.body)
         assert_equal 400, response['status']
     end
+
+
+    # ########################################################################
+    # Tests for put /courses/:course_id
 
     test "standard user successfully put updated" do
         log_in_user(@user_std, "passwwd")
@@ -259,6 +300,10 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         response = JSON.parse(@response.body)
         assert_equal 400, response['status']
     end
+
+
+    # ########################################################################
+    # Tests for delete /courses/:course_id
 
     test "standard user successfully delete" do
         log_in_user(@user_std, "passwwd")
