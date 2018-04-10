@@ -11,7 +11,7 @@ class EnrollmentTest < ActiveSupport::TestCase
     assert_raises(Exception) { Enrollment.create!(course_id: 1) }
   end
 
-  # test "Should create enrollment when foreign ID's are present" do
-  #   assert Enrollment.create!(course_id: 1, user_id: 1)
-  # end
+  test "Should create enrollment when foreign ID's are present" do
+    assert Enrollment.create!(course_id: 100, user_id: 1)
+  end
 end
