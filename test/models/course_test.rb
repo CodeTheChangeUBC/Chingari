@@ -35,6 +35,11 @@ class CourseTest < ActiveSupport::TestCase
     assert_not @course.valid?
   end
 
+  test "title should not be all whitespace" do
+    @course.title = (" " * 5) + ("\t" * 5)
+    assert_not @course.valid?
+  end
+
   test "description should have minimum length 1" do 
     @course.description = ""
     assert_not @course.valid?
@@ -42,6 +47,11 @@ class CourseTest < ActiveSupport::TestCase
 
   test "description should have maximum length 1000" do 
     @course.description = "a" * 2048
+    assert_not @course.valid?
+  end
+
+  test "description should not be all whitespace" do
+    @course.description = (" " * 5) + ("\t" * 5)
     assert_not @course.valid?
   end
 
