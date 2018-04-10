@@ -12,7 +12,7 @@ class CoursesController < ApplicationController
         if c_user.role == Role.admin or c_user.role == Role.moderator
 
             # return the courses as a JSON file for the API
-            courses = Course.all.order(:created_at)
+            courses = Course.all.order(updated_at: :desc)
             render :json => courses
         else
              redirect_to :root
@@ -31,7 +31,7 @@ class CoursesController < ApplicationController
         if c_user.role == Role.admin or c_user.role == Role.moderator
 
             # return the courses as a JSON file for the API
-            courses = Course.where(visibility: Visibility.reviewing).order(:created_at)
+            courses = Course.where(visibility: Visibility.reviewing).order(updated_at: :desc)
             render :json => courses
         else
              redirect_to :root
@@ -46,7 +46,7 @@ class CoursesController < ApplicationController
         c_user = current_user()
         return ( redirect_to :root ) unless logged_in?  # Ensure the user is logged in
 
-        courses = Course.where({visibility: Visibility.draft, user_id: c_user.id}).order(:created_at)
+        courses = Course.where(visibility: Visibility.draft, user_id: c_user.id).order(updated_at: :desc)
         render :json => courses
     end
 
@@ -55,7 +55,7 @@ class CoursesController < ApplicationController
     # Unauthorized access: Should get redirected to root (/)
     # Authorized access: Return a JSON of all courses where course.visibility == Visibility.published in the format { items: [ course1, course2, ...] }
     def published        
-        courses = Course.where(visibility: Visibility.published).order(:created_at)
+        courses = Course.where(visibility: Visibility.published).order(updated_at: :desc)
         render :json => courses
     end
 
@@ -129,7 +129,7 @@ class CoursesController < ApplicationController
         c_user = current_user()
         return ( redirect_to :root ) unless logged_in?  # Ensure the user is logged in
         token = session[:_csrf_token]
-        course = Course.where(id: params[:course_id]).order(:created_at).first()
+        course = Course.where(id: params[:course_id]).first()
 
         # Course not found case
         if course.nil?
@@ -165,10 +165,10 @@ class CoursesController < ApplicationController
 
         # Other Course case
         else
-            if not course_params[:visibility] == "0"
-                status = false
-            else                
+            if course_params[:visibility].to_i == Visibility.draft
                 status = Course.new(course_params).save
+            else                
+                status = false
             end
             render :json => {"status": status}
         end

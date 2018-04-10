@@ -28,6 +28,11 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         log_in_user(@user_admin, "passwwd")
         get courses_review_path
         assert_response :success
+
+        response = JSON.parse(@response.body)
+        response.each do |course|
+            assert_equal Visibility.reviewing, course['visibility'].to_i
+        end
     end
 
     test "standard user get review" do
@@ -40,12 +45,22 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         log_in_user(@user_std, "passwwd")
         get courses_drafts_path
         assert_response :success
+
+        response = JSON.parse(@response.body)
+        response.each do |course|
+            assert_equal Visibility.draft, course['visibility'].to_i
+        end
     end
 
     test "standard user get published" do
         log_in_user(@user_std, "passwwd")
         get courses_published_path
         assert_response :success
+
+        response = JSON.parse(@response.body)
+        response.each do |course|
+            assert_equal Visibility.published, course['visibility'].to_i
+        end
     end
 
     test "standard user get new" do
@@ -58,6 +73,9 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         log_in_user(@user_admin, "passwwd")
         get "/courses/314/edit"
         assert_response :success
+
+        response = JSON.parse(@response.body)
+        assert_equal 314, response['course']['id']
     end
 
     test "standard user get edit course 314" do
@@ -70,6 +88,9 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         log_in_user(@user_std, "passwwd")
         get "/courses/314"
         assert_response :success
+
+        response = JSON.parse(@response.body)
+        assert_equal 314, response['id']
     end
 
     test "standard user successfully post new" do

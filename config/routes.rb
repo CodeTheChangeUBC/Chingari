@@ -32,7 +32,7 @@ Rails.application.routes.draw do
     put '/courses/:course_id', to: 'courses#update' # ^^^^
     delete '/courses/:course_id', to: 'courses#delete' # ^^^^
     get '/courses/:course_id/edit', to: 'courses#edit'  # ^^^^
-    resources :courses
+    # resources :courses
 
   else
     # Set root of application
