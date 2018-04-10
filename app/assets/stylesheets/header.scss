@@ -1,0 +1,25 @@
+.header {
+  .header-top {
+    padding: 20px 20px 20px 20px;
+    margin: 0px;
+    .header-logo {
+      height: 125px;
+      width: auto;
+    }
+    .button {
+      position: absolute;
+      bottom: -10px;
+    }
+  }
+  nav{
+    // decrease the percentage if we decide to add more to the nav bar
+    padding: 5px 8% 5px 8%;
+    .navbar-nav {
+      width:100%;
+      .nav-link {
+        margin-left: 30px;
+        margin-right: 30px;
+      }
+    }
+  }
+}

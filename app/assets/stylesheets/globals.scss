@@ -1,0 +1,111 @@
+
+// Useful globals
+@mixin darker-orange-bg(){ background-color: rgb(225, 130, 11); }
+@mixin darker-blue-bg(){ background-color: rgb(57, 189,199); }
+
+@mixin dark-orange-bg(){ background-color: rgb(235, 140, 21); }
+@mixin dark-blue-bg(){ background-color: rgb(67, 199, 209); }
+
+@mixin orange-bg(){ background-color: rgb(245, 150, 31); }
+@mixin blue-bg(){ background-color: rgb(77, 209, 219); }
+@mixin light-bg(){ background-color: rgb(250, 250, 250); }
+@mixin dark-bg(){ background-color: rgb(50, 50, 50); }
+
+@mixin orange(){ color: rgb(245, 150, 31); }
+@mixin blue(){ color: rgb(77, 209, 219); }
+@mixin light(){ color: rgb(250, 250, 250); }
+@mixin dark(){ color: rgb(10, 10, 10); }
+
+.button {
+  border-width: 0px;
+  border-radius: 0px;
+  padding: 5px 30px 5px 30px;
+}
+.orange-button {
+  @include orange-bg;
+  @include light;
+  &:hover {
+    @include darker-orange-bg;
+  }
+}
+.blue-button {
+  @include blue-bg;
+  @include light;
+  &:hover {
+    @include darker-blue-bg;
+  }
+}
+.orange-hover:hover{
+  @include light;
+  @include darker-orange-bg;
+}
+.blue-hover:hover{
+  @include light;
+  @include darker-blue-bg;
+}
+
+.fa {
+  margin-right: 10px;
+}
+.darker-orange-theme {
+  @include dark-orange-bg();
+  @include light();
+}
+.darker-blue-theme {
+  @include dark-blue-bg();
+  @include light();
+}
+.dark-orange-theme {
+  @include orange-bg();
+  @include light();
+}
+.dark-blue-theme {
+  @include blue-bg();
+  @include light();
+}
+.dark-theme {
+  @include dark-bg();
+  @include light();
+}
+
+.light-orange-theme {
+  @include light-bg();
+  @include orange();
+}
+.light-blue-theme {
+  @include light-bg();
+  @include orange();
+}
+.light-theme {
+  @include light-bg();
+  @include dark();
+}
+
+.corners {
+  border-radius: 0px;
+}
+.margin {
+  margin: 10px;
+}
+.padded {
+  padding: 5px;
+}
+.super-padded {
+  padding: 15px;
+}
+
+.title {
+  font-size: 30px;
+}
+.subtitle {
+  font-size: 20px;
+}
+.text {
+  font-size: 12px;
+}
+.borderless {
+  border-width: 0px;
+}
+.center-text {
+  text-align: center;
+}
