@@ -3,7 +3,7 @@ class CoursesController < ApplicationController
     # Request: GET /courses
     # Authorization: Only available if the requesting user's @current_user.role is Role.admin or Role.moderator.
     # Unauthorized access: Should get redirected to root (/)
-    # Authorized access: Return a JSON of all courses { items: [ course1, course2, ...] }
+    # Authorized access: Return a JSON of all courses { result: [ course1, course2, ...] }
     def index
         c_user = current_user()
         return ( redirect_to :login ) unless logged_in?  # Ensure the user is logged in
@@ -13,16 +13,16 @@ class CoursesController < ApplicationController
 
             # return the courses as a JSON file for the API
             courses = Course.all.order(updated_at: :desc)
-            render :json => { "items": courses }
+            render status: 200, json: { result: courses }
         else
-            redirect_to :root, :status => 401
+            render status: 401, json: { result: "Not Authorized" }
         end
     end
 
     # Request: GET /courses/review
     # Authorization: Only available if the requesting user's @current_user.role is Role.admin or Role.moderator.
     # Unauthorized access: Should get redirected to root (/)
-    # Authorized access: Return a JSON of all courses where course.visibility == Visibility.review in the format { items: [ course1, course2, ...] }
+    # Authorized access: Return a JSON of all courses where course.visibility == Visibility.review in the format { result: [ course1, course2, ...] }
     def review
         c_user = current_user()
         return ( redirect_to :login ) unless logged_in?  # Ensure the user is logged in
@@ -32,33 +32,33 @@ class CoursesController < ApplicationController
 
             # return the review courses as a JSON file for the API
             courses = Course.where(visibility: Visibility.reviewing).order(updated_at: :desc)
-            render :json => { "items": courses }
+            render status: 200, json: { result: courses }
         else
-             redirect_to :root, :status => 401
+            render status: 401, json: { result: "Not Authorized" }
         end
     end
 
     # Request: GET /courses/drafts
     # Authorization: Only available to logged in user @current_user.id == course.user_id
     # Unauthorized access: Should get redirected to root (/)
-    # Authorized access: Return a JSON of all courses where course.visibility == Visibility.draft and @current_user.id == course.user_id in the format { items: [ course1, course2, ...] }
+    # Authorized access: Return a JSON of all courses where course.visibility == Visibility.draft and @current_user.id == course.user_id in the format { result: [ course1, course2, ...] }
     def drafts
         c_user = current_user()
         return ( redirect_to :login ) unless logged_in?  # Ensure the user is logged in
 
         # return the draft courses as a JSON file for the API
         courses = Course.where(visibility: Visibility.draft, user_id: c_user.id).order(updated_at: :desc)
-        render :json => { "items": courses }
+        render status: 200, json: { result: courses }
     end
 
     # Request: GET /courses/published
     # Authorization: Available to public
     # Unauthorized access: Should get redirected to root (/)
-    # Authorized access: Return a JSON of all courses where course.visibility == Visibility.published in the format { items: [ course1, course2, ...] }
+    # Authorized access: Return a JSON of all courses where course.visibility == Visibility.published in the format { result: [ course1, course2, ...] }
     def published
         # return all the published courses as a JSON file for the API
         courses = Course.where(visibility: Visibility.published).order(updated_at: :desc)
-        render :json => { "items": courses }
+        render status: 200, json: { result: courses }
     end
 
     # Request: GET /courses/(:course_id)
@@ -73,21 +73,21 @@ class CoursesController < ApplicationController
 
         # Course not found case
         if course.nil?
-            return ( render :json => {"status": 404},:status => 404 )
+            return ( render status: 404, json: { result: "Not Found" } )
         end
 
         # Public case:
         if course.visibility == Visibility.published
-            render :json => course
+            render status: 200, json: { result: course }
 
         # Authenticated case:
         elsif logged_in?  # Ensure that the user is logged in
             # Checks IF user is privledged or owns the course, ELSE return unauthorized
             if c_user.role == Role.admin or c_user.role == Role.moderator or
                     c_user.id == course.user_id then
-                render :json => course
+                render status: 200, json: { result: course }
             else
-                redirect_to :root, :status => 401
+                render status: 401, json: { result: "Not Authorized" }
             end
 
         # Course is not (public) AND (owned by user and editable) AND (user is not privledged)
@@ -109,7 +109,19 @@ class CoursesController < ApplicationController
         token = session[:_csrf_token]
         course = Course.new(user_id: c_user.id)
 
-        render :json => { "token": token, "course": course }
+        schema = {
+            title: :text,
+            description: :text,
+            tier: Tier.schema,
+            visibility: Visibility.schema
+        }
+
+        unless c_user.role == Role.admin or c_user.role == Role.moderator
+            schema[:visibility].delete(:published)
+            schema[:visibility].delete(:reviewing)
+        end
+
+        render status: 200, json: { token: token, result: course, schema: schema }
     end
 
     # Request: GET /courses/(:course_id)/edit
@@ -129,20 +141,33 @@ class CoursesController < ApplicationController
 
         # Course Not Found case
         if course.nil?
-            return ( render :json => {"status": 404},:status => 404 )
+            return ( render status: 404, json: { result: "Not Found" } )
+        end
+
+        # Attaches a schema 
+        schema = {
+            title: :text,
+            description: :text,
+            tier: Tier.schema,
+            visibility: Visibility.schema
+        }
+
+        unless c_user.role == Role.admin or c_user.role == Role.moderator
+            schema[:visibility].delete(:published)
+            schema[:visibility].delete(:reviewing)
         end
 
         # Draft Course case
         if course.visibility == Visibility.draft and course.user_id == c_user.id
-            render :json => { "token": token, "course": course }
+            render status: 200, json: { token: token, result: course, schema: schema }
 
         # Privledged User case
         elsif c_user.role == Role.admin or c_user.role == Role.moderator
-            render :json => { "token": token, "course": course }
+            render status: 200, json: { token: token, result: course, schema: schema }
 
         # Course is not (owned by user and editable) AND (user is not privledged)
         else
-            redirect_to :root, :status => 401
+            render status: 401, json: { result: "Not Authorized" }
         end
     end
 
@@ -160,9 +185,9 @@ class CoursesController < ApplicationController
             course = Course.new(course_params.merge(user_id: c_user.id))
             status = course.save
             if status
-                render :json => { "status": status, "course": course }
+                render status: 200, json: { result: course }
             else
-                render :json => { "status": 400 }, :status => 400
+                render status: 400, json: { result: "Bad Request" }
             end
 
         # Non-priledged user case
@@ -172,13 +197,13 @@ class CoursesController < ApplicationController
                 course = Course.new(course_params.merge(user_id: c_user.id))
                 status = course.save
                 if status
-                    render :json => { "status": status, "course": course }
+                    render status: 200, json: { result: course }
                 else
-                    render :json => { "status": 400 }, :status => 400
+                    render status: 400, json: { result: "Bad Request" }
                 end
 
-            else                
-                render :json => { "status": 400 }, :status => 400
+            else   
+                render status: 400, json: { result: "Bad Request" }             
             end
         end
     end
@@ -197,16 +222,16 @@ class CoursesController < ApplicationController
 
         # Course Not Found case
         if course.nil?
-            return ( render :json => {"status": 404},:status => 404 )
+            return ( render status: 404, json: { result: "Not Found" } )
         end
 
         # Privledged User case
         if c_user.role == Role.admin or c_user.role == Role.moderator
             status = course.update(course_params)
             if status
-                render :json => { "status": status, "course": course }
+                render status: 200, json: { result: course }
             else
-                render :json => { "status": 400 }, :status => 400
+                render status: 400, json: { result: "Bad Request" }
             end
 
         # Draft Course case
@@ -215,18 +240,18 @@ class CoursesController < ApplicationController
             if course_params[:visibility].to_i == Visibility.draft
                 status = course.update(course_params)
                 if status
-                    render :json => { "status": status, "course": course }
+                    render status: 200, json: { result: course }
                 else
-                    render :json => { "status": 400 }, :status => 400
+                    render status: 400, json: { result: "Bad Request" }
                 end
 
             else
-                render :json => { "status": 400 }, :status => 400
+                render status: 400, json: { result: "Bad Request" }
             end
 
         # Course is not (owned by user and editable) AND (user is not privledged)
         else
-            redirect_to :root, :status => 401
+            render status: 401, json: { result: "Not Authorized" }
         end
     end
 
@@ -243,20 +268,28 @@ class CoursesController < ApplicationController
 
         # Course Not Found case
         if course.nil?
-            return ( render :json => {"status": 404},:status => 404 )
+            return ( render status: 404, json: { result: "Not Found" } )
         end
 
         # Draft Course case
         if course.visibility == Visibility.draft and course.user_id == c_user.id
-            render :json => { "status": course.delete }
+            if course.delete
+                render status: 200, json: { result: "Request Processed" }
+            else
+                render status: 400, json: { result: "Bad Request" }
+            end
 
         # Privledged User case
         elsif c_user.role == Role.admin or c_user.role == Role.moderator
-            render :json => { "status": course.delete }
+            if course.delete
+                render status: 200, json: { result: "Request Processed" }
+            else
+                render status: 400, json: { result: "Bad Request" }
+            end
 
         # Course is not (owned by user and editable) AND (user is not privledged)
         else
-            redirect_to :root, :status => 401
+            render status: 401, json: { result: "Not Authorized" }
         end
     end
 

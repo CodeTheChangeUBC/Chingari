@@ -39,7 +39,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :success
 
         response = JSON.parse(@response.body)
-        response['items'].each do |course|
+        response["result"].each do |course|
             assert_equal Visibility.reviewing, course['visibility'].to_i
         end
     end
@@ -69,8 +69,8 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :success
 
         response = JSON.parse(@response.body)
-        response['items'].each do |course|
-            assert_equal Visibility.draft, course['visibility'].to_i
+        response["result"].each do |course|
+            assert_equal Visibility.draft, course["visibility"].to_i
         end
     end
 
@@ -89,8 +89,8 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :success
 
         response = JSON.parse(@response.body)
-        response['items'].each do |course|
-            assert_equal Visibility.published, course['visibility'].to_i
+        response["result"].each do |course|
+            assert_equal Visibility.published, course["visibility"].to_i
         end
     end
 
@@ -99,8 +99,8 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :success
 
         response = JSON.parse(@response.body)
-        response['items'].each do |course|
-            assert_equal Visibility.published, course['visibility'].to_i
+        response["result"].each do |course|
+            assert_equal Visibility.published, course["visibility"].to_i
         end
     end
 
@@ -114,7 +114,9 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :success
 
         response = JSON.parse(@response.body)
-        assert_equal @user_admin.id, response['course']['user_id'].to_i
+        assert_equal @user_admin.id, response["result"]["user_id"].to_i
+        assert_not_nil response["schema"]["visibility"]["published"]
+        assert_not_nil response["schema"]["visibility"]["reviewing"]
     end
 
     test "standard user get new" do
@@ -123,7 +125,9 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :success
 
         response = JSON.parse(@response.body)
-        assert_equal @user_std.id, response['course']['user_id'].to_i
+        assert_equal @user_std.id, response["result"]["user_id"].to_i
+        assert_nil response["schema"]["visibility"]["published"]
+        assert_nil response["schema"]["visibility"]["reviewing"]
     end
 
     test "no user get new" do
@@ -141,7 +145,9 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :success
 
         response = JSON.parse(@response.body)
-        assert_equal 314, response['course']['id']
+        assert_equal 314, response["result"]["id"]
+        assert_not_nil response["schema"]["visibility"]["published"]
+        assert_not_nil response["schema"]["visibility"]["reviewing"]
     end
 
     test "standard user get edit course 314" do
@@ -165,7 +171,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :success
 
         response = JSON.parse(@response.body)
-        assert_equal 314, response['id']
+        assert_equal 314, response["result"]["id"]
     end
 
     test "standard user get course 314" do
@@ -174,7 +180,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :success
 
         response = JSON.parse(@response.body)
-        assert_equal 314, response['id']
+        assert_equal 314, response["result"]["id"]
     end
 
     test "no user get course 314" do
@@ -182,7 +188,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :success
 
         response = JSON.parse(@response.body)
-        assert_equal 314, response['id']
+        assert_equal 314, response["result"]["id"]
     end
 
     test "admin user get course 406" do
@@ -191,7 +197,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :success
 
         response = JSON.parse(@response.body)
-        assert_equal 406, response['id']
+        assert_equal 406, response["result"]["id"]
     end
 
     test "standard user get course 406" do
@@ -215,7 +221,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :success
 
         response = JSON.parse(@response.body)
-        assert_equal true, response['status']
+        assert_equal 200, @response.status
     end
 
     test "standard user unsuccessfully post new" do
@@ -224,7 +230,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response 400  # Bad data
 
         response = JSON.parse(@response.body)
-        assert_equal 400, response['status']
+        assert_equal 400, @response.status
     end
 
     test "no user unsuccessfully post new" do
@@ -238,7 +244,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :success
 
         response = JSON.parse(@response.body)
-        assert_equal true, response['status']
+        assert_equal 200, @response.status
     end
 
     test "admin user unsuccessfully post new" do
@@ -247,7 +253,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response 400  # Bad data
 
         response = JSON.parse(@response.body)
-        assert_equal 400, response['status']
+        assert_equal 400, @response.status
     end
 
 
@@ -260,7 +266,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :success
 
         response = JSON.parse(@response.body)
-        assert_equal true, response['status']
+        assert_equal 200, @response.status
     end
 
     test "standard user unsuccessfully put updated" do
@@ -269,7 +275,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response 400  # Bad data
 
         response = JSON.parse(@response.body)
-        assert_equal 400, response['status']
+        assert_equal 400, @response.status
     end
 
     test "unauthorized standard user unsuccessfully put updated" do
@@ -289,7 +295,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :success
 
         response = JSON.parse(@response.body)
-        assert_equal true, response['status']
+        assert_equal 200, @response.status
     end
 
     test "admin user unsuccessfully put updated" do
@@ -298,7 +304,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response 400  # Bad data
 
         response = JSON.parse(@response.body)
-        assert_equal 400, response['status']
+        assert_equal 400, @response.status
     end
 
 
@@ -311,7 +317,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         post "/courses", params: { course: { title: "Deleteable", description: "Test Description please ignore", visibility: 0, tier: 0 } }
         assert_response :success
         response = JSON.parse(@response.body)
-        cid = response['course']['id'].to_s
+        cid = response["result"]["id"].to_s
 
         get "/courses/"+cid
         assert_response :success
@@ -347,7 +353,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         post "/courses", params: { course: { title: "Deleteable", description: "Test Description please ignore", visibility: 2, tier: 0 } }
         assert_response :success
         response = JSON.parse(@response.body)
-        cid = response['course']['id'].to_s
+        cid = response["result"]["id"].to_s
 
         get "/courses/"+cid
         assert_response :success
