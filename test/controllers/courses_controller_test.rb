@@ -221,7 +221,6 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :success
 
         response = JSON.parse(@response.body)
-        assert_equal 200, @response.status
     end
 
     test "standard user unsuccessfully post new" do
@@ -230,7 +229,6 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response 400  # Bad data
 
         response = JSON.parse(@response.body)
-        assert_equal 400, @response.status
     end
 
     test "no user unsuccessfully post new" do
@@ -244,7 +242,6 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :success
 
         response = JSON.parse(@response.body)
-        assert_equal 200, @response.status
     end
 
     test "admin user unsuccessfully post new" do
@@ -253,7 +250,6 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response 400  # Bad data
 
         response = JSON.parse(@response.body)
-        assert_equal 400, @response.status
     end
 
 
@@ -266,7 +262,6 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :success
 
         response = JSON.parse(@response.body)
-        assert_equal 200, @response.status
     end
 
     test "standard user unsuccessfully put updated" do
@@ -275,7 +270,6 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response 400  # Bad data
 
         response = JSON.parse(@response.body)
-        assert_equal 400, @response.status
     end
 
     test "unauthorized standard user unsuccessfully put updated" do
@@ -304,7 +298,6 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response 400  # Bad data
 
         response = JSON.parse(@response.body)
-        assert_equal 400, @response.status
     end
 
 
