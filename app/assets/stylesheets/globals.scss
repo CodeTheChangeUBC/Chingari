@@ -158,6 +158,9 @@ body {
     font-family: 'Source Sans Pro', sans-serif;
 }
 
+.super-title {
+  font-size: 35px;
+}
 .title {
   font-size: 25px;
 }
@@ -208,4 +211,8 @@ a:active {
       }
     }
   }
+}
+
+ul.indent {
+  padding-left: 100px;
 }

@@ -1,0 +1,43 @@
+.testimony {
+  padding: 0px;
+  .message {
+    padding: 100px;
+  }
+}
+.heading {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+.founder-display {
+  padding: 50px;
+  .founder {
+    min-height: 800px;
+  }
+}
+.founder-display {
+  padding: 1vw 5vw 1vw 5vw;
+  .founder {
+    min-height: 800px;
+  }
+  .message {
+    margin-top: 2vw;
+  }
+}
+.team-display{
+  padding-left: 8vw;
+  padding-right: 8vw;
+  .member-card {
+    padding: 20px;
+    .member {
+      margin: auto;
+      border-radius: 100%;
+      height: 150px;
+      width: 150px;
+    }
+  }
+
+}
+
+.no-margin {
+  margin: none;
+}
