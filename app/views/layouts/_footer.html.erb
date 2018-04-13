@@ -1,31 +1,37 @@
 <footer class="dark-blue-theme footer">
   <div class="row">
-    <div class="col-lg-4 col-md-12">
-      <a name="contact" class="title padded">Contact Us</a>
-      <ul class="super-text">
-          <li>1-800-123-4567</li>
-          <li><a href="mailto:hello@chingari.org">hello@chingari.org</a></li>
-          <li>
-            Chingari does not provide emergency services.<br>If you are having an emergency please <b>call 911</b>
-          </li>
-          <!-- Site map is really unnecessary -->
-          <!-- <li><a href="#">Site Map</a></li> -->
-          <!-- Hide this until we have a mailing subscription service set up -->
-          <!-- <li><a href="#">Join Our Mailing List</a></li> -->
-      </ul>
-    </div>
-    <div class="col-lg-4 col-md-12">
-      <a name="Follow Us" class="title padded">Follow Us</a>
-      <ul class="super-text">
-          <li><a href="https://twitter.com/ChingariOrg"><%= fa_icon "twitter", text: "Twitter" %></a></li>
-          <li><a href="https://www.facebook.com/chingari.org/"><%= fa_icon "facebook", text: "Facebook" %></a></li>
-          <li><a href="https://www.instagram.com/chingariorg/"><%= fa_icon "instagram", text: "Instagram" %></a></li>
-      </ul>
-    </div>
-    <div class="col-lg-4 col-md-12">
-      <a href="/home">
-        <%= image_tag("footer-logo.png", class: "footer-logo") %>
+    <div class="col-lg-4 col-md-12 padded">
+      <a name="contact">
+        <div  class="title padded">Contact Us</div>
+        <ul class="super-text">
+            <li><i class="fa fa-phone"></i>1-800-123-4567</li>
+            <li><a href="mailto:hello@chingari.org"><i class="fa fa-envelope"></i>hello@chingari.org</a></li>
+            <!-- Site map is really unnecessary -->
+            <!-- <li><a href="#">Site Map</a></li> -->
+            <!-- Hide this until we have a mailing subscription service set up -->
+            <!-- <li><a href="#">Join Our Mailing List</a></li> -->
+        </ul>
+        <div class="dark-orange-theme super-padded">
+          Chingari does not provide emergency services.<br>If you are having an emergency please <b>call 911</b>
+        </div>
       </a>
+    </div>
+    <div class="col-lg-4 col-md-12 padded">
+      <a name="external">
+        <div  class="title padded">Follow Us</div>
+        <ul class="super-text">
+            <li><a href="https://twitter.com/ChingariOrg"><%= fa_icon "twitter", text: "Twitter" %></a></li>
+            <li><a href="https://www.facebook.com/chingari.org/"><%= fa_icon "facebook", text: "Facebook" %></a></li>
+            <li><a href="https://www.instagram.com/chingariorg/"><%= fa_icon "instagram", text: "Instagram" %></a></li>
+        </ul>
+      </a>
+    </div>
+    <div class="col-lg-4 col-md-12 padded">
+      <a href="/home">
+        <%= image_tag("logos/footer.png", class: "footer-logo") %>
+      </a>
+      <br>
+      <a href="#top"><i class="fa fa-chevron-up"></i>Back to Top</a>
     </div>
   </div>
 </footer>

@@ -9,12 +9,49 @@
 @mixin orange-bg(){ background-color: rgb(245, 150, 31); }
 @mixin blue-bg(){ background-color: rgb(77, 209, 219); }
 @mixin light-bg(){ background-color: rgb(250, 250, 250); }
+@mixin grey-bg(){ background-color: rgba(50, 50, 50, 0.5); }
 @mixin dark-bg(){ background-color: rgb(50, 50, 50); }
 
 @mixin orange(){ color: rgb(245, 150, 31); }
 @mixin blue(){ color: rgb(77, 209, 219); }
 @mixin light(){ color: rgb(250, 250, 250); }
 @mixin dark(){ color: rgb(10, 10, 10); }
+
+@mixin serif(){ font-family: 'Martel', serif; }
+@mixin wide-serif(){ font-family: 'Raleway', sans-serif; }
+@mixin sans-serif(){ font-family: 'Source Sans Pro', sans-serif; }
+
+@mixin title(){ font-size: 30px; }
+@mixin subtitle(){ font-size: 20px; }
+@mixin super-text(){ font-size: 16px; }
+@mixin text(){ font-size: 12px; }
+
+@mixin transition($value){
+    /* Firefox */
+    -moz-transition: $value;
+    /* WebKit */
+    -webkit-transition: $value;
+    /* Opera */
+    -o-transition: $value;
+    /* Standard */
+    transition: $value;
+}
+
+.title { @include title(); }
+.subtitle { @include subtitle(); }
+.super-text { @include super-text(); }
+.text { @include text(); }
+
+.serif { @include serif(); }
+.sans-serif { @include sans-serif(); }
+.wide-sans-serif { @include wide-serif(); }
+
+body {
+  @include light-bg();
+  @include dark();
+  @include wide-serif();
+  @include transition(background-color 0.2s ease-in-out 0s);
+}
 
 .button {
   border-width: 0px;
@@ -43,6 +80,10 @@
   @include light;
   @include darker-blue-bg;
 }
+.clear-hover:hover{
+  @include light;
+  @include grey-bg;
+}
 
 .fa {
   margin-right: 10px;
@@ -68,17 +109,31 @@
   @include light();
 }
 
+.border {
+  border-width: 2px;
+  border-color: rgb(250, 250, 250);
+}
+
+.clear-theme {
+  background-color: rgba(0, 0, 0, 0.0);
+  text-shadow: 2px 2px 5px rgb(0, 0, 0);
+  @include light;
+}
+
 .light-orange-theme {
   @include light-bg();
   @include orange();
 }
 .light-blue-theme {
   @include light-bg();
-  @include orange();
+  @include blue();
 }
 .light-theme {
   @include light-bg();
   @include dark();
+}
+.light-text {
+  @include light();
 }
 
 .corners {
@@ -94,8 +149,17 @@
   padding: 15px;
 }
 
+.serif {
+    // font-family: "Times New Roman", Times, serif;
+    font-family: 'Martel', serif;
+}
+.sans-serif {
+    // font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
 .title {
-  font-size: 30px;
+  font-size: 25px;
 }
 .subtitle {
   font-size: 20px;
@@ -106,6 +170,7 @@
 .text {
   font-size: 12px;
 }
+
 .borderless {
   border-width: 0px;
 }
@@ -128,4 +193,19 @@ a:hover {
 a:active {
   color: inherit;
   text-decoration: none;
+}
+
+.banner {
+  // min-height: 30vh;
+  background-attachment: scroll;
+  background-position: center center;
+  background-size: cover;
+  .row{
+    .message {
+      padding: 15vw 50px 15vw 50px;
+      button {
+        padding: 10px 25px 10px 25px;
+      }
+    }
+  }
 }

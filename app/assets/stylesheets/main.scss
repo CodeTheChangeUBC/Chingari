@@ -46,12 +46,12 @@ body {
 =================================== */
 
 
-input, textarea, select, .uneditable-input {
-  border: 1px solid #bbb;
-  width: 100%;
-  margin-bottom: 15px;
-  @include box_sizing;
-}
+// input, textarea, select, .uneditable-input {
+//   border: 1px solid #bbb;
+//   width: 100%;
+//   margin-bottom: 15px;
+//   @include box_sizing;
+// }
 
 .checkbox {
   margin-top: -10px;
@@ -91,29 +91,29 @@ input, textarea, select, .uneditable-input {
 ========== FOOTER ===================
 =================================== */
 
-footer {
-  margin-top: 45px;
-  padding-top: 5px;
-  border-top: 1px solid #eaeaea;
-  color: #777;
-  a {
-    color: #555;
-    &:hover {
-      color: #222;
-    }
-  }
-  small {
-    float: left;
-  }
-  ul {
-    float: right;
-    list-style: none;
-    li {
-      float: left;
-      margin-left: 15px;
-    }
-  }
-}
+// footer {
+//   margin-top: 45px;
+//   padding-top: 5px;
+//   border-top: 1px solid #eaeaea;
+//   color: #777;
+//   a {
+//     color: #555;
+//     &:hover {
+//       color: #222;
+//     }
+//   }
+//   small {
+//     float: left;
+//   }
+//   ul {
+//     float: right;
+//     list-style: none;
+//     li {
+//       float: left;
+//       margin-left: 15px;
+//     }
+//   }
+// }
 
 
 /* ==================================
@@ -121,9 +121,9 @@ footer {
 =================================== */
 
 
-h1 {
-  text-align: center;
-}
+// h1 {
+//   text-align: center;
+// }
 
 
 /* ==================================
@@ -144,10 +144,4 @@ h1 {
   .form-control {
     color: $state-danger-text;
   }
-}
-
-/* User signin */
-
-h1 {
-  text-align: center;
 }

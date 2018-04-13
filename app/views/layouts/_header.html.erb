@@ -1,87 +1,95 @@
-<div class="header light-theme">
-  <div class="header-top row">
-    <div class="col-md-4 col-sm-12 center-text">
-      <%= image_tag("main-logo.png", class: "header-logo") %>
+<a name="top">
+  <div class="header light-theme">
+
+    <div class="header-top row text-center">
+      <div class="col-md-1 col-sm-12" style="min-height:1px;">
+      </div>
+      <div class="col-md-1 col-sm-12">
+          <a href="/home"><%= image_tag("logos/main.png", class: "header-logo") %></a>
+      </div>
+      <div class="col-md-8 col-sm-12" style="min-height:1px;">
+      </div>
+      <div class="col-md-1 col-sm-12"  style="min-height:30px;">
+        <a href="#contact"><button type="button" class="btn dark-orange-theme orange-hover button"><i class="fa fa-phone"></i>Get Help Now</button></a>
+      </div>
+      <div class="col-md-1 col-sm-12" style="min-height:1px;">
+      </div>
     </div>
-    <div class="col-md-4 col-sm-12 center-text">
-    </div>
-    <div class="col-md-4 col-sm-12 center-text" style="min-height:20px;">
-      <a href="#contact" style="min-height:20px;"><button type="button" class="btn dark-orange-theme orange-hover button"><i class="fa fa-phone"></i>Get Help Now</button></a>
-    </div>
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark dark-blue-theme wide-sans-serif">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto subtitle">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle dark-blue-theme" href="/home" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="dark-blue-theme">Home</span>
+            </a>
+            <div class="dropdown-menu corners darker-blue-theme borderless" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/home/#mission">Mission & Vision</a>
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/home/#services">Our Services</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle dark-blue-theme" href="/about" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="dark-blue-theme">About Us</span>
+            </a>
+            <div class="dropdown-menu corners darker-blue-theme borderless" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/about">What We Do</a>
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/home/#testimonials">Testimonials</a>
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/home/#founder">Founder Story</a>
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/home/#team">Our Team</a>
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/home/#involve">Get Involved</a>
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="#contact">Contact Us</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle dark-blue-theme" href="/resources" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="dark-blue-theme">Resources</span>
+            </a>
+            <div class="dropdown-menu corners darker-blue-theme borderless" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/home/#immigration">Immigration</a>
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/home/#legal">Legal Rights</a>
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/home/#women">Women's Rights</a>
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/home/#personal">Personal Development</a>
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/home/#professional">Professional Development</a>
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/community">Community</a>
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="#external">External Links</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="/events">
+              <span class="dark-blue-theme">Events</span>
+            </a>
+          </li>
+
+          <% if logged_in? then %> <!-- Content for logged in user -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle dark-blue-theme" href="/users/<%= current_user.id %>" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="dark-blue-theme">Account</span>
+              </a>
+              <div class="dropdown-menu corners darker-blue-theme borderless" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/users/<%= current_user.id %>">Profile</a>
+                <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/logout">Log Out</a>
+              </div>
+            </li>
+          <% else %> <!-- Login link -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle dark-blue-theme" href="/login" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="dark-blue-theme">Account</span>
+              </a>
+              <div class="dropdown-menu corners darker-blue-theme borderless" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/login">Log In</a>
+                <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/signup">Sign Up</a>
+              </div>
+            </li>
+          <% end %>
+
+        </ul>
+      </div>
+    </nav>
   </div>
-
-  <nav class="navbar navbar-expand-lg navbar-dark dark-blue-theme">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto subtitle">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle dark-blue-theme" href="/home" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="dark-blue-theme">Home</span>
-          </a>
-          <div class="dropdown-menu corners darker-blue-theme borderless" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/home/#vision">Mission & Vision</a>
-            <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/home/#services">Our Services</a>
-          </div>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle dark-blue-theme" href="/about" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="dark-blue-theme">About Us</span>
-          </a>
-          <div class="dropdown-menu corners darker-blue-theme borderless" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/about">What We Do</a>
-            <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/home/#testimonials">Testimonials</a>
-            <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/home/#founder">Founder Story</a>
-            <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/home/#team">Our Team</a>
-            <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/home/#involve">Get Involved</a>
-            <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="#contact">Contact Us</a>
-          </div>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle dark-blue-theme" href="/resources" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="dark-blue-theme">Resources</span>
-          </a>
-          <div class="dropdown-menu corners darker-blue-theme borderless" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/home/#immigration">Immigration</a>
-            <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/home/#legal">Legal Rights</a>
-            <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/home/#women">Women's Rights</a>
-            <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/home/#personal">Personal Development</a>
-            <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/home/#professional">Professional Development</a>
-            <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/community">Community</a>
-            <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="#external">External Links</a>
-          </div>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link" href="/events">
-            <span class="dark-blue-theme">Events</span>
-          </a>
-        </li>
-
-        <% if logged_in? then %> <!-- Content for logged in user -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle dark-blue-theme" href="/users/<%= current_user.id %>" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="dark-blue-theme">Account</span>
-            </a>
-            <div class="dropdown-menu corners darker-blue-theme borderless" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/users/<%= current_user.id %>">Profile</a>
-              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/logout">Log Out</a>
-            </div>
-          </li>
-        <% else %> <!-- Login link -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle dark-blue-theme" href="/login" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="dark-blue-theme">Account</span>
-            </a>
-            <div class="dropdown-menu corners darker-blue-theme borderless" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/login">Log In</a>
-              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/signup">Sign Up</a>
-            </div>
-          </li>
-        <% end %>
-
-      </ul>
-    </div>
-  </nav>
-</div>
+</a>

@@ -1,27 +1,28 @@
 <% provide(:title, "Home") %>
-
-<!-- ==== Popup Js ==== -->
-<!-- Banner -->
-<div class="main-banner">
-	<div class="container">
-		<div class="banner-caption">
-			<p>Chingari is an international solidarity organization that provides resources to empower women</p>
-			<a name="/home/#vision"><button>Learn More</button></a>
+<%= stylesheet_link_tag 'home', media: 'all', 'data-turbolinks-track': 'reload' %>
+<a name="feature">
+	<div class="banner" style="background-image: url(<%= asset_path('backgrounds/home.jpg') %>)">
+		<div class="row d-flex align-items-center">
+			<div class="message text-center col-sm-7">
+				<p class="light-text title serif clear-theme">Chingari is an international solidarity organization that provides resources to empower women</p>
+				<br>
+				<a href="/about">
+					<button type="button" class="btn dark-blue-theme blue-hover button subtitle wide-sans-serif">
+						Learn More
+					</button>
+				</a>
+			</div>
 		</div>
 	</div>
-	<div class="banner">
-		<%= image_tag("banner1.jpg") %>
-	</div>
-</div>
-	<!-- // Banner -->
+</a>
 
-<!-- Our aim -->
-<a name="vision">
-	<div class="aim">
-		<div class="container">
-			<div class="aim-div">
-				<h1>Our Aim is to:</h1>
-				<ul>
+<a name="mission">
+	<div class="banner">
+		<div class="row d-flex align-items-center">
+			<div class="message text-center col-sm-12">
+				<p class="title light-blue-theme wide-serif font-weight-bold">Our Aim is to:</p>
+				<br>
+				<ul class="title serif text-left container">
 					<li>Provide resources on personal security and crisis management in the event of abuse,harassment or rape.</li>
 					<li>Empower women by providing resources for business and enterpreneurial skills  so they can become self-sufficient.</li>
 					<li>Provide informationn on community resources in a centeralized location.</li>
@@ -31,111 +32,143 @@
 		</div>
 	</div>
 </a>
-<!-- // Our aim -->
 
-<!-- challenges -->
-<a name="challenges">
-	<div class="challenges">
-		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 challenges-left"></div>
-		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 challenges-right">
-			<h3>Immigrant women face many challenges and 
-			barriers once they arrive on our shores
-			Here are just a few:</h3>
-			<ul>
-				<li><p>Difficulty speaking and learning English</p></li>
-				<li><p>Raising children</p></li>
-				<li><p>Security work</p></li>
-				<li><p>Securing housing</p></li>
-				<li><p>Accessing services</p></li>
-				<li><p>Transportation</p></li>
-				<li><p>Cultural barriers</p></li>
-			</ul>
-		</div>
-		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hidden-sm hidden-md hidden-lg remove-padding">
-			<%= image_tag("challenges2.jpg", class: "img-responsive") %>
-		</div>
+<div class="row">
+	<div class="col-lg-6 d-none d-lg-block banner" style="background-image: url(<%= asset_path('backgrounds/brooke-cagle-65601-unsplash.jpg') %>)">
 	</div>
-</a>
-<!-- // challenges -->
-
-<!-- Featur story -->
-<a name="stories">
-	<div class="featur-story">
-		<div class="container">
-			<h3>Feature Story:<br>
-			Read about Fatima's story<br>
-			and learn how Chingari can help.</h3>
-			<a href="/about/#testimonies"><button>Read More</button></a>
-		</div>
-	</div>
-</a>
-<!-- // Featur story -->
-
-<!-- Online Research -->
-<a name="resources">
-	<div class="online-Resources">
-		<div class="Resources">
-			<h1>Our Online Resources Cover Tips On...</h1>
-			<div class="tips">
-				<div class="tips1">
-					<%= image_tag("icon2.png") %>
-					<h2 class="Legal-Rights">Legal Rights</h2>
-				</div>
-				<div class="tips2">
-					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-						<%= image_tag("icon1.png", class: "icon1") %>
-						<div class="clearfix"></div>
-						<h2 class="Immigration">Immigration</h2>
-					</div>
-					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-						<%= image_tag("icon3.png", class: "icon2") %>
-						<div class="clearfix"></div>
-						<h2 class="Womens-Rights">Womens Rights</h2>
-					</div>
-				</div>
-				<div class="tips3">
-					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-						<%= image_tag("icon4.png", class: "icon1") %>
-						<div class="clearfix"></div>
-						<h2 class="Personal-Development">Personal Development</h2>
-					</div>
-					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-						<%= image_tag("icon5.png", class: "icon2") %>
-						<div class="clearfix"></div>
-						<h2 class="Professional-Development">Professional Development</h2>
+	<div class="col-lg-6 col-sm-12">
+		<a name="challenges">
+			<div class="banner">
+				<div class="row">
+					<div class="col-sm-12 d-flex align-items-center dark-blue-theme wide-serif font-weight-bold text-center">
+						<div class="message">
+							<p class="title">
+								Immigrant women face many challenges and barriers once they arrive on our shores
+								Here are just a few:
+							</p>
+							<br>
+							<ul class="title text-left container">
+								<li>Difficulty speaking and learning English</li>
+								<li>Raising children</li>
+								<li>Security work</li>
+								<li>Securing housing</li>
+								<li>Accessing services</li>
+								<li>Transportation</li>
+								<li>Cultural barriers</li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="clearfix"></div>
-			<a href="/resources">
-				<div class="view-resources">
-					<button>View Free Resources</button>
-				</div>
-			</a>
-		</div>
-	</div>
-</a>
-<!-- // Online Research -->
-
-<div class="container back-to-top">
-	<div class="row">
-		<span class="scrolltotop"><i class="fa fa-chevron-up"></i></span>
-		<p>Back to Top</p>
+		</a>
 	</div>
 </div>
 
-<script>
-	$('.scrolltotop').on('click', function() {
-			$('html, body').animate({ scrollTop: 0 }, 800);
-			return false;
-	});
 
-	$(document).scroll(function() {
-			var y = $(this).scrollTop();
-			if (y > 300) {
-					$('.scrolltotop').fadeIn();
-			} else {
-					$('.scrolltotop').fadeOut();
-			}
-	});
-</script>
+<a name="story">
+	<div class="banner" style="background-image: url(<%= asset_path('backgrounds/story.jpg') %>)">
+		<div class="row d-flex align-items-center">
+			<div class="message text-center col-sm-12">
+				<p class="light-text clear-theme title serif">
+					Feature Story:
+					<br>
+					Read about Fatima's story and learn how Chingari can help.
+				</p>
+				<br>
+				<a href="/story">
+					<button type="button" class="btn clear-theme clear-hover border button subtitle wide-sans-serif">
+						Read More
+					</button>
+				</a>
+			</div>
+		</div>
+	</div>
+</a>
+
+<a name="services">
+	<div class="banner">
+		<div class="row d-flex align-items-center">
+			<div class="message text-center col-sm-12">
+				<p class="title light-blue-theme wide-serif font-weight-bold">Our Online Resources Cover Tips On...</p>
+				<div class="circle d-none d-lg-block banner">
+					<ul class="circle-display">
+						<li>
+							<a href="/resources/#immigration">
+								<%= image_tag("icons/immigration.png", class: "icon") %>
+								<span class="wide-sans-serif subtitle font-weight-bold light-blue-theme">Immigration</span>
+							</a>
+						</li>
+						<li>
+							<a href="/resources/#legal">
+								<%= image_tag("icons/legal.png", class: "icon") %>
+								<span class="wide-sans-serif subtitle font-weight-bold light-blue-theme">Legal Rights</span>
+							</a>
+						</li>
+						<li>
+							<a href="/resources/#women">
+								<%= image_tag("icons/women.png", class: "icon") %>
+								<span class="wide-sans-serif subtitle font-weight-bold light-blue-theme">Women's Rights</span>
+							</a>
+						</li>
+						<li>
+							<a href="/resources/#professional">
+								<%= image_tag("icons/professional.png", class: "icon") %>
+								<span class="wide-sans-serif subtitle font-weight-bold light-blue-theme">Professional Development</span>
+							</a>
+						</li>
+						<li>
+							<a href="/resources/#personal">
+								<%= image_tag("icons/personal.png", class: "icon") %>
+								<span class="wide-sans-serif subtitle font-weight-bold light-blue-theme">Personal Development</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="d-lg-none">
+					<ul class="list-display">
+						<li>
+							<a href="/resources/#immigration">
+								<%= image_tag("icons/immigration.png", class: "icon") %>
+								<br>
+								<span class="wide-sans-serif subtitle font-weight-bold light-blue-theme">Immigration</span>
+							</a>
+						</li>
+						<li>
+							<a href="/resources/#legal">
+								<%= image_tag("icons/legal.png", class: "icon") %>
+								<br>
+								<span class="wide-sans-serif subtitle font-weight-bold light-blue-theme">Legal Rights</span>
+							</a>
+						</li>
+						<li>
+							<a href="/resources/#women">
+								<%= image_tag("icons/women.png", class: "icon") %>
+								<br>
+								<span class="wide-sans-serif subtitle font-weight-bold light-blue-theme">Women's Rights</span>
+							</a>
+						</li>
+						<li>
+							<a href="/resources/#professional">
+								<%= image_tag("icons/professional.png", class: "icon") %>
+								<br>
+								<span class="wide-sans-serif subtitle font-weight-bold light-blue-theme">Professional Development</span>
+							</a>
+						</li>
+						<li>
+							<a href="/resources/#personal">
+								<%= image_tag("icons/personal.png", class: "icon") %>
+								<br>
+								<span class="wide-sans-serif subtitle font-weight-bold light-blue-theme">Personal Development</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<a href="/resources">
+					<button type="button" class="btn dark-orange-theme orange-hover button subtitle wide-sans-serif">
+						View Free Resources
+					</button>
+				</a>
+			</div>
+		</div>
+	</div>
+</a>
