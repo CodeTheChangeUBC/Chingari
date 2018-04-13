@@ -1,9 +1,18 @@
 class Role
   # List of User Roles translated into their database encoding
 
+  def self.schema
+    {
+      admin: 10,
+      moderator: 8,
+      user: 0,
+      deactivated: -1
+    }
+  end
+
   # Description: Cannot make any state changes to database (create, update, delete)
   def self.deactivated
-    -1
+    Role.schema[:deactivated]
   end
 
   # Responsiblities: Manage roles
@@ -13,7 +22,7 @@ class Role
   # Can view all submitted and published content
   # Can change roles of any user
   def self.admin
-    10
+    Role.schema[:admin]
   end
 
   # Responsibilities: Publish Content
@@ -22,7 +31,7 @@ class Role
   # Can view all self-created content
   # Can view all submitted and published content
   def self.moderator
-    8
+    Role.schema[:moderator]
   end
 
   # Responsiblities: Create Content
@@ -31,6 +40,6 @@ class Role
   # Can view all self-created content 
   # Can view all published content of qualified tier
   def self.user
-    0
+    Role.schema[:user]
   end
 end
