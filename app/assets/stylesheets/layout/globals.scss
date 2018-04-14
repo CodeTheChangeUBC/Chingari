@@ -91,8 +91,9 @@ body {
   @include grey-bg;
 }
 
-.fa {
-  margin-right: 10px;
+li .fa {
+  margin-right: 5px;
+  margin-left: 5px;
 }
 .darker-orange-theme {
   @include dark-orange-bg();
@@ -197,21 +198,11 @@ a:active {
   text-decoration: none;
 }
 
-.banner {
-  // min-height: 30vh;
-  background-attachment: scroll;
-  background-position: center center;
-  background-size: cover;
-  .row{
-    .message {
-      padding: 15vw 50px 15vw 50px;
-      button {
-        // padding: 10px 25px 10px 25px;
-      }
-    }
-  }
-}
-
 ul.indent {
   padding-left: 80px;
+}
+
+ul.clear {
+  list-style-type: none;
+  padding-left: 10px;
 }
