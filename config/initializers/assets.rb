@@ -13,5 +13,10 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 
-Rails.application.config.assets.precompile += %w(  )
-Rails.application.config.assets.precompile += %w( home.scss about.scss resources.scss community.scss login.scss signup.scss )
+# Javascript
+Rails.application.config.assets.precompile += []
+
+# Stylesheets
+Rails.application.config.assets.precompile += [
+  "pages/*" # precompile all page stylesheets
+]

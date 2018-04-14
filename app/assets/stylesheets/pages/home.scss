@@ -47,6 +47,7 @@
     margin: auto;
     @include on-circle($item-count: 5, $circle-size: 600px, $item-size: 150px, $offset:-162);
     .icon {
+      border-radius: 100%;
       width: auto;
       height: 150px;
     }

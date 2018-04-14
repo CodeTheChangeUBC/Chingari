@@ -11,6 +11,12 @@ class StaticPagesController < ApplicationController
   def resources
   end
 
+  def stories
+  end
+
+  def public_speaking
+  end
+
   def policies
   end
 end

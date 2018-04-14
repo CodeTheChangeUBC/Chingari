@@ -1,6 +1,6 @@
 <% provide(:title, "Home") %>
-<%= stylesheet_link_tag 'home', media: 'all', 'data-turbolinks-track': 'reload' %>
-<a name="feature">
+<%= stylesheet_link_tag 'pages/home', media: 'all', 'data-turbolinks-track': 'reload' %>
+<a data-anchor-id="feature">
 	<div class="banner" style="background-image: url(<%= asset_path('backgrounds/home.jpg') %>)">
 		<div class="row d-flex align-items-center">
 			<div class="message text-center col-sm-7">
@@ -16,7 +16,7 @@
 	</div>
 </a>
 
-<a name="mission">
+<a data-anchor-id="mission">
 	<div class="banner">
 		<div class="row d-flex align-items-center">
 			<div class="message text-center col-sm-12">
@@ -37,7 +37,7 @@
 	<div class="col-lg-6 d-none d-lg-block banner" style="background-image: url(<%= asset_path('backgrounds/brooke-cagle-65601-unsplash.jpg') %>)">
 	</div>
 	<div class="col-lg-6 col-sm-12">
-		<a name="challenges">
+		<a data-anchor-id="challenges">
 			<div class="banner">
 				<div class="row">
 					<div class="d-flex align-items-center dark-blue-theme wide-serif font-weight-bold text-center">
@@ -65,7 +65,7 @@
 </div>
 
 
-<a name="story">
+<a data-anchor-id="story">
 	<div class="banner" style="background-image: url(<%= asset_path('backgrounds/story.jpg') %>)">
 		<div class="row d-flex align-items-center">
 			<div class="message text-center col-sm-12">
@@ -75,7 +75,7 @@
 					Read about Fatima's story and learn how Chingari can help.
 				</p>
 				<br>
-				<a href="/story">
+				<a href="/stories">
 					<button type="button" class="btn clear-theme clear-hover border button subtitle wide-sans-serif">
 						Read More
 					</button>
@@ -85,7 +85,7 @@
 	</div>
 </a>
 
-<a name="services">
+<a data-anchor-id="services">
 	<div class="banner">
 		<div class="row d-flex align-items-center">
 			<div class="message text-center col-sm-12">
@@ -94,31 +94,32 @@
 					<ul class="circle-display">
 						<li>
 							<a href="/resources/#immigration">
-								<%= image_tag("icons/immigration.png", class: "icon") %>
+								<!-- This one needs special care to make the circular icon align with the border -->
+								<div class="icon blue-border" style="background-image: url(<%= asset_path('icons/immigration.png') %>); background-position: -1px, 0px;"></div>
 								<span class="wide-sans-serif subtitle font-weight-bold light-blue-theme">Immigration</span>
 							</a>
 						</li>
 						<li>
 							<a href="/resources/#legal">
-								<%= image_tag("icons/legal.png", class: "icon") %>
+								<div class="banner icon blue-border" style="background-image: url(<%= asset_path('icons/legal.png') %>)"></div>
 								<span class="wide-sans-serif subtitle font-weight-bold light-blue-theme">Legal Rights</span>
 							</a>
 						</li>
 						<li>
 							<a href="/resources/#women">
-								<%= image_tag("icons/women.png", class: "icon") %>
+								<div class="banner icon blue-border" style="background-image: url(<%= asset_path('icons/women.png') %>)"></div>
 								<span class="wide-sans-serif subtitle font-weight-bold light-blue-theme">Women's Rights</span>
 							</a>
 						</li>
 						<li>
 							<a href="/resources/#professional">
-								<%= image_tag("icons/professional.png", class: "icon") %>
+								<div class="banner icon blue-border" style="background-image: url(<%= asset_path('icons/professional.png') %>)"></div>
 								<span class="wide-sans-serif subtitle font-weight-bold light-blue-theme">Professional Development</span>
 							</a>
 						</li>
 						<li>
 							<a href="/resources/#personal">
-								<%= image_tag("icons/personal.png", class: "icon") %>
+								<div class="banner icon blue-border" style="background-image: url(<%= asset_path('icons/personal.png') %>)"></div>
 								<span class="wide-sans-serif subtitle font-weight-bold light-blue-theme">Personal Development</span>
 							</a>
 						</li>

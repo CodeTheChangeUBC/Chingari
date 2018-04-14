@@ -6,10 +6,12 @@ Rails.application.routes.draw do
     root 'static_pages#home'
 
     # Static pages roots
-    get  '/home',     to: 'static_pages#home'
-    get  '/about',    to: 'static_pages#about'
-    get  '/resources',to: 'static_pages#resources'
-    get '/policies',  to: 'static_pages#policies'
+    get '/home',            to: 'static_pages#home'
+    get '/about',           to: 'static_pages#about'
+    get '/resources',       to: 'static_pages#resources'
+    get '/stories',         to: 'static_pages#stories'
+    get '/public_speaking', to: 'static_pages#public_speaking'
+    get '/policies',        to: 'static_pages#policies'
   
     # Routes handled by Sessions
     get    '/login',   to: 'sessions#new'
