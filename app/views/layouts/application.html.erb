@@ -5,11 +5,13 @@
     <%= csrf_meta_tags %>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Martel:300|Raleway:200|Source+Sans+Pro:200" rel="stylesheet" data-turbolinks-track='reload'> 
+		<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body id="app">
   	<!-- Render header -->
     <%= render 'layouts/header' %>
     <!-- Render error messages for forms (if any) -->
