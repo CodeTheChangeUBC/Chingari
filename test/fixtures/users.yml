@@ -51,7 +51,7 @@ Eric:
   tier: <%= Tier.free %>
 
 Rody:
-  id: 3
+  id: 4
   name: Rody
   username: Rody
   password_digest: <%= User.digest("password") %>
@@ -60,7 +60,7 @@ Rody:
   tier: <%= Tier.free %>
 
 Jordan:
-  id: 3
+  id: 5
   name: Jordan
   username: Jordan
   password_digest: <%= User.digest("password") %>
@@ -69,7 +69,7 @@ Jordan:
   tier: <%= Tier.free %>
 
 Mona:
-  id: 4
+  id: 6
   name: Mona
   username: Mona
   password_digest: <%= User.digest("password") %>
@@ -78,7 +78,7 @@ Mona:
   tier: <%= Tier.free %> 
 
 Jared:
-  id: 5
+  id: 7
   name: Jared
   username: Jared
   password_digest: <%= User.digest("password") %>
@@ -87,7 +87,7 @@ Jared:
   tier: <%= Tier.free %>
 
 moderator:
-  id: 6
+  id: 8
   name: moderator
   username: moderator
   password_digest: <%= User.digest("password") %>
@@ -96,7 +96,7 @@ moderator:
   tier: <%= Tier.free %>
 
 free_user:
-  id: 7
+  id: 9
   name: free_user
   username: free_user
   password_digest: <%= User.digest("password") %>
@@ -105,7 +105,7 @@ free_user:
   tier: <%= Tier.free %>
 
 premium_user:
-  id: 8
+  id: 10
   name: premium_user
   username: premium_user
   password_digest: <%= User.digest("password") %>
@@ -114,7 +114,7 @@ premium_user:
   tier: <%= Tier.premium %>
 
 deactivated_user:
-  id: 9
+  id: 11
   name: deactivated_user
   username: deactivated_user
   password_digest: <%= User.digest("password") %>
