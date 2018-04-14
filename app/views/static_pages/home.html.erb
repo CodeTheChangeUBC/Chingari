@@ -7,7 +7,7 @@
 				<p class="light-text title serif clear-theme">Chingari is an international solidarity organization that provides resources to empower women</p>
 				<br>
 				<a href="/about">
-					<button type="button" class="btn dark-blue-theme blue-hover button subtitle wide-sans-serif">
+					<button type="button" class="btn dark-blue-theme blue-hover button super-text wide-sans-serif">
 						Learn More
 					</button>
 				</a>
@@ -129,36 +129,32 @@
 					<ul class="list-display">
 						<li>
 							<a href="/resources/#immigration">
-								<%= image_tag("icons/immigration.png", class: "icon") %>
-								<br>
+								<!-- This one needs special care to make the circular icon align with the border -->
+								<div class="icon blue-border" style="background-image: url(<%= asset_path('icons/immigration.png') %>); background-position: -1px, 0px;"></div>
 								<span class="wide-sans-serif subtitle font-weight-bold light-blue-theme">Immigration</span>
 							</a>
 						</li>
 						<li>
 							<a href="/resources/#legal">
-								<%= image_tag("icons/legal.png", class: "icon") %>
-								<br>
+								<div class="banner icon blue-border" style="background-image: url(<%= asset_path('icons/legal.png') %>)"></div>
 								<span class="wide-sans-serif subtitle font-weight-bold light-blue-theme">Legal Rights</span>
 							</a>
 						</li>
 						<li>
 							<a href="/resources/#women">
-								<%= image_tag("icons/women.png", class: "icon") %>
-								<br>
+								<div class="banner icon blue-border" style="background-image: url(<%= asset_path('icons/women.png') %>)"></div>
 								<span class="wide-sans-serif subtitle font-weight-bold light-blue-theme">Women's Rights</span>
 							</a>
 						</li>
 						<li>
 							<a href="/resources/#professional">
-								<%= image_tag("icons/professional.png", class: "icon") %>
-								<br>
+								<div class="banner icon blue-border" style="background-image: url(<%= asset_path('icons/professional.png') %>)"></div>
 								<span class="wide-sans-serif subtitle font-weight-bold light-blue-theme">Professional Development</span>
 							</a>
 						</li>
 						<li>
 							<a href="/resources/#personal">
-								<%= image_tag("icons/personal.png", class: "icon") %>
-								<br>
+								<div class="banner icon blue-border" style="background-image: url(<%= asset_path('icons/personal.png') %>)"></div>
 								<span class="wide-sans-serif subtitle font-weight-bold light-blue-theme">Personal Development</span>
 							</a>
 						</li>

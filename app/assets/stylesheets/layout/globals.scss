@@ -4,7 +4,7 @@
 @mixin darker-blue-bg(){ background-color: rgb(57, 189,199); }
 
 @mixin dark-orange-bg(){ background-color: rgb(235, 140, 21); }
-@mixin dark-blue-bg(){ background-color: rgb(67, 199, 209); }
+@mixin dark-blue-bg(){ background-color: rgb(57, 189, 199); }
 
 @mixin orange-bg(){ background-color: rgb(245, 150, 31); }
 @mixin blue-bg(){ background-color: rgb(77, 209, 219); }
@@ -18,7 +18,7 @@
 @mixin dark(){ color: rgb(10, 10, 10); }
 
 @mixin serif(){ font-family: 'Martel', serif; }
-@mixin wide-serif(){ font-family: 'Raleway', sans-serif; }
+@mixin wide-sans-serif(){ font-family: 'Raleway', sans-serif; }
 @mixin sans-serif(){ font-family: 'Source Sans Pro', sans-serif; }
 
 @mixin super-title(){ font-size: 30px; }
@@ -48,14 +48,15 @@
 
 .serif { @include serif(); }
 .sans-serif { @include sans-serif(); }
-.wide-sans-serif { @include wide-serif(); }
+.wide-sans-serif { @include wide-sans-serif(); }
 
 body {
   @include text();
   @include light-bg();
   @include dark();
-  @include wide-serif();
+  @include wide-sans-serif();
   @include transition(background-color 0.2s ease-in-out 0s);
+  overflow-x: hidden;
 }
 
 .button {
@@ -111,6 +112,10 @@ body {
 }
 .dark-theme {
   @include dark-bg();
+  @include light();
+}
+.grey-theme {
+  @include grey-bg();
   @include light();
 }
 
@@ -201,7 +206,7 @@ a:active {
     .message {
       padding: 15vw 50px 15vw 50px;
       button {
-        padding: 10px 25px 10px 25px;
+        // padding: 10px 25px 10px 25px;
       }
     }
   }

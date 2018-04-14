@@ -48,7 +48,7 @@
     @include on-circle($item-count: 5, $circle-size: 600px, $item-size: 150px, $offset:-162);
     .icon {
       border-radius: 100%;
-      width: auto;
+      width: 150px;
       height: 150px;
     }
   }
@@ -58,5 +58,11 @@
   li {
     margin-top: 50px;
     margin-bottom: 50px;
+    .icon {
+      margin: auto;
+      border-radius: 100%;
+      width: 150px;
+      height: 150px;
+    }
   }
 }
