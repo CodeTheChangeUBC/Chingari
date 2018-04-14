@@ -1,11 +1,16 @@
 <% provide(:title, "Coming Soon") %>
-	<div class="main-banner">
-		<div class="container">
-			<div class="banner-caption">
-				<p>Coming Soon</p>
+<a data-anchor-id="feature">
+	<div class="banner" style="background-image: url(<%= asset_path('backgrounds/home.jpg') %>)">
+		<div class="row d-flex align-items-center">
+			<div class="message text-center col-sm-7">
+				<p class="light-text title serif clear-theme">Coming Soon</p>
+				<p class="light-text text sans-serif clear-theme">Oops! This an upcoming feature, our product team is working hard to deliver this service to you as soon as possible.</p>
+				<a href="/home">
+					<button type="button" class="btn dark-orange-theme orange-hover button subtitle wide-sans-serif">
+						Back to Home
+					</button>
+				</a>
 			</div>
 		</div>
-		<div class="banner">
-			<%= image_tag("banner1.jpg") %>
-		</div>
 	</div>
+</a>

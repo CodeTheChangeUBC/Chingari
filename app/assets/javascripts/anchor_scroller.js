@@ -1,9 +1,9 @@
 class AnchorScroller {
   // Summary: 
-  //   Calling this scrolls to the current location hash id (eg. /current/path/#id) if one exists.
+  //   Calling this scrolls to the current location hash id (eg. /current/path/#foobar) if one exists.
   // DOM Effects: 
   //   For this to work
-  //     - There must be an element with a matching data-anchor-id
+  //     - There must be an element with a matching data-anchor-id (eg. <a data-anchor-id="foobar"></a>)
   //     - The scroller must have finished all current actions
   //   Otherwise the action is ignored.
   //   Note that the scroll destination is computed after the delay, just before animation.

@@ -21,10 +21,12 @@
 @mixin wide-serif(){ font-family: 'Raleway', sans-serif; }
 @mixin sans-serif(){ font-family: 'Source Sans Pro', sans-serif; }
 
+@mixin super-title(){ font-size: 30px; }
 @mixin title(){ font-size: 30px; }
 @mixin subtitle(){ font-size: 20px; }
-@mixin super-text(){ font-size: 16px; }
-@mixin text(){ font-size: 12px; }
+@mixin super-text(){ font-size: 18px; }
+@mixin text(){ font-size: 16px; }
+@mixin subtext(){ font-size: 14px; }
 
 @mixin transition($value){
     /* Firefox */
@@ -37,16 +39,19 @@
     transition: $value;
 }
 
+.super-title { @include super-title(); }
 .title { @include title(); }
 .subtitle { @include subtitle(); }
 .super-text { @include super-text(); }
 .text { @include text(); }
+.subtext { @include subtext(); }
 
 .serif { @include serif(); }
 .sans-serif { @include sans-serif(); }
 .wide-sans-serif { @include wide-serif(); }
 
 body {
+  @include text();
   @include light-bg();
   @include dark();
   @include wide-serif();
@@ -163,22 +168,6 @@ body {
     font-family: 'Source Sans Pro', sans-serif;
 }
 
-.super-title {
-  font-size: 35px;
-}
-.title {
-  font-size: 25px;
-}
-.subtitle {
-  font-size: 20px;
-}
-.super-text {
-  font-size: 16px;
-}
-.text {
-  font-size: 12px;
-}
-
 .borderless {
   border-width: 0px;
 }
@@ -219,5 +208,5 @@ a:active {
 }
 
 ul.indent {
-  padding-left: 100px;
+  padding-left: 80px;
 }
