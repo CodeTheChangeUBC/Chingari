@@ -21,7 +21,7 @@
           <% end %>
         </div>
 
-        <% if BetaFeatures.released?(:oauth, current_user) %>
+        <% if BetaFeatures.released?(:oauth, current_user: current_user) %>
           <div class="shadow_box login-apis">
             Log in through a third-party:
             <br>
@@ -36,7 +36,7 @@
 
         <div class="shadow_box">
           New user?
-          <%= link_to signup_path do %>
+          <%= link_to "/signup" do %>
             <button class="button">Sign up now!</button>
           <% end %>
         </div>
