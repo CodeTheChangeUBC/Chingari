@@ -20,17 +20,3 @@
 //= require turbolinks
 
 //= require anchor_scroller
-
-
-// Turbolinks initial-dom-loaded
-$(document).on("turbolinks:load", () => {
-  AnchorScroller.scrollToCurrentAnchor(200, 500)
-
-  // Block anchor-jumps when the destination is on current page
-  $("a").click(AnchorScroller.overrideAnchorClick);
-});
-
-// Turbolink cached-page
-$(document).on("turbolinks:visit", () => {
-  AnchorScroller.scrollToCurrentAnchor(200, 500)
-});
