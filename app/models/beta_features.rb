@@ -29,9 +29,9 @@ class BetaFeatures
     released_feature: :released
   }
 
-  def self.released?(feature)
+  def self.released?(feature, current_user: nil)
     return true if Rails.env != "production"
-    return true if logged_in? && current_user.role == Roles.admin
+    return true if !current_user.nil? && current_user.role == Roles.admin
     return true if @@features[feature] == :released
     return false
   end
