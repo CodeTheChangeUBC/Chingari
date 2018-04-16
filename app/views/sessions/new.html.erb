@@ -21,7 +21,7 @@
           <% end %>
         </div>
 
-        <% if BetaFeatures.released?(:oauth) %>
+        <% if BetaFeatures.released?(:oauth, current_user) %>
           <div class="shadow_box login-apis">
             Log in through a third-party:
             <br>

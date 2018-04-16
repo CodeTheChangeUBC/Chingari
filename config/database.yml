@@ -25,12 +25,10 @@ stage:
   <<: *default
   database: db/stage.sqlite3
 
-
-
 production:
   <<: *default
   adapter: postgresql
-  host: localhost
+  host: ''
   database: rails_project_production
   username: rails
   password: <%= ENV['APP_DATABASE_PASSWORD'] %>
