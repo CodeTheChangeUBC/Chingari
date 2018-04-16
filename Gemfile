@@ -11,7 +11,9 @@ gem 'rails', '5.1.4'
 # Use SCSS for stylesheets
 gem 'sass-rails', '5.0.6'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '3.2.0'
+gem 'uglifier', '4.1.9'
+# Support ES6 in our Javascript assets
+gem 'babel-transpiler', '0.7.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '4.2.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
