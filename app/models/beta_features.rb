@@ -3,7 +3,7 @@ class BetaFeatures
   # To track a feature, wrap off of your changes in a condition and register your feature name under the @@features table
 
   # Example wrapper:
-  # if BetaFeatures.released?(:name_of_my_feature)
+  # if BetaFeatures.released?(:name_of_my_feature, current_user: current_user)
   #   ... all of my cool new code ...
   # end
 
