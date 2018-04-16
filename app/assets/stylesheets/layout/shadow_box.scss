@@ -1,0 +1,32 @@
+.shadow_box {
+  @include light();
+  @include sans-serif();
+  @include text();
+
+  padding: 2vw 2vw 2vw 2vw;
+  margin: 1vw 2vw 1vw 2vw;
+  text-align: left;
+  background-color: rgba(10, 10, 10, 0.8);
+  box-shadow: 7px 7px rgba(150, 150, 150, 0.1) inset, 7px 7px rgba(10, 10, 10, 0.9);
+  border: 1px solid rgb(250, 250, 250);
+
+  p {
+    margin: none;
+  }
+
+  .input {
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+
+  .button {
+    @include light();
+    margin: 10px 5px 10px 5px;
+    padding: 5px 50px 5px 50px;
+    background-color: inherit;
+    border: 1px solid rgb(250, 250, 250);
+    &:hover {
+      @include grey-bg;
+    }
+  }
+}

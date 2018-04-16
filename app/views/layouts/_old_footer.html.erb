@@ -1,0 +1,57 @@
+<footer>
+    <div class="bottom-navigation">
+        <div class="bottom-trip">
+            <div class="container">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 left">
+                    <ul>
+                        <li><a name="contact"><b>Contact Us</b></a></li>
+                        <li>1-800-123-4567</li>
+                        <li>hello@chingari.org</li>
+                        <p>Chingari does not Provide emergency services</p>
+                        <p>If you are having a crisis<br>Cal 911</p>
+                        <p>Suggested Hotline<br>(xxx) xxx-xxxx</p>
+                        <p>Other</p>
+                        <!-- Site map is really unnecessary -->
+                        <!-- <li><a href="#">Site Map</a></li> -->
+                        <!-- Hide this until we have a mailing subscription service set up -->
+                        <!-- <li><a href="#">Join Our Mailing List</a></li> -->
+                    </ul>
+                </div>                
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 left">
+                    <ul>
+                        <li><b>Follow Us</b></li>
+                        <li><a href="https://twitter.com/ChingariOrg"><%= fa_icon "twitter", text: "Twitter" %></a></li>
+                        <li><a href="https://www.facebook.com/chingari.org/"><%= fa_icon "facebook", text: "Facebook" %></a></li>
+                        <li><a href="https://www.instagram.com/chingariorg/"><%= fa_icon "instagram", text: "Instagram" %></a></li>
+                        <!-- Site map is really unnecessary -->
+                        <!-- <li><a href="#">Site Map</a></li> -->
+                        <!-- Hide this until we have a mailing subscription service set up -->
+                        <!-- <li><a href="#">Join Our Mailing List</a></li> -->
+                    </ul>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 right">
+                    <a href="/home">
+                        <%= image_tag("footer-logo.png", class: "img-responsive footer-logo") %>
+                    </a>
+                    <!-- <img src="http://solutionsofts.com/nikhil/wp-content/themes/blank-theme/images/footer-logo.png" class="img-responsive footer-logo"> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- // Footer -->
+<!-- Wow Animation-->
+<!-- <script defer src="js/wow.js"></script> -->
+<!-- End Wow Animation-->
+<!-- Owl -->
+<script>
+    $(document).ready(function() {
+        $("#owl-demo").owlCarousel({
+        autoPlay: 3000,
+        items : 4,
+        itemsDesktop : [1199,3],
+        itemsDesktopSmall : [979,3]
+        });
+    });
+</script>
+<!-- End Owl -->

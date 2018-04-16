@@ -1,0 +1,35 @@
+.black-text {
+    color: black;
+}
+
+.resource-card {
+    border: 2px solid rgb(77, 209, 219);
+    margin-bottom: 15px;
+}
+
+.card-button {
+    display: flex;
+    justify-content: center;
+}
+
+.card-button > .btn {
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    width: 60px;
+    height: 60px;
+
+    margin: 5px;
+}
+
+.collapse ~ .card-button > .btn {
+    background-image: asset_url("icons/collapse-open.png");
+}
+
+.collapsing ~ .card-button > .btn {
+    background-image: asset_url("icons/collapse-close.png"); 
+}
+
+.collapse:not(.show) ~ .card-button > .btn {
+    background-image: asset_url("icons/collapse-close.png");
+}

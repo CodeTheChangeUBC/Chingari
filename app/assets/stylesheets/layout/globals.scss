@@ -1,0 +1,208 @@
+
+// Useful globals
+@mixin darker-orange-bg(){ background-color: rgb(225, 130, 11); }
+@mixin darker-blue-bg(){ background-color: rgb(57, 189,199); }
+
+@mixin dark-orange-bg(){ background-color: rgb(235, 140, 21); }
+@mixin dark-blue-bg(){ background-color: rgb(57, 189, 199); }
+
+@mixin orange-bg(){ background-color: rgb(245, 150, 31); }
+@mixin blue-bg(){ background-color: rgb(77, 209, 219); }
+@mixin light-bg(){ background-color: rgb(250, 250, 250); }
+@mixin grey-bg(){ background-color: rgba(50, 50, 50, 0.5); }
+@mixin dark-bg(){ background-color: rgb(50, 50, 50); }
+
+@mixin orange(){ color: rgb(245, 150, 31); }
+@mixin blue(){ color: rgb(77, 209, 219); }
+@mixin light(){ color: rgb(250, 250, 250); }
+@mixin dark(){ color: rgb(10, 10, 10); }
+
+@mixin serif(){ font-family: 'Martel', serif; }
+@mixin wide-sans-serif(){ font-family: 'Raleway', sans-serif; }
+@mixin sans-serif(){ font-family: 'Source Sans Pro', sans-serif; }
+
+@mixin super-title(){ font-size: 30px; }
+@mixin title(){ font-size: 30px; }
+@mixin subtitle(){ font-size: 20px; }
+@mixin super-text(){ font-size: 18px; }
+@mixin text(){ font-size: 16px; }
+@mixin subtext(){ font-size: 14px; }
+
+@mixin transition($value){
+    /* Firefox */
+    -moz-transition: $value;
+    /* WebKit */
+    -webkit-transition: $value;
+    /* Opera */
+    -o-transition: $value;
+    /* Standard */
+    transition: $value;
+}
+
+.super-title { @include super-title(); }
+.title { @include title(); }
+.subtitle { @include subtitle(); }
+.super-text { @include super-text(); }
+.text { @include text(); }
+.subtext { @include subtext(); }
+
+.serif { @include serif(); }
+.sans-serif { @include sans-serif(); }
+.wide-sans-serif { @include wide-sans-serif(); }
+
+body {
+  @include text();
+  @include light-bg();
+  @include dark();
+  @include wide-sans-serif();
+  @include transition(background-color 0.2s ease-in-out 0s);
+  overflow-x: hidden;
+}
+
+.button {
+  border-width: 0px;
+  border-radius: 0px;
+  padding: 5px 30px 5px 30px;
+}
+.orange-button {
+  @include orange-bg;
+  @include light;
+  &:hover {
+    @include darker-orange-bg;
+  }
+}
+.blue-button {
+  @include blue-bg;
+  @include light;
+  &:hover {
+    @include darker-blue-bg;
+  }
+}
+.orange-hover:hover{
+  @include light;
+  @include darker-orange-bg;
+}
+.blue-hover:hover{
+  @include light;
+  @include darker-blue-bg;
+}
+.clear-hover:hover{
+  @include light;
+  @include grey-bg;
+}
+
+li .fa {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+.darker-orange-theme {
+  @include dark-orange-bg();
+  @include light();
+}
+.darker-blue-theme {
+  @include dark-blue-bg();
+  @include light();
+}
+.dark-orange-theme {
+  @include orange-bg();
+  @include light();
+}
+.dark-blue-theme {
+  @include blue-bg();
+  @include light();
+}
+.dark-theme {
+  @include dark-bg();
+  @include light();
+}
+.grey-theme {
+  @include grey-bg();
+  @include light();
+}
+
+.border {
+  border: 1px solid rgb(250, 250, 250);
+}
+.blue-border {
+  border: 3px solid rgb(77, 209, 219);
+}
+.orange-border {
+  border: 3px solid rgb(245, 150, 31); 
+}
+
+.clear-theme {
+  background-color: rgba(0, 0, 0, 0.0);
+  text-shadow: 2px 2px 5px rgb(0, 0, 0);
+  @include light;
+}
+
+.light-orange-theme {
+  @include light-bg();
+  @include orange();
+}
+.light-blue-theme {
+  @include light-bg();
+  @include blue();
+}
+.light-theme {
+  @include light-bg();
+  @include dark();
+}
+.light-text {
+  @include light();
+}
+
+.corners {
+  border-radius: 0px;
+}
+.margin {
+  margin: 10px;
+}
+.padded {
+  padding: 5px;
+}
+.super-padded {
+  padding: 15px;
+}
+
+.serif {
+    // font-family: "Times New Roman", Times, serif;
+    font-family: 'Martel', serif;
+}
+.sans-serif {
+    // font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.borderless {
+  border-width: 0px;
+}
+.center-text {
+  text-align: center;
+}
+
+a:link {
+  color: inherit;
+  text-decoration: none;
+}
+a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+a:active {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul.indent {
+  padding-left: 80px;
+}
+
+ul.clear {
+  list-style-type: none;
+  padding-left: 10px;
+}

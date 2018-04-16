@@ -1,0 +1,15 @@
+.footer {
+  padding: 50px;
+  .footer-logo {
+    height: 75px;
+    width: auto;
+    float: right;
+  }
+  ul {
+    list-style-type: none;
+    padding-left: 10px;
+    li {
+      margin: 10px;
+    }
+  }
+}

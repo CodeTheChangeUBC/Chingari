@@ -1,0 +1,31 @@
+.context {
+  padding: 5vw 10vw 5vw 10vw;
+  .circle {
+    height: 400px;
+    width: 400px;
+    border-radius: 100%
+  }
+  .message {
+    margin-top: 2vw;
+  }
+}
+
+.choice-display{
+  padding-left: 8vw;
+  padding-right: 8vw;
+  .option-card {
+    padding: 20px;
+    .option {
+      margin: auto;
+      border-radius: 100%;
+      height: 200px;
+      width: 200px;
+    }
+  }
+}
+
+.solutions {
+  .stretch {
+    width: 100%;
+  }
+}
