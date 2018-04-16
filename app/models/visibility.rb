@@ -1,23 +1,31 @@
-class Visbility
+class Visibility
   # List of visibility levels used on content such as Courses
+
+  def self.schema
+    {
+      published: 2,
+      reviewing: 1,
+      draft: 0
+    }
+  end
 
   # Policies:
   # Draft content is visible for edit by creator but does not clutter review pipeline
   def self.draft
-    0
+    Visibility.schema[:draft]
   end
 
   # Policies:
   # Review content is visible by creator, moderator, and admin
   # Review content is editable by moderator and admin (eg. change, revert to draft, and publish)
   def self.reviewing
-    1
+    Visibility.schema[:reviewing]
   end
 
   # Policies:
   # Published content is visible by all qualified users
   # Published content is editable moderator and admin (eg. change, recall)
   def self.published
-    2
+    Visibility.schema[:published]
   end
 end

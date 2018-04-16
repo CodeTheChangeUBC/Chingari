@@ -1,0 +1,89 @@
+  # create_table "texts", force: :cascade do |t|
+  #   t.integer "user_id", null: false
+  #   t.string "attachable_type", null: false
+  #   t.integer "attachable_id", null: false
+  #   t.text "content", default: "", null: false
+  #   t.integer "display_index", default: 0, null: false
+  #   t.index ["attachable_type", "attachable_id", "display_index"], name: "index_texts_on_attachable_display_index", unique: true
+  #   t.index ["user_id"], name: "index_texts_on_user_id"
+  # end
+
+rhubarb_pie_ingredient1:
+  id: 1
+  user_id: 1
+  attachable_type: courses
+  attachable_id: 314
+  display_index: 2
+  content: INGREDIENTS
+
+rhubarb_pie_ingredient2:
+  id: 2
+  user_id: 1
+  attachable_type: courses
+  attachable_id: 314
+  display_index: 3
+  content: 4 cups chopped rhubarb
+
+rhubarb_pie_ingredient3:
+  id: 3
+  user_id: 1
+  attachable_type: courses
+  attachable_id: 314
+  display_index: 4
+  content: 1 tablespoon butter
+
+rhubarb_pie_ingredient4:
+  id: 4
+  user_id: 1
+  attachable_type: courses
+  attachable_id: 314
+  display_index: 5
+  content: 1 1/3 cups white sugar,
+
+rhubarb_pie_ingredient5:
+  id: 5
+  user_id: 1
+  attachable_type: courses
+  attachable_id: 314
+  display_index: 6
+  content: 1 recipe pastry for a 9 inch double crust pie
+
+rhubarb_pie_ingredient6:
+  id: 6
+  user_id: 1
+  attachable_type: courses
+  attachable_id: 314
+  display_index: 7
+  content: 6 tablespoons all-purpose flour
+
+rhubarb_pie_step1:
+  id: 7
+  user_id: 1
+  attachable_type: courses
+  attachable_id: 314
+  display_index: 8
+  content: PROCEDURE
+
+rhubarb_pie_step2:
+  id: 8
+  user_id: 1
+  attachable_type: courses
+  attachable_id: 314
+  display_index: 9
+  content: Preheat oven to 450 degrees F (230 degrees C). 
+
+rhubarb_pie_step3:
+  id: 9
+  user_id: 1
+  attachable_type: courses
+  attachable_id: 314
+  display_index: 10
+  content: Combine sugar and flour. Sprinkle 1/4 of it over pastry in pie plate. Heap rhubarb over this mixture. Sprinkle with remaining sugar and flour. Dot with small pieces of butter. Cover with top crust. 
+
+rhubarb_pie_step4:
+  id: 10
+  user_id: 1
+  attachable_type: courses
+  attachable_id: 314
+  display_index: 11
+  content: Place pie on lowest rack in oven. Bake for 15 minutes. Reduce oven temperature to 350 degrees F (175 degrees C), and continue baking for 40 to 45 minutes. Serve warm or cold.

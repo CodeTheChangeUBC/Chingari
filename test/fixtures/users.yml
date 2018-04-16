@@ -1,3 +1,18 @@
+  # create_table "users", force: :cascade do |t|
+  #   t.string "name"
+  #   t.string "username", default: "Anonymous", null: false
+  #   t.string "password_digest", null: false
+  #   t.string "email"
+  #   t.integer "role", default: 0, null: false
+  #   t.datetime "created_at", null: false
+  #   t.datetime "updated_at", null: false
+  #   t.integer "tier", default: 0, null: false
+  #   t.string "provider"
+  #   t.string "uid"
+  #   t.index ["email"], name: "index_users_on_email", unique: true
+  #   t.index ["role"], name: "index_users_on_role"
+  # end
+
 user1: 
   name: New User 
   email: new@user.ca
@@ -7,3 +22,102 @@ user2:
   name: User two
   email: email@user2.ca
   password_digest: <%= User.digest("password") %>
+
+Jimmy:
+  id: 1
+  name: Jimmy
+  username: Jimmy
+  password_digest: <%= User.digest("password") %>
+  email: jimmy.lin@chingari.org
+  role: <%= Role.admin %>
+  tier: <%= Tier.free %>
+
+Ben:
+  id: 2
+  name: Ben
+  username: Ben
+  password_digest: <%= User.digest("password") %>
+  email: ben.chugg@chingari.org
+  role: <%= Role.admin %>
+  tier: <%= Tier.free %>
+
+Eric:
+  id: 3
+  name: Eric
+  username: Eric
+  password_digest: <%= User.digest("password") %>
+  email: eric.mikulin@chingari.org
+  role: <%= Role.admin %>
+  tier: <%= Tier.free %>
+
+Rody:
+  id: 4
+  name: Rody
+  username: Rody
+  password_digest: <%= User.digest("password") %>
+  email: rody@chingari.org
+  role: <%= Role.admin %>
+  tier: <%= Tier.free %>
+
+Jordan:
+  id: 5
+  name: Jordan
+  username: Jordan
+  password_digest: <%= User.digest("password") %>
+  email: jordan.kroll@chingari.org
+  role: <%= Role.admin %>
+  tier: <%= Tier.free %>
+
+Mona:
+  id: 6
+  name: Mona
+  username: Mona
+  password_digest: <%= User.digest("password") %>
+  email: mona.yousaf@chingari.org
+  role: <%= Role.admin %>
+  tier: <%= Tier.free %> 
+
+Jared:
+  id: 7
+  name: Jared
+  username: Jared
+  password_digest: <%= User.digest("password") %>
+  email: jared@chingari.org
+  role: <%= Role.moderator %>
+  tier: <%= Tier.free %>
+
+moderator:
+  id: 8
+  name: moderator
+  username: moderator
+  password_digest: <%= User.digest("password") %>
+  email: moderator@chingari.org
+  role: <%= Role.moderator %>
+  tier: <%= Tier.free %>
+
+free_user:
+  id: 9
+  name: free_user
+  username: free_user
+  password_digest: <%= User.digest("password") %>
+  email: free_user@chingari.org
+  role: <%= Role.user %>
+  tier: <%= Tier.free %>
+
+premium_user:
+  id: 10
+  name: premium_user
+  username: premium_user
+  password_digest: <%= User.digest("password") %>
+  email: premium_user@chingari.org
+  role: <%= Role.user %>
+  tier: <%= Tier.premium %>
+
+deactivated_user:
+  id: 11
+  name: deactivated_user
+  username: deactivated_user
+  password_digest: <%= User.digest("password") %>
+  email: deactivated_user@chingari.org
+  role: <%= Role.deactivated %>
+  tier: <%= Tier.free %>

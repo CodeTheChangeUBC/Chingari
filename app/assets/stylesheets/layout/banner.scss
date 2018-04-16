@@ -1,0 +1,23 @@
+.banner {
+  // min-height: 30vh;
+  background-attachment: scroll;
+  background-position: center center;
+  background-size: cover;
+  .row{
+    .message {
+      padding: 15vw 50px 15vw 50px;
+    }
+  }
+}
+
+.banner-sm {
+  // min-height: 30vh;
+  background-attachment: scroll;
+  background-position: center center;
+  background-size: cover;
+  .row{
+    .message {
+      padding: 5vw 50px 5vw 50px;
+    }
+  }
+}

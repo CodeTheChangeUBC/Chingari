@@ -1,190 +1,97 @@
-<header>
-  <div class="container remove-padding">
-    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-      <a href="/home">
-        <%= image_tag("main-logo.png", class: "img-responsive logo") %>
-        <!-- <img src="http://solutionsofts.com/nikhil/wp-content/themes/blank-theme/images/main-logo.png" class="img-responsive logo"> -->
-      </a>
-    </div>
-    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 remove-padding">
-      <div class="header-right">
-        <ul>
-          <!-- ================ -->
-          <div class="container hidden-sm hidden-md hidden-lg">
-            <!-- Modal -->
-            <div class="modal fade" id="myModal" role="dialog">
-              <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-                  <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <br>
-                    <p>Chingari does not Provide emergency services</p>
-                    <p>If you are having a crisis<br>Cal 911</p>
-                    <p>Suggested Hotline<br>(xxx) xxx-xxxx</p>
-                    <p>Other</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- ================ -->
-          <li>
-            <!-- <div class="get-help" data-toggle="modal" data-target="#myModal"><i class="fa fa-phone"></i><p>Get Help Now</p></div> -->
-            <a href="#contact"><div class="get-help"><i class="fa fa-phone"></i><p>Get Help Now</p></div></a>
-          </li>
-          <!--
-            <li data-toggle="modal" data-target="#myModal1">
-              <i class="fa fa-search"></i><input type="text" name="" placeholder="SEARCH">
-            </li>
-          -->
-          <!-- ================ -->
-          <!-- Modal -->
-          <div class="modal fade search-box" id="myModal1" role="dialog">
-            <div class="modal-dialog">
-              <!-- Modal content-->
-              <div class="modal-content">
-                <div class="modal-body">
-                  <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-                  <br>
-                  <form method="" action="" class="form-group">
-                    <i class="fa fa-search"></i><input type="text"  name="" placeholder="Search" class="form-control">
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- ================ -->
-        </ul>
+<a data-anchor-id="top">
+  <div class="header light-theme">
+
+    <div class="header-top row text-center">
+      <div class="col-md-1 col-sm-12" style="min-height:1px;">
+      </div>
+      <div class="col-md-1 col-sm-12">
+          <a href="/home"><%= image_tag("logos/main.png", class: "header-logo") %></a>
+      </div>
+      <div class="col-md-8 col-sm-12" style="min-height:1px;">
+      </div>
+      <div class="col-md-1 col-sm-12"  style="min-height:30px;">
+        <a href="#contact"><button type="button" class="btn dark-orange-theme orange-hover button"><%= fa_icon "phone", text: "Get Help Now" %></button></a>
+      </div>
+      <div class="col-md-1 col-sm-12" style="min-height:1px;">
       </div>
     </div>
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark dark-blue-theme wide-sans-serif">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto subtitle">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle dark-blue-theme" href="/home" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="dark-blue-theme">Home</span>
+            </a>
+            <div class="dropdown-menu corners darker-blue-theme borderless" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/home/#mission">Mission & Vision</a>
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/home/#services">Our Services</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle dark-blue-theme" href="/about" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="dark-blue-theme">About Us</span>
+            </a>
+            <div class="dropdown-menu corners darker-blue-theme borderless" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/about/#value">What We Do</a>
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/about/#testimonials">Testimonials</a>
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/about/#founder">Founder Story</a>
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/about/#team">Our Team</a>
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/about/#involve">Get Involved</a>
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="#contact">Contact Us</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle dark-blue-theme" href="/resources" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="dark-blue-theme">Resources</span>
+            </a>
+            <div class="dropdown-menu corners darker-blue-theme borderless" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/resources/#immigration">Immigration</a>
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/resources/#legal">Legal Rights</a>
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/resources/#women">Women's Rights</a>
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/resources/#personal">Personal Development</a>
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/resources/#professional">Professional Development</a>
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/community">Community</a>
+              <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="#external">External Links</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="/events">
+              <span class="dark-blue-theme">Events</span>
+            </a>
+          </li>
+
+          <% if logged_in? then %> <!-- Content for logged in user -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle dark-blue-theme" href="/users/<%= current_user.id %>" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="dark-blue-theme">Account</span>
+              </a>
+              <div class="dropdown-menu corners darker-blue-theme borderless" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/users/<%= current_user.id %>">Profile</a>
+                <%= link_to logout_path, method: :delete, class:"dropdown-item darker-blue-theme blue-hover super-padded subtitle" do %>
+                  Log Out
+                <% end %>
+              </div>
+            </li>
+          <% else %> <!-- Login link -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle dark-blue-theme" href="/login" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="dark-blue-theme">Account</span>
+              </a>
+              <div class="dropdown-menu corners darker-blue-theme borderless" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/login">Log In</a>
+                <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/signup">Sign Up</a>
+              </div>
+            </li>
+          <% end %>
+
+        </ul>
+      </div>
+    </nav>
   </div>
-</header>
-
-<!-- Navagation Bar -->
-<nav id='cssmenu'>
-  <div id="head-mobile"></div>
-  <div class="button"></div>
-  <ul class="first-ul">
-    <li class='active'><a href='/home'>Home<i class="fa fa-caret-down" aria-hidden="true"></i></a>
-      <ul>
-        <li><a href='/home/#vision'>Vision</a></li>
-        <li><a href='/home/#challenges'>Challenges</a></li>
-        <li><a href='/home/#stories'>Stories</a></li>
-        <li><a href='/home/#services'>Products & services</a></li>
-      </ul>
-    </li>
-
-    <li class='active'><a href='/about'>About Us<i class="fa fa-caret-down" aria-hidden="true"></i></a>
-      <ul>
-        <li><a href='/about/#value'>Why Chingari</a></li>
-        <li><a href='/about/#testimonies'>Testimonies</a></li>
-        <li><a href='/about/#history'>Founder History</a></li>
-        <li><a href='/about/#team'>Our Team</a></li>
-        <li><a href='/about/#contribute'>Get Involved </a></li>
-        <li><a href='#contact'>Contact Us </a></li>
-        <!-- This link has no respective content -->
-        <%# <li><a href='#'>FAQ </a></li> %>
-      </ul>
-    </li>
-
-    <li class='active'><a href='/resources'>Resources<i class="fa fa-caret-down" aria-hidden="true"></i></a>
-      <ul>
-        <li><a href='/resources/#immigration'>Immigration</a></li>
-        <li><a href='/resources/#legal'>Legal Resources</a></li>
-        <li><a href='/resources/#women'>Women's Rights</a></li>
-        <li><a href='/resources/#personal'>Personal Development</a></li>
-        <li><a href='/resources/#professional'>Professional Development</a></li>
-        <li><a href='/resources/#external'>External Links </a></li>
-      </ul>
-    </li>   
-
-    <li><a href='/events'>Events<i class="fa fa-caret-down" aria-hidden="true"></i></a>
-      <ul>
-        <li><a href='/events/#networking'>Networking Events </a></li>
-        <li><a href='/enents/#upcoming'>Upcoming Events</a></li>
-      </ul>
-    </li>
-
-    <li><a href='/community'>Community</a>
-    </li>
-
-    <% if logged_in? then %> <!-- Content for logged in user -->s
-      <li><a href='/users/<%= current_user.id %>'>My Account<i class="fa fa-caret-down" aria-hidden="true"></i></a>
-        <ul>
-          <li><a href='/users/<%= current_user.id %>'</a></li>
-          <li><a href='/logout'>Log Out</a></li>
-        </ul>
-      </li>
-    <% else %> <!-- Login link -->
-      <li><a href='/login'>My Account<i class="fa fa-caret-down" aria-hidden="true"></i></a>
-        <ul>
-          <li><a href='/login'>Log In</a></li>
-          <li><a href='/signup'>Sign Up</a></li>
-        </ul>
-      </li>
-    <% end %>
-
-  </ul>
-</nav>
-
-<script type="text/javascript">
-  (function($) {
-$.fn.menumaker = function(options) {  
- var cssmenu = $(this), settings = $.extend({
-   format: "dropdown",
-   sticky: false
- }, options);
- return this.each(function() {
-   $(this).find(".button").on('click', function(){
-     $(this).toggleClass('menu-opened');
-     var mainmenu = $(this).next('ul');
-     if (mainmenu.hasClass('open')) { 
-       mainmenu.slideToggle().removeClass('open');
-     }
-     else {
-       mainmenu.slideToggle().addClass('open');
-       if (settings.format === "dropdown") {
-         mainmenu.find('ul').show();
-       }
-     }
-   });
-   cssmenu.find('li ul').parent().addClass('has-sub');
-multiTg = function() {
-     cssmenu.find(".has-sub").prepend('<span class="submenu-button"></span>');
-     cssmenu.find('.submenu-button').on('click', function() {
-       $(this).toggleClass('submenu-opened');
-       if ($(this).siblings('ul').hasClass('open')) {
-         $(this).siblings('ul').removeClass('open').slideToggle();
-       }
-       else {
-         $(this).siblings('ul').addClass('open').slideToggle();
-       }
-     });
-   };
-   if (settings.format === 'multitoggle') multiTg();
-   else cssmenu.addClass('dropdown');
-   if (settings.sticky === true) cssmenu.css('position', 'fixed');
-resizeFix = function() {
-  var mediasize = 1000;
-     if ($( window ).width() > mediasize) {
-       cssmenu.find('ul').show();
-     }
-     if ($(window).width() <= mediasize) {
-       cssmenu.find('ul').hide().removeClass('open');
-     }
-   };
-   resizeFix();
-   return $(window).on('resize', resizeFix);
- });
-  };
-})(jQuery);
-
-(function($){
-$(document).ready(function(){
-$("#cssmenu").menumaker({
-   format: "multitoggle"
-});
-});
-})(jQuery);
-</script>
+</a>

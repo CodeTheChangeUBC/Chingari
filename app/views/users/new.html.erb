@@ -1,29 +1,39 @@
-<% provide(:title, "New User") %>
-<div class='container text-center'>
-	<h3>User signup</h3>
+<% provide(:title, "Sign Up") %>
+<%= stylesheet_link_tag 'pages/login', media: 'all', 'data-turbolinks-track': 'reload' %>
+<div class="banner-sm" style="background-image: url(<%= asset_path('backgrounds/resources.jpg') %>)">
+  <div class="row d-flex align-items-center">
+    <div class="message text-center col-lg-6 col-sm-12">
+      <p class="light-text title serif clear-theme">New Account</p>
+    </div>
+    <div class="message text-center col-lg-6 col-sm-12">
+      <p class="light-text title sans-serif clear-theme">
 
-	<div class="row">
-	  <div class="col-md-6 col-md-offset-3">
-	    <%= form_for(@user) do |f| %>
-	      <%= render 'shared/error_messages', object: @user %>
-	      <%= f.label :name %>
-	      <%= f.text_field :name, class: 'form-control' %>
+        <div class="shadow_box">
+					<%= form_for(@user) do |f| %>
+						<%= render 'shared/error_messages', object: @user %>
 
-	      <%= f.label :username %>
-	      <%= f.text_field :username, class: 'form-control' %>
+						<%= f.text_field :name, class: 'form-control input', placeholder: "Name" %>
 
-	      <%= f.label :email %>
-	      <%= f.email_field :email, class: 'form-control' %>
+						<%= f.text_field :username, class: 'form-control input', placeholder: "Username" %>
 
-	      <%= f.label :password %>
-	      <%= f.password_field :password, class: 'form-control' %>
+						<%= f.email_field :email, class: 'form-control input', placeholder: "Email" %>
 
-	      <%= f.label :password_confirmation, "Confirmation" %>
-	      <%= f.password_field :password_confirmation, class: 'form-control' %>
+						<%= f.password_field :password, class: 'form-control input', placeholder: "Password" %>
 
-	      <%= f.submit "Create my account", class: "btn btn-primary" %>
-	    <% end %>
-	  </div>
-	</div>
+						<%= f.password_field :password_confirmation, class: 'form-control input', placeholder: "Confirm Password"  %>
 
+						<%= f.submit "Create my account", class: "btn button border clear-theme clear-hover" %>
+					<% end %>
+        </div>
+
+        <div class="shadow_box">
+          Already have an account?
+          <%= link_to login_path do %>
+            <button class="button">Log in here!</button>
+          <% end %>
+        </div>
+
+      </p>
+    </div>
+  </div>
 </div>

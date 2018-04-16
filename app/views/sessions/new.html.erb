@@ -1,26 +1,47 @@
 <% provide(:title, "Log in") %>
-<h1>Log in</h1>
+<%= stylesheet_link_tag 'pages/login', media: 'all', 'data-turbolinks-track': 'reload' %>
+<div class="banner-sm" style="background-image: url(<%= asset_path('backgrounds/resources.jpg') %>)">
+  <div class="row d-flex align-items-center">
+    <div class="message text-center col-lg-6 col-sm-12">
+      <p class="light-text title serif clear-theme">Log In</p>
+    </div>
+    <div class="message text-center col-lg-6 col-sm-12">
+      <p class="light-text title sans-serif clear-theme">
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= form_for(:session, url: login_path) do |f| %>
+        <div class="shadow_box">
+          <%= form_for(:session, url: login_path) do |f| %>
 
-      <%= f.label :email %>
-      <%= f.email_field :email, class: 'form-control' %>
+            <!-- <%= f.label :email, class: "input-label" %> -->
+            <%= f.email_field :email, class: "form-control input", placeholder: "Email" %>
 
-      <%= f.label :password %>
-      <%= f.password_field :password, class: 'form-control' %>
+            <!-- <%= f.label :password, class: "input-label" %> -->
+            <%= f.password_field :password, class: "form-control input", placeholder: "Password"  %>
 
-      <%= f.submit "Log in", class: "btn btn-primary" %>
-    <% end %>
+            <%= f.submit "Log In", class: "btn button border clear-theme clear-hover" %>
+          <% end %>
+        </div>
 
-    <p>New user? <%= link_to "Sign up now!", signup_path %></p>
-  </div>
+        <% if BetaFeatures.released?(:oauth) %>
+          <div class="shadow_box login-apis">
+            Log in through a third-party:
+            <br>
+            <%= link_to "/auth/facebook" do %>
+              <button class="button"><%= fa_icon "facebook", text: "Facebook" %></button>
+            <% end %>
+            <%= link_to "/auth/google_oauth2" do %>
+              <button class="button"><%= fa_icon "google", text: "Google" %></button>
+            <% end %>
+          </div>
+        <% end %>
 
-  <div class='container login-apis'>
-    Hello!!
-    <%= link_to "Login with Google!", '/auth/google_oauth2' %>
-    OR 
-    <%= link_to "Login with Facebook!", '/auth/facebook' %>
+        <div class="shadow_box">
+          New user?
+          <%= link_to signup_path do %>
+            <button class="button">Sign up now!</button>
+          <% end %>
+        </div>
+
+      </p>
+    </div>
   </div>
 </div>

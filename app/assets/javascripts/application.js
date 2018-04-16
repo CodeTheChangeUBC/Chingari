@@ -11,11 +11,12 @@
 // about supported directives.
 //
 //= require jquery
+//= require popper
 //= require wow
 //= require owl.carousel
-
 
 //= require bootstrap
 //= require rails-ujs
 //= require turbolinks
-//= require_tree .
+
+//= require anchor_scroller

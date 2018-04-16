@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180330035537) do
+ActiveRecord::Schema.define(version: 20180406030526) do
 
   create_table "courses", force: :cascade do |t|
     t.string "title", default: "Untitled", null: false
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20180330035537) do
     t.string "attachable_type", null: false
     t.integer "attachable_id", null: false
     t.integer "display_index"
-    t.index ["attachable_type", "attachable_id"], name: "index_documents_on_attachable_type_and_attachable_id", unique: true
+    t.index ["attachable_type", "attachable_id", "display_index"], name: "index_documents_on_attachable_display_index", unique: true
     t.index ["user_id"], name: "index_documents_on_user_id"
   end
 
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 20180330035537) do
     t.integer "attachable_id", null: false
     t.text "content", default: "", null: false
     t.integer "display_index", default: 0, null: false
-    t.index ["attachable_type", "attachable_id"], name: "index_embeds_on_attachable_type_and_attachable_id", unique: true
+    t.index ["attachable_type", "attachable_id", "display_index"], name: "index_embeds_on_attachable_display_index", unique: true
     t.index ["user_id"], name: "index_embeds_on_user_id"
   end
 
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 20180330035537) do
     t.integer "attachable_id", null: false
     t.text "content", default: "", null: false
     t.integer "display_index", default: 0, null: false
-    t.index ["attachable_type", "attachable_id"], name: "index_texts_on_attachable_type_and_attachable_id", unique: true
+    t.index ["attachable_type", "attachable_id", "display_index"], name: "index_texts_on_attachable_display_index", unique: true
     t.index ["user_id"], name: "index_texts_on_user_id"
   end
 
