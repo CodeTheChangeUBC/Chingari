@@ -41,6 +41,7 @@
       $(document).on("turbolinks:visit", () => {
         AnchorScroller.scrollToCurrentAnchor(200, 500)
       });
+      console.log("Rails is running in <%= Rails.env %> environment");
     </script>
   </body>
 </html>
