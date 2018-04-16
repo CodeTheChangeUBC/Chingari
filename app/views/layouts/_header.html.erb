@@ -73,7 +73,7 @@
               </a>
               <div class="dropdown-menu corners darker-blue-theme borderless" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item darker-blue-theme blue-hover super-padded subtitle" href="/users/<%= current_user.id %>">Profile</a>
-                <%= link_to logout_path, method: :delete, class:"dropdown-item darker-blue-theme blue-hover super-padded subtitle" do %>
+                <%= link_to "/logout", method: :delete, class:"dropdown-item darker-blue-theme blue-hover super-padded subtitle" do %>
                   Log Out
                 <% end %>
               </div>
