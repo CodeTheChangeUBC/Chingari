@@ -1,254 +1,207 @@
 <% provide(:title, "Resources") %>
+<%= stylesheet_link_tag 'pages/resources', media: 'all', 'data-turbolinks-track': 'reload' %>
 
-<!-- Resources -->
-<div class="resources-page">
-
-	<div class="about-banner-div">
-		<div class="">
-			<div class="about-banner-caption">
-				<p>Resources</p>
+<a name="feature">
+	<div class="banner" style="background-image: url(<%= asset_path('backgrounds/resources.jpg') %>)">
+		<div class="row d-flex align-items-center">
+			<div class="message text-center col-sm-12">
+				<p class="light-text title serif clear-theme">Resources</p>
+				<br>
 			</div>
-			<div class="">
-				<%= image_tag("resources.jpg", class: "img-responsive") %>
+		</div>
+	</div>
+</a>
+
+<section>
+<div id="accordion" class="light-blue-theme margin padded corners">
+	<!-- Panel 1 -->
+  	<div class="card resource-card">
+    <div class="card-header" id="headingOne">
+		<div class="row">
+			<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 left">
+				<%= image_tag("icons/immigration.png") %>
+			</div>
+			<div class="col-xs-9 col-sm-7 col-md-7 col-lg-7 right">
+				<h1>Immigration</h1>
+				<p class="black-text">
+					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a .
+				</p>
 			</div>
 		</div>
 	</div>
 
-	<section>
-		<div class="container resources-sec">
-			<div class="row">
-				<div class="col-md-12" id="main">
-					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-									
-						<!-- Panel 1 -->
-						<a name="immigration">
-							<div class="panel">
-								<div class="panel-heading" role="tab" id="headingOne">
-										<div class="row">
-											<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 left">
-												<%= image_tag("icon1.png") %>
-											</div>
-											<div class="col-xs-9 col-sm-7 col-md-7 col-lg-7 right">
-												<h1>Immigration</h1>
-												<p class="hidden-xs">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a .</p>
-											</div>
-										</div>
-								</div>
-								<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-									<div class="panel-body">
-										<div class="row">
-											<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 left">
-												
-											</div>
-											<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7 right">
-												<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a.
-													<ul>
-														<li>Immigration Document</li>
-														<li>Immigration Document</li>
-														<li>Immigration Document</li>
-														<li>Immigration Document</li>
-														<li>Immigration Document</li>
-													</ul>
-												</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<h4 class="panel-title">
-								<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"></a>
-							</h4>
-						</a>
-						<!-- // Panel 1 -->
+  	<div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+      <div class="card-body">
+		<p class="black-text">
+			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a.
+			<ul>
+				<li>Immigration Document</li>
+				<li>Immigration Document</li>
+				<li>Immigration Document</li>
+				<li>Immigration Document</li>
+				<li>Immigration Document</li>
+			</ul>
+		</p>
+      </div>
+    </div>
 
-						<!-- Panel 2 -->
-						<a name="legal">
-							<div class="panel">
-								<div class="panel-heading" role="tab" id="headingTwo">
-									<div class="row">
-										<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 left">
-											<%= image_tag("icon2.png") %>
-										</div>
-										<div class="col-xs-9 col-sm-7 col-md-7 col-lg-7 right">
-											<h1>Legal Documents</h1>
-											<p class="hidden-xs">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a .</p>
-										</div>
-									</div>
-								</div>
-								<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-									<div class="panel-body">
-										<div class="row">
-											<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 left">
-											</div>
-											<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7 right">
-												<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a.
-													<ul>
-														<li>Divorce</li>
-														<li>Custody</li>
-														<li>Child Support</li>
-														<li>Spousal Support</li>
-													</ul>
-												</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<h4 class="panel-title">
-								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"></a>
-							</h4>
-						</a>
-						<!-- //Panel 2 -->
+    <h4 class="card-button">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        </button>
+    </h4>
+  	</div>
+  	<!-- // Panel 1 -->
 
-						<!-- Panel 3 -->
-						<a name="women">
-							<div class="panel">
-								<div class="panel-heading" role="tab" id="headingThree">
-									<div class="row">
-										<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 left">
-											<%= image_tag("icon3.png") %>
-										</div>
-										<div class="col-xs-9 col-sm-7 col-md-7 col-lg-7 right">
-											<h1>Women's Rights</h1>
-											<p class="hidden-xs">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a .</p>
-										</div>
-									</div>
-								</div>
-								<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-									<div class="panel-body">
-										<div class="row">
-											<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 left">
-											</div>
-											<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7 right">
-												<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a.
-													<ul>
-														<li>Women's Rights</li>
-														<li>Women's Rights</li>
-														<li>Women's Rights</li>
-													</ul>
-												</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<h4 class="panel-title">
-								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree"></a>
-							</h4>
-						</a>
-						<!-- //Panel 3 -->
-
-						<!-- Panel 4 -->
-						<a name="personal">
-							<div class="panel">
-								<div class="panel-heading" role="tab" id="headingFour">
-									<div class="row">
-											<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 left">
-												<%= image_tag("icon4.png") %>
-											</div>
-											<div class="col-xs-9 col-sm-7 col-md-7 col-lg-7 right">
-												<h1>Personal Development</h1>
-												<p class="hidden-xs">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's .</p>
-											</div>
-										</div>
-								</div>
-								<div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-									<div class="panel-body">
-										<div class="row">
-											<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 left">
-											</div>
-											<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7 right">
-												<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-													<ul>
-														<li>Boundaries</li>
-														<li>Mutual Self Respect</li>
-														<li>Self-Esteem</li>
-														<li>Self-Esteem</li>
-														<li>Limitations</li>
-														<li>Comfort Level</li>
-														<li>Flexibility</li>
-													</ul>
-												</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<h4 class="panel-title">
-								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour"></a>
-							</h4>
-						</a>
-						<!-- //Panel 4 -->
-
-						<!-- Panel 5 -->
-						<a name="professional">
-							<div class="panel">
-								<div class="panel-heading" role="tab" id="headingFive">
-									<div class="row">
-										<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 left">
-											<%= image_tag("icon5.png") %>
-										</div>
-										<div class="col-xs-9 col-sm-7 col-md-7 col-lg-7 right">
-											<h1>Professional Development</h1>
-											<p class="hidden-xs">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's .</p>
-										</div>
-									</div>
-								</div>
-								<div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
-									<div class="panel-body">
-										<div class="row">
-											<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 left">
-											</div>
-											<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7 right">
-												<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-													<ul>
-														<li>Finance</li>
-														<li>Public Speaking</li>
-														<li>Education</li>
-														<li>Networking</li>
-														<li>Awareness</li>
-													</ul>
-												</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<h4 class="panel-title">
-								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive"></a>
-							</h4>
-						</a>
-						<!-- //Panel 5 -->
-
-						<a name="external"></a>
-
-					</div>
-				</div>
+  	<!-- Panel 2 -->
+  	<div class="card resource-card">
+    <div class="card-header" id="headingTwo">
+		<div class="row">
+			<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 left">
+				<%= image_tag("icons/legal.png") %>
 			</div>
-		<div>
-	</section>
-</div>
-	<!-- // Resources -->
-
-<div class="container back-to-top">
-	<div class="row">
-		<span class="scrolltotop"><i class="fa fa-chevron-up"></i></span>
-		<p>Back to Top</p>
+			<div class="col-xs-9 col-sm-7 col-md-7 col-lg-7 right">
+				<h1>Legal Documents</h1>
+				<p class="black-text">
+					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a .
+				</p>
+			</div>
+		</div>
 	</div>
+
+  	<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+      <div class="card-body">
+		<p class="black-text">
+			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a.
+			<ul>
+				<li>Divorce</li>
+				<li>Custody</li>
+				<li>Child Support</li>
+				<li>Spousal Support</li>
+			</ul>
+		</p>
+      </div>
+    </div>
+
+    <h4 class="card-button">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+        </button>
+    </h4>
+  	</div>
+  	<!-- // Panel 2 -->
+
+
+  	<!-- Panel 3 -->
+  	<div class="card resource-card">
+    <div class="card-header" id="headingThree">
+		<div class="row">
+			<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 left">
+				<%= image_tag("icons/women.png") %>
+			</div>
+			<div class="col-xs-9 col-sm-7 col-md-7 col-lg-7 right">
+				<h1>Women's Rights</h1>
+				<p class="black-text">
+					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a .
+				</p>
+			</div>
+		</div>
+	</div>
+
+  	<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+      <div class="card-body">
+		<p class="black-text">
+			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a.
+			<ul>
+				<li>Women's Rights</li>
+				<li>Women's Rights</li>
+				<li>Women's Rights</li>
+			</ul>
+		</p>
+      </div>
+    </div>
+
+    <h4 class="card-button">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+        </button>
+    </h4>
+  	</div>
+  	<!-- // Panel 3 -->
+
+  	<!-- Panel 4 -->
+  	<div class="card resource-card">
+    <div class="card-header" id="headingFour">
+		<div class="row">
+			<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 left">
+				<%= image_tag("icons/personal.png") %>
+			</div>
+			<div class="col-xs-9 col-sm-7 col-md-7 col-lg-7 right">
+				<h1>Personal Development</h1>
+				<p class="black-text">
+					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a .
+				</p>
+			</div>
+		</div>
+	</div>
+
+  	<div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+      <div class="card-body">
+		<p class="black-text">
+			Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+			<ul>
+				<li>Boundaries</li>
+				<li>Mutual Self Respect</li>
+				<li>Self-Esteem</li>
+				<li>Self-Esteem</li>
+				<li>Limitations</li>
+				<li>Comfort Level</li>
+				<li>Flexibility</li>
+			</ul>
+		</p>
+      </div>
+    </div>
+
+    <h4 class="card-button">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+        </button>
+    </h4>
+  	</div>
+  	<!-- // Panel 4 -->
+
+  	<!-- Panel 5 -->
+  	<div class="card resource-card">
+    <div class="card-header" id="headingFive">
+		<div class="row">
+			<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 left">
+				<%= image_tag("icons/professional.png") %>
+			</div>
+			<div class="col-xs-9 col-sm-7 col-md-7 col-lg-7 right">
+				<h1>Professional Development</h1>
+				<p class="black-text">
+					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a .
+				</p>
+			</div>
+		</div>
+	</div>
+
+  	<div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+      <div class="card-body">
+		<p class="black-text">
+			Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+			<ul>
+				<li>Finance</li>
+				<li>Public Speaking</li>
+				<li>Education</li>
+				<li>Networking</li>
+				<li>Awareness</li>
+			</ul>
+		</p>
+      </div>
+    </div>
+
+    <h4 class="card-button">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+        </button>
+    </h4>
+  	</div>
+  	<!-- // Panel 5 -->
 </div>
-
-<script>
-	$('.scrolltotop').on('click', function() {
-		$('html, body').animate({ scrollTop: 0 }, 800);
-		return false;
-	});
-
-	$(document).scroll(function() {
-		var y = $(this).scrollTop();
-		if (y > 300) {
-				$('.scrolltotop').fadeIn();
-		} else {
-				$('.scrolltotop').fadeOut();
-		}
-	});
-</script>
+</section>
