@@ -48,7 +48,7 @@ class AnchorScroller {
 
   static overrideAnchorClick(event, delay, duration) {
     if (event.delegateTarget.getAttribute("href") == null) { return }
-    let hash_match = event.delegateTarget.getAttribute("href").match(/#\w+/)
+    let hash_match = event.delegateTarget.getAttribute("href").match(/#[a-zA-Z0-9_-]+/)
     if (hash_match !== null) {
       let hash = hash_match[0].substr(1)
       if (AnchorScroller.getElementByDataAnchorId(hash) !== undefined) {
