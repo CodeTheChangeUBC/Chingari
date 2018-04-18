@@ -182,6 +182,22 @@ body {
   text-align: center;
 }
 
+.top-bottom-inset-shadows {
+  box-shadow: inset 0px 14px 20px -14px rgb(0,0,0), inset 0px -14px 20px -14px rgb(0,0,0);
+}
+
+.top-inset-shadows {
+  box-shadow: inset 0px 14px 20px -14px rgb(0,0,0);
+}
+
+.bottom-inset-shadows {
+  box-shadow: inset 0px -14px 20px -14px rgb(0,0,0);
+}
+
+.inset-shadows {
+  box-shadow: inset 0px 0px 1px 0px rgb(0,0,0);
+}
+
 a:link {
   color: inherit;
   text-decoration: none;

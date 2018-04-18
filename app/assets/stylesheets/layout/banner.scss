@@ -1,8 +1,23 @@
+.banner.banner-fix {
+  // min-height: 30vh;
+  background-attachment: fixed;
+  
+  background-position: center 100px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  .row{
+    .message {
+      padding: 15vw 50px 15vw 50px;
+    }
+  }
+}
+
 .banner {
   // min-height: 30vh;
   background-attachment: scroll;
   background-position: center center;
   background-size: cover;
+  background-repeat: no-repeat;
   .row{
     .message {
       padding: 15vw 50px 15vw 50px;
@@ -14,6 +29,7 @@
   // min-height: 30vh;
   background-attachment: scroll;
   background-position: center center;
+  background-repeat: no-repeat;
   background-size: cover;
   .row{
     .message {
