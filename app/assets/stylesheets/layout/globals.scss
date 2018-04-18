@@ -91,10 +91,6 @@ body {
   @include grey-bg;
 }
 
-li .fa {
-  margin-right: 5px;
-  margin-left: 5px;
-}
 .darker-orange-theme {
   @include dark-orange-bg();
   @include light();
@@ -120,22 +116,6 @@ li .fa {
   @include light();
 }
 
-.border {
-  border: 1px solid rgb(250, 250, 250);
-}
-.blue-border {
-  border: 3px solid rgb(77, 209, 219);
-}
-.orange-border {
-  border: 3px solid rgb(245, 150, 31); 
-}
-
-.clear-theme {
-  background-color: rgba(0, 0, 0, 0.0);
-  text-shadow: 2px 2px 5px rgb(0, 0, 0);
-  @include light;
-}
-
 .light-orange-theme {
   @include light-bg();
   @include orange();
@@ -152,6 +132,22 @@ li .fa {
   @include light();
 }
 
+.border {
+  border: 1px solid rgb(250, 250, 250);
+}
+.blue-border {
+  border: 3px solid rgb(77, 209, 219);
+}
+.orange-border {
+  border: 3px solid rgb(245, 150, 31); 
+}
+
+.clear-theme {
+  background-color: rgba(0, 0, 0, 0.0);
+  text-shadow: 2px 2px 5px rgb(0, 0, 0);
+  @include light;
+}
+
 .corners {
   border-radius: 0px;
 }
@@ -163,6 +159,11 @@ li .fa {
 }
 .super-padded {
   padding: 15px;
+}
+
+.fa.fa-padded {
+  margin-right: 5px;
+  margin-left: 5px;
 }
 
 .serif {
