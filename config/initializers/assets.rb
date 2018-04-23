@@ -14,7 +14,10 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 
 # Javascript
-Rails.application.config.assets.precompile += []
+Rails.application.config.assets.precompile += [
+  "models/*",
+  "views/*"
+]
 
 # Stylesheets
 Rails.application.config.assets.precompile += [

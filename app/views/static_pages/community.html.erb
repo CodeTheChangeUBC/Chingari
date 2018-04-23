@@ -1,0 +1,20 @@
+<% provide(:title, "Community") %>
+<%= stylesheet_link_tag 'pages/community', media: 'all', 'data-turbolinks-track': 'reload' %>
+<a data-anchor-id="feature">
+	<div class="banner" style="background-image: url(<%= asset_path('backgrounds/home.jpg') %>)">
+		<div class="row d-flex align-items-center">
+			<div class="message text-center col-sm-7">
+				<p class="light-text title serif clear-theme">Community</p>
+			</div>
+		</div>
+	</div>
+</a>
+
+<a data-anchor-id="mission">
+	<div class="banner-sm">
+		
+	</div>
+</a>
+
+<%= javascript_include_tag 'models/course.js', 'data-turbolinks-track': 'reload' %>
+<%= javascript_include_tag 'views/course.js', 'data-turbolinks-track': 'reload' %>

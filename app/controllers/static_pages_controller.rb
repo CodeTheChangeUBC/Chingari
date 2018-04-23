@@ -17,6 +17,9 @@ class StaticPagesController < ApplicationController
   def public_speaking
   end
 
+  def community
+  end
+
   def events
   end
 

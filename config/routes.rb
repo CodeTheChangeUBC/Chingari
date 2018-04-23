@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     get '/stories',         to: 'static_pages#stories'
     get '/public_speaking', to: 'static_pages#public_speaking'
     get '/policies',        to: 'static_pages#policies'
+    get '/community',       to: 'static_pages#community'
   
     # Session routes
     get    '/login',   to: 'sessions#new'
