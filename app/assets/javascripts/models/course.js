@@ -9,10 +9,10 @@ class CourseView {
                 url: url,
                 type: 'GET',
                 success: function(data, status, xobj){
-                    resolve({"status":xobj.status, "result":data.result});
+                    resolve({status: xobj.status, result: xobj.responseJSON.result});
                 },
                 error: function(data, status, xobj){
-                    reject({"status":xobj.status, "result":data.result2});
+                    reject({status: data.status, result: data.responseJSON.result});
                 }
             });
         })
@@ -25,11 +25,11 @@ class CourseView {
             $.ajax({
                 url: url,
                 type: 'GET',
-                success: function(data, status, xobj){
-                    resolve({"status":xobj.status, "result":data.result});
+                success: function (data, status, xobj) {
+                    resolve({ status: xobj.status, result: xobj.responseJSON.result });
                 },
-                error: function(data, status, xobj){
-                    reject({"status":xobj.status, "result":data.result});
+                error: function (data, status, xobj) {
+                    reject({ status: data.status, result: data.responseJSON.result });
                 }
             });
         })
@@ -42,11 +42,11 @@ class CourseView {
             $.ajax({
                 url: url,
                 type: 'GET',
-                success: function(data, status, xobj){
-                    resolve({"status":xobj.status, "result":data.result, "schema":data.schema});
+                success: function (data, status, xobj) {
+                    resolve({ status: xobj.status, result: xobj.responseJSON.result, schema:data.responseJSON.result });
                 },
-                error: function(data, status, xobj){
-                    reject({"status":xobj.status, "result":data.result});
+                error: function (data, status, xobj) {
+                    reject({ status: data.status, result: data.responseJSON.result });
                 }
             });
         })
@@ -59,11 +59,11 @@ class CourseView {
             $.ajax({
                 url: url,
                 type: 'GET',
-                success: function(data, status, xobj){
-                    resolve({"status":xobj.status, "result":data.result, "schema":data.schema});
+                success: function (data, status, xobj) {
+                    resolve({ status: xobj.status, result: xobj.responseJSON.result, schema:data.responseJSON.result });
                 },
-                error: function(data, status, xobj){
-                    reject({"status":xobj.status, "result":data.result});
+                error: function (data, status, xobj) {
+                    reject({ status: data.status, result: data.responseJSON.result });
                 }
             });
         })
@@ -78,11 +78,11 @@ class CourseView {
                 url: url,
                 type: 'POST',
                 data: params,
-                success: function(data, status, xobj){
-                    resolve({"status":xobj.status, "result":data.result});
+                success: function (data, status, xobj) {
+                    resolve({ status: xobj.status, result: xobj.responseJSON.result });
                 },
-                error: function(data, status, xobj){
-                    reject({"status":xobj.status, "result":data.result});
+                error: function (data, status, xobj) {
+                    reject({ status: data.status, result: data.responseJSON.result });
                 }
             });
         })
@@ -97,11 +97,11 @@ class CourseView {
                 url: url,
                 type: 'PUT',
                 data: params,
-                success: function(data, status, xobj){
-                    resolve({"status":xobj.status, "result":data.result});
+                success: function (data, status, xobj) {
+                    resolve({ status: xobj.status, result: xobj.responseJSON.result });
                 },
-                error: function(data, status, xobj){
-                    reject({"status":xobj.status, "result":data.result});
+                error: function (data, status, xobj) {
+                    reject({ status: data.status, result: data.responseJSON.result });
                 }
             });
         })
@@ -114,11 +114,11 @@ class CourseView {
             $.ajax({
                 url: url,
                 type: 'DELETE',
-                success: function(data, status, xobj){
-                    resolve({"status":xobj.status, "result":data.result});
+                success: function (data, status, xobj) {
+                    resolve({ status: xobj.status, result: xobj.responseJSON.result });
                 },
-                error: function(data, status, xobj){
-                    reject({"status":xobj.status, "result":data.result});
+                error: function (data, status, xobj) {
+                    reject({ status: data.status, result: data.responseJSON.result });
                 }
             });
         })

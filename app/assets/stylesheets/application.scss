@@ -20,11 +20,7 @@
 //= require owl.theme
 @import "bootstrap";
 @import "font-awesome";
-@import "layout/globals";
-@import "layout/header";
-@import "layout/footer";
-@import "layout/banner";
-@import "layout/shadow_box";
+@import "layout/*";
 
 // Site.css
 

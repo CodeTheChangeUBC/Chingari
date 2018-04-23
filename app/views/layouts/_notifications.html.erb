@@ -1,0 +1,78 @@
+<div id="notifications">
+  <note-pad v-bind:init="notes"></notes>
+</div>
+
+<script>
+  // Globally available UI component with interface though global constant Notifications
+  // Usage:
+  // Notifications.notify("my message") => id
+  // Notifications.error("my error") => id
+  // Notifications.dismiss(id) => true if deleted || false if not found
+
+  Vue.component("note", {
+    props: ["id", "message", "theme"],
+    methods: {
+      dismiss(id) {
+        Notifications.dismiss(id)
+      }
+    },
+    template: `<div class="text note" v-bind:class="theme">
+                {{ message }}
+                <span class="subtext dismiss" v-on:click="dismiss(id)">
+                  <%= fa_icon "times" %>
+                </span>
+              </div>`
+  })
+  Vue.component("note-pad", {
+    props: ["init"],
+    data() {
+      return { notes: this.init }
+    },
+    template: `<div class="note-pad">
+                <transition-group name="slide-fade">
+                  <note
+                    v-for="(note, index) in this.notes"
+                    v-bind:key="note.id"
+                    v-bind:id="note.id"
+                    v-bind:message="note.message"
+                    v-bind:theme="note.theme"
+                  ></note>
+                </transition-group>
+              </div>`
+  })
+  const Notifications = new Vue({
+    el: "#notifications",
+    data: {
+      id: 0,
+      notes: [],
+      lifespan: 10000
+    },
+    methods: {
+      dismiss(id) {
+        let index = this.notes.findIndex((note) => note.id === id)
+        if (index !== -1) {
+          this.notes.splice(index, 1)
+          return true
+        } else {
+          return false
+        }
+      },
+      notify(message) {
+        let id = this.id++
+        this.notes.push({ theme: "dark-blue-theme", message: message, id: id })
+        setTimeout(() => {
+          this.dismiss(id)
+        }, this.lifespan)
+        return id
+      },
+      error(message) {
+        let id = this.id++
+        this.notes.push({ theme: "dark-orange-theme", message: message, id: id})
+        setTimeout(() => {
+          this.dismiss(id)
+        }, this.lifespan)
+        return id
+      }
+    }
+  })
+</script>

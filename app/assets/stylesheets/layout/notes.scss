@@ -1,0 +1,36 @@
+.note-pad {
+  padding: 10px;
+  position: fixed;
+  bottom: -1px;
+  right: -1px;
+  background: none;
+  z-index: 100;
+
+  .note {
+    margin: 10px;
+    padding: 10px;
+    border-width: 2px 2px 2px 2px;
+    border-style: solid;
+    border-radius: 2px;
+    border-color: rgb(250, 250, 250);
+    box-shadow: 5px 5px 10px 0px rgb(10, 10, 10);
+    font-weight: bold;
+
+    .dismiss {
+      margin: 10px;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  .slide-fade-enter-active, .slide-fade-leave-active {
+    -webkit-transition: all .5s ease;
+    transition: all .5s ease;
+  }
+  .slide-fade-enter, .slide-fade-leave-to, .slide-fade-leave-active 
+  /* .slide-fade-leave-active below version 2.1.8 */ {
+    // -webkit-transform: translateX(10px);
+    // transform: translateX(10px);
+    opacity: 0;
+  }
+}

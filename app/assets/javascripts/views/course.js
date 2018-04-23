@@ -3,36 +3,32 @@
 // 
 
 const data = {
-  courses: []
+  errors: [],
+  courses: [],
+  course: undefined
 }
 
 const methods = {
 
 }
 
-// const on_create = () => {
-//   let view = this
-//   console.log("Initializing Course View")
-//   CourseView.index()
-//     .then((response) => {
-//       console.log(response.result.result)
-//       console.log(view)
-//       view.courses = response.result.result
-//     })
-// }
-
 const course_view = new Vue({
-  el: "#course_index",
+  el: "#course_view",
   data: data,
-  methods: methods,
-  created() {
-    let view = this
-    console.log("Initializing Course View")
-    CourseView.index()
-      .then((response) => {
-        console.log(response.result.result)
-        console.log(view)
-        view.courses = response.result.result
-      }, this)
+  methods: {
+    index() {
+      CourseView.index()
+        .then((response) => {
+          this.courses = response.result
+        })    
+        .catch((response) => { Notifications.error(response.result) })  
+    },
+    get(id) {
+
     }
+  },
+  created() {
+    console.log("Initializing Course View")
+    this.index();
+  }
 })
