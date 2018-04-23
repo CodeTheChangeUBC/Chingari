@@ -1,12 +1,38 @@
+// View Declaration for courses
+// This interfaces with the client-side model CourseView
+// 
+
 const data = {
-  courses: [
-    { title: "How to make a new york cheesecake" },
-    { title: "How to make an apple pie" },
-  ]
+  courses: []
 }
 
 const methods = {
 
 }
 
-const course_view = new Vue({ el: "#course_index", data: data, methods: methods})
+// const on_create = () => {
+//   let view = this
+//   console.log("Initializing Course View")
+//   CourseView.index()
+//     .then((response) => {
+//       console.log(response.result.result)
+//       console.log(view)
+//       view.courses = response.result.result
+//     })
+// }
+
+const course_view = new Vue({
+  el: "#course_index",
+  data: data,
+  methods: methods,
+  created() {
+    let view = this
+    console.log("Initializing Course View")
+    CourseView.index()
+      .then((response) => {
+        console.log(response.result.result)
+        console.log(view)
+        view.courses = response.result.result
+      }, this)
+    }
+})
