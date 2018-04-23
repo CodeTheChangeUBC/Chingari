@@ -18,6 +18,7 @@ class StaticPagesController < ApplicationController
   end
 
   def community
+    @subpath = params[:subpath]
   end
 
   def events
