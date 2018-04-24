@@ -1,0 +1,8 @@
+.fade-in-out-enter-active, .fade-in-out-leave-active {
+  -webkit-transition: opacity .2s ease;
+  transition: opacity .2s ease;
+}
+.fade-in-out-enter, .fade-in-out-leave-to, .fade-in-out-leave-active 
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}

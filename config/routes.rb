@@ -31,7 +31,7 @@ Rails.application.routes.draw do
     get '/courses/drafts', to: 'courses#drafts'
     get '/courses/published', to: 'courses#published'
     get '/courses/new', to: 'courses#new'
-    get '/courses/:course_id', to: 'courses#getcourse'  # Should go last as it also catches most of the other routes
+    get '/courses/:course_id', to: 'courses#show'  # Should go last as it also catches most of the other routes
     put '/courses/:course_id', to: 'courses#update' # ^^^^
     delete '/courses/:course_id', to: 'courses#delete' # ^^^^
     get '/courses/:course_id/edit', to: 'courses#edit'  # ^^^^
@@ -65,7 +65,7 @@ Rails.application.routes.draw do
     get '/courses/drafts', to: 'courses#drafts'
     get '/courses/published', to: 'courses#published'
     get '/courses/new', to: 'courses#new'
-    get '/courses/:course_id', to: 'courses#getcourse'  # Should go last as it also catches most of the other routes
+    get '/courses/:course_id', to: 'courses#show'  # Should go last as it also catches most of the other routes
     put '/courses/:course_id', to: 'courses#update' # ^^^^
     delete '/courses/:course_id', to: 'courses#delete' # ^^^^
     get '/courses/:course_id/edit', to: 'courses#edit'  # ^^^^

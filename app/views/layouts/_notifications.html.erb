@@ -13,6 +13,9 @@
     props: ["id", "message", "theme"],
     methods: {
       dismiss(id) {
+        // Normally we should emit an event instead of accessing the parent directly but
+        // The event is getting blocked by transition group
+        // Will look into refactoring this later
         Notifications.dismiss(id)
       }
     },
@@ -59,7 +62,7 @@
       },
       notify(message) {
         let id = this.id++
-        this.notes.push({ theme: "dark-blue-theme", message: message, id: id })
+        this.notes.push({ theme: "dark-theme blue-text", message: message, id: id })
         setTimeout(() => {
           this.dismiss(id)
         }, this.lifespan)
@@ -67,7 +70,7 @@
       },
       error(message) {
         let id = this.id++
-        this.notes.push({ theme: "dark-orange-theme", message: message, id: id})
+        this.notes.push({ theme: "dark-theme orange-text", message: message, id: id})
         setTimeout(() => {
           this.dismiss(id)
         }, this.lifespan)

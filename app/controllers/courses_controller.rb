@@ -8,12 +8,17 @@ class CoursesController < ApplicationController
         c_user = current_user()
         return ( render status: 401, json: { result: "Not Authorized" } ) unless logged_in?  # Ensure the user is logged in
 
+         schema = {
+            tier: Tier.schema,
+            visibility: Visibility.schema
+        }       
+
         # Verify that they can access this API endpoint
         if c_user.role == Role.admin or c_user.role == Role.moderator
 
             # return the courses as a JSON file for the API
             courses = Course.all.order(updated_at: :desc)
-            render status: 200, json: { result: courses }
+            render status: 200, json: { result: courses, schema: schema }
         else
             render status: 401, json: { result: "Not Authorized" }
         end
@@ -27,12 +32,17 @@ class CoursesController < ApplicationController
         c_user = current_user()
         return ( render status: 401, json: { result: "Not Authorized" } ) unless logged_in?  # Ensure the user is logged in
 
+        schema = {
+            tier: Tier.schema,
+            visibility: Visibility.schema
+        }
+
         # Verify that they can access this API endpoint
         if c_user.role == Role.admin or c_user.role == Role.moderator
 
             # return the review courses as a JSON file for the API
             courses = Course.where(visibility: Visibility.reviewing).order(updated_at: :desc)
-            render status: 200, json: { result: courses }
+            render status: 200, json: { result: courses, schema: schema }
         else
             render status: 401, json: { result: "Not Authorized" }
         end
@@ -46,9 +56,14 @@ class CoursesController < ApplicationController
         c_user = current_user()
         return ( render status: 401, json: { result: "Not Authorized" } ) unless logged_in?  # Ensure the user is logged in
 
+        schema = {
+            tier: Tier.schema,
+            visibility: Visibility.schema
+        }
+
         # return the draft courses as a JSON file for the API
         courses = Course.where(visibility: Visibility.draft, user_id: c_user.id).order(updated_at: :desc)
-        render status: 200, json: { result: courses }
+        render status: 200, json: { result: courses, schema: schema }
     end
 
     # Request: GET /courses/published
@@ -56,9 +71,15 @@ class CoursesController < ApplicationController
     # Unauthorized access: Should get redirected to root (/)
     # Authorized access: Return a JSON of all courses where course.visibility == Visibility.published in the format { result: [ course1, course2, ...] }
     def published
+
+        schema = {
+            tier: Tier.schema,
+            visibility: Visibility.schema
+        }
+
         # return all the published courses as a JSON file for the API
         courses = Course.where(visibility: Visibility.published).order(updated_at: :desc)
-        render status: 200, json: { result: courses }
+        render status: 200, json: { result: courses, schema: schema }
     end
 
     # Request: GET /courses/(:course_id)
@@ -67,7 +88,7 @@ class CoursesController < ApplicationController
     # - otherwise only available to admin, moderator, and creator of course
     # Unauthorized access: Should get redirected to root (/)
     # Authorized access: Return a JSON of the course where course.id == course_id in the format { item: { title: "How to kill a mockingbird", description : "...", ... } }
-    def getcourse
+    def show
         c_user = current_user()
         course = Course.where(id: params[:course_id]).first()
 
@@ -76,9 +97,14 @@ class CoursesController < ApplicationController
             return ( render status: 404, json: { result: "Not Found" } )
         end
 
+        schema = {
+            tier: Tier.schema,
+            visibility: Visibility.schema
+        }
+
         # Public case:
         if course.visibility == Visibility.published
-            render status: 200, json: { result: course }
+            render status: 200, json: { result: course, schema: schema }
 
         # Authenticated case:
         elsif logged_in?  # Ensure that the user is logged in
@@ -111,7 +137,7 @@ class CoursesController < ApplicationController
 
         schema = {
             title: :text,
-            description: :text,
+            description: :textarea,
             tier: Tier.schema,
             visibility: Visibility.schema
         }
@@ -147,7 +173,7 @@ class CoursesController < ApplicationController
         # Attaches a schema 
         schema = {
             title: :text,
-            description: :text,
+            description: :textarea,
             tier: Tier.schema,
             visibility: Visibility.schema
         }

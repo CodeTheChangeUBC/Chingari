@@ -1,5 +1,10 @@
-class CourseView {
+class CourseModel {
     // If any of these get an error code, the promise should reject with <status: error_code, result: explanation>
+
+    static parse_response(response) {
+        response.status = response.status
+        return response
+    }
 
     // .index() => Promise<status: success_code, result: existing_courses>
     static index() {
@@ -8,29 +13,57 @@ class CourseView {
             $.ajax({
                 url: url,
                 type: 'GET',
-                success: function(data, status, xobj){
-                    resolve({status: xobj.status, result: xobj.responseJSON.result});
-                },
-                error: function(data, status, xobj){
-                    reject({status: data.status, result: data.responseJSON.result});
-                }
+                success(data, status, xobj) { resolve(CourseModel.parse_response(xobj)) },
+                error(data, status, xobj) { reject(CourseModel.parse_response(data)) }
             });
         })
     }
 
-    // .get(id) => Promise<status: success_code, result: existing_course>
-    static get(id) {
+    static drafts() {
+        return new Promise(function (resolve, reject) {
+            let url = "/courses/drafts";
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success(data, status, xobj) { resolve(CourseModel.parse_response(xobj)) },
+                error(data, status, xobj) { reject(CourseModel.parse_response(data)) }
+            });
+        })
+    }    
+
+    static review() {
+        return new Promise(function (resolve, reject) {
+            let url = "/courses/review";
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success(data, status, xobj) { resolve(CourseModel.parse_response(xobj)) },
+                error(data, status, xobj) { reject(CourseModel.parse_response(data)) }
+            });
+        })
+    }    
+
+    static published() {
+        return new Promise(function (resolve, reject) {
+            let url = "/courses/published";
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success(data, status, xobj) { resolve(CourseModel.parse_response(xobj)) },
+                error(data, status, xobj) { reject(CourseModel.parse_response(data)) }
+            });
+        })
+    }
+
+    // .show(id) => Promise<status: success_code, result: existing_course>
+    static show(id) {
         return new Promise(function(resolve, reject){
             let url = "/courses/"+id;
             $.ajax({
                 url: url,
                 type: 'GET',
-                success: function (data, status, xobj) {
-                    resolve({ status: xobj.status, result: xobj.responseJSON.result });
-                },
-                error: function (data, status, xobj) {
-                    reject({ status: data.status, result: data.responseJSON.result });
-                }
+                success(data, status, xobj) { resolve(CourseModel.parse_response(xobj)) },
+                error(data, status, xobj) { reject(CourseModel.parse_response(data)) }
             });
         })
     }
@@ -42,12 +75,8 @@ class CourseView {
             $.ajax({
                 url: url,
                 type: 'GET',
-                success: function (data, status, xobj) {
-                    resolve({ status: xobj.status, result: xobj.responseJSON.result, schema:data.responseJSON.result });
-                },
-                error: function (data, status, xobj) {
-                    reject({ status: data.status, result: data.responseJSON.result });
-                }
+                success(data, status, xobj) { resolve(CourseModel.parse_response(xobj)) },
+                error(data, status, xobj) { reject(CourseModel.parse_response(data)) }
             });
         })
     }
@@ -59,12 +88,8 @@ class CourseView {
             $.ajax({
                 url: url,
                 type: 'GET',
-                success: function (data, status, xobj) {
-                    resolve({ status: xobj.status, result: xobj.responseJSON.result, schema:data.responseJSON.result });
-                },
-                error: function (data, status, xobj) {
-                    reject({ status: data.status, result: data.responseJSON.result });
-                }
+                success(data, status, xobj) { resolve(CourseModel.parse_response(xobj)) },
+                error(data, status, xobj) { reject(CourseModel.parse_response(data)) }
             });
         })
     }
@@ -78,12 +103,8 @@ class CourseView {
                 url: url,
                 type: 'POST',
                 data: params,
-                success: function (data, status, xobj) {
-                    resolve({ status: xobj.status, result: xobj.responseJSON.result });
-                },
-                error: function (data, status, xobj) {
-                    reject({ status: data.status, result: data.responseJSON.result });
-                }
+                success(data, status, xobj) { resolve(CourseModel.parse_response(xobj)) },
+                error(data, status, xobj) { reject(CourseModel.parse_response(data)) }
             });
         })
     }
@@ -97,12 +118,8 @@ class CourseView {
                 url: url,
                 type: 'PUT',
                 data: params,
-                success: function (data, status, xobj) {
-                    resolve({ status: xobj.status, result: xobj.responseJSON.result });
-                },
-                error: function (data, status, xobj) {
-                    reject({ status: data.status, result: data.responseJSON.result });
-                }
+                success(data, status, xobj) { resolve(CourseModel.parse_response(xobj)) },
+                error(data, status, xobj) { reject(CourseModel.parse_response(data)) }
             });
         })
     }
@@ -114,12 +131,8 @@ class CourseView {
             $.ajax({
                 url: url,
                 type: 'DELETE',
-                success: function (data, status, xobj) {
-                    resolve({ status: xobj.status, result: xobj.responseJSON.result });
-                },
-                error: function (data, status, xobj) {
-                    reject({ status: data.status, result: data.responseJSON.result });
-                }
+                success(data, status, xobj) { resolve(CourseModel.parse_response(xobj)) },
+                error(data, status, xobj) { reject(CourseModel.parse_response(data)) }
             });
         })
     }

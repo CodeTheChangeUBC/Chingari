@@ -5,8 +5,8 @@ class Tier
 
   def self.schema
     {
-      premium: 1,
-      free: 0
+      free: 0,
+      premium: 1
     }
   end
 

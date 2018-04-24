@@ -1,7 +1,7 @@
 <% provide(:title, "Community") %>
 <%= stylesheet_link_tag 'pages/community', media: 'all', 'data-turbolinks-track': 'reload' %>
 <a data-anchor-id="feature">
-	<div class="banner" style="background-image: url(<%= asset_path('backgrounds/home.jpg') %>)">
+	<div class="banner-sm" style="background-image: url(<%= asset_path('backgrounds/home.jpg') %>)">
 		<div class="row d-flex align-items-center">
 			<div class="message text-center col-sm-7">
 				<p class="light-text title serif clear-theme">Community</p>
@@ -10,19 +10,27 @@
 	</div>
 </a>
 
-<a data-anchor-id="mission">
+<a data-anchor-id="courses">
 	<div class="banner-sm">
-    <div id="course_view">
-      <div id="index">
-        <div v-for="course in courses">
-          {{ course.title }}
+        <div class="row">
+          <div class="col-lg-1 col-sm-0"></div>
+
+          <div class="message col-lg-10 col-sm-12">
+            <div id="course-app" style="min-height: 300px">
+              <transition name="fade-in-out" v-on:transition="$emit('transition', $event)">
+                <course-list v-on:transition="transition" v-if="viewing_mode === 'list'" v-bind:items="items" v-bind:schema="schema">
+                </course-list>
+                <course-view v-on:transition="transition" v-if="viewing_mode === 'view'" v-bind:item="item" v-bind:schema="schema">
+                </course-view>
+                <control-form v-on:transition="transition" v-if="viewing_mode === 'form'" v-bind:item="item" v-bind:schema="schema" v-bind:mode="action_mode">
+                </control-form>
+                <div class="loading text-center" v-if="viewing_mode === 'load'"><%= fa_icon "spinner", class: "fa-spin fa-lg" %></div>
+              </transition>
+            </div>
+          </div>
+
+          <div class="col-lg-1 col-sm-0"></div>
         </div>
-      </div>
-      <div id="show">
-      </div>
-      <div id="new">
-      </div>
-      <div id="edit">
       </div>
     </div>
 	</div>
@@ -30,7 +38,260 @@
 <script>
   let preload_data = {
     subpath: "<%= @subpath.to_s %>"
+
   }
 </script>
 <%= javascript_include_tag 'models/course.js', 'data-turbolinks-track': 'reload' %>
 <%= javascript_include_tag 'views/course.js', 'data-turbolinks-track': 'reload' %>
+
+<script>
+
+const PropertyInput = Vue.component("property-input", {
+  props: ["label", "placeholder", "type"],
+  data() {
+    return {
+      value: undefined
+    }
+  },
+  methods: {
+    changed(event) {
+      this.value = event.target.value
+      this.$emit("changed", this.label, this.value)
+    }
+  },
+  created() {
+    this.value = this.placeholder
+  },
+  template: `
+            <div class="form-group property-input">
+              <label v-bind:for="label">{{ label }}</label>
+              <input v-if="type === 'text'" v-bind:placeholder="value" v-on:input="changed" type="text" class="form-control">
+              <textarea v-if="type === 'textarea'" v-bind:placeholder="value" v-on:input="changed" type="textarea" class="form-control"></textarea>
+              <select v-if="type.constructor === Object" v-on:change="changed" type="enumerable" class="form-control">
+                <option v-for="(num, name) in type" v-if="num === placeholder" v-bind:value="num" selected>{{ name }}</option>
+                <option v-for="(num, name) in type" v-if="num !== placeholder" v-bind:value="num">{{ name }}</option>
+              </select>
+            </div>
+            `
+})
+const ModelForm = Vue.component("model-form", {
+  props: ["item", "schema"],
+  data() {
+    return {
+      model: {}
+    }
+  },
+  methods: {
+    changed(key, value) {
+      Vue.set(this.model, key, value)
+      this.$emit("changed", this.model)
+    }
+  },
+  created() {
+    for (key in this.item) {
+      Vue.set(this.model, key, this.item[key])
+    }
+  },
+  template: `
+            <form class="model-form">
+              <property-input v-for="(type, label) in schema" 
+                v-bind:key="label"
+                v-bind:label="label" 
+                v-bind:placeholder="item[label]" 
+                v-bind:type="type"
+                v-on:changed="changed">
+              </property-input>
+            </form>
+            `
+})
+
+const ControlForm = Vue.component("control-form", {
+  props: ["schema", "item", "mode"],
+  data() { 
+    return {
+      model: {}
+    }
+  },
+  methods: {
+    changed(new_model) {
+      Vue.set(this, "model", new_model)
+    }
+  },
+  created() {
+    for (key in this.item) {
+      Vue.set(this.model, key, this.item[key])
+    }
+  },
+  template: `
+            <div class="control-form row">
+              <div class="preview col-lg-6 col-sm-12">
+                <p class="title">
+                  {{ model.title }}
+                </p>
+                <p class="text">
+                  {{ model.description }}
+                </p>
+              </div>
+
+              <div class="form col-lg-6 col-sm-12">
+                <model-form
+                  v-bind:item="item"
+                  v-bind:schema="schema"
+                  v-on:changed="changed">
+                </model-form>
+
+                <button class="button blue-button" v-if="mode === 'create'" v-on:click="$emit('transition', { viewing_mode: 'list' })">Cancel</button>
+                <button class="button blue-button" v-if="mode === 'edit'" v-on:click="$emit('transition', { viewing_mode: 'view', id: item.id })">Cancel</button>
+
+                <button class="button orange-button" v-if="mode === 'create'" v-on:click="this.$emit('create', this.model)">Create</button>
+                <button class="button orange-button" v-if="mode === 'edit'" v-on:click="this.$emit('update', this.model)">Save</button>
+                <button class="button orange-button" v-if="mode === 'edit'" v-on:click="this.$emit('delete', this.model)">Delete</button>
+              </div>
+            </div>
+            `
+})
+
+const CoursePreview = Vue.component("course-preview", {
+  props: ["schema", "item"],
+  template: `<div class="col-lg-4 col-md-6 col-sm-12 item-preview shadow-box">
+              <p class="title">
+                {{ item.title }}
+              </p>
+              <button class="button blue-button" v-on:click="$emit('transition', { viewing_mode: 'view', id: item.id })">View</button>
+            </div>`
+})
+
+const CourseView = Vue.component("course-view", {
+  props: ["schema", "item"],
+  methods: {
+    copylink(id) {
+      const hidden_element = document.createElement('textarea')
+      const url = window.location.host + "/community/" + id
+      hidden_element.value = url
+      hidden_element.setAttribute('readonly', '')
+      hidden_element.style.position = 'absolute'
+      hidden_element.style.left = '-9999px'
+      document.body.appendChild(hidden_element)
+      hidden_element.select()
+      document.execCommand('copy')
+      document.body.removeChild(hidden_element)
+      Notifications.notify("The course link has been copied to your clipboard")
+    },
+    del(id) {
+      console.log("delete")
+    }
+  },
+  template: `
+            <div class="item-view">
+              <p class="title">
+                {{ item.title }}
+              </p>
+              <p class="text">
+                {{ item.description }}
+              </p>
+              
+              <button class="button blue-button" v-on:click="$emit('transition', { viewing_mode: 'list' })">Back</button>
+              <button class="button blue-button" v-on:click="copylink(item.id)">Share</button>
+              <button class="button orange-button" v-on:click="$emit('transition', { viewing_mode: 'form', id: item.id })">Edit</button>
+
+            </div>
+            `
+})
+
+const CourseList = Vue.component("course-list", {
+  props: ["schema", "items"],
+  template: `
+            <div class="item-list">
+              <button class="button orange-button" v-on:click="$emit('transition', { viewing_mode: 'form' })">New Course</button>
+              <br> 
+              <div class="row">
+                <course-preview v-on:transition="$emit('transition', $event)" class="" v-for="item in items" v-bind:schema="schema" v-bind:item="item" v-bind:key="item.id">
+                </course-preview>
+              </div>
+            </div>
+            `
+})
+
+const CourseApp = new Vue({
+  el: "#course-app",
+  data: {
+    api: CourseModel,
+    path: preload_data.subpath,
+    schema: undefined,
+    items: [],
+    item: undefined,
+    viewing_mode: undefined,
+    action_mode: undefined,
+  },
+  methods: {
+    load(promise, viewing_mode) {
+      this.viewing_mode = "blank"
+      const load = setTimeout(() => { this.viewing_mode = "load" }, 200)
+      return promise.then(() => {
+        clearTimeout(load)
+        this.viewing_mode = "blank"
+        setTimeout(() => { this.viewing_mode = viewing_mode }, 200)
+      })
+    },
+    transition(state) {
+      console.log(state)
+      if (state.viewing_mode === "view") {
+        this.show(state.id)
+      } else if (state.viewing_mode === "list") {
+        this.published()
+      } else if (state.viewing_mode === "form") {
+        if (state.id === undefined) {
+          this.new()
+          this.action_mode = "create"
+        } else {
+          this.edit(state.id)
+          this.action_mode = "edit"
+        }
+      }
+    },
+    success(response) {
+      if (response.result !== undefined) {
+        if(response.result.constructor === Array) {
+          this.items = response.result
+          this.item = undefined
+        } else if (response.result.constructor === Object) {
+          this.items = undefined
+          this.item = response.result
+        } else if (response.result.constructor === String) {
+          this.items = undefined
+          this.item = undefined
+          Notifications.notify(response.result)
+        } else {
+          this.items = undefined
+          this.item = undefined
+        }
+      }
+      if (response.schema !== undefined && response.schema.constructor === Object) {
+        this.schema = response.schema
+      }
+    },
+    error(response) {
+      Notifications.error(response.result)
+    },
+    index() { return this.load(CourseModel.index().then(this.success).catch(this.error), "list") },
+    drafts() { return this.load(CourseModel.drafts().then(this.success).catch(this.error), "list") },
+    review() { return this.load(CourseModel.review().then(this.success).catch(this.error), "list") },
+    published() { return this.load(CourseModel.published().then(this.success).catch(this.error), "list") },
+    show(id) { return this.load(CourseModel.show(id).then(this.success).catch(this.error), "view") },
+    new() { return this.load(CourseModel.new().then(this.success).catch(this.error), "form") },
+    edit(id) { return this.load(CourseModel.edit(id).then(this.success).catch(this.error), "form") },
+    // create(params) { return CourseModel.delete(id).then(this.success).catch(this.error).then(() => this.published()) },
+    // update(id, params) { return CourseModel.delete(id).then(this.success).catch(this.error).then(() => this.published()) },
+    delete(id) { return CourseModel.delete(id).then(this.success).catch(this.error).then(() => this.published()) },
+  },
+  created() {
+    console.log("Initializing Course App at path: " + this.path)
+    if (this.path.match(/^\d+$/) !== null) {
+      let id = this.path.match(/^\d+$/)[0]
+      this.show(id)
+    } else {
+      this.published()
+    }
+  }
+})
+</script>
