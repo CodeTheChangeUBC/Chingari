@@ -17,14 +17,108 @@
 
           <div class="message col-lg-10 col-sm-12">
             <div id="course-app" style="min-height: 300px">
-              <transition name="fade-in-out" v-on:transition="$emit('transition', $event)">
-                <course-list v-on:transition="transition" v-if="viewing_mode === 'list'" v-bind:items="items" v-bind:schema="schema">
-                </course-list>
-                <course-view v-on:transition="transition" v-if="viewing_mode === 'view'" v-bind:item="item" v-bind:schema="schema">
-                </course-view>
-                <control-form v-on:transition="transition" v-if="viewing_mode === 'form'" v-bind:item="item" v-bind:schema="schema" v-bind:mode="action_mode">
+              <transition name="fade-in-out">
+
+                <control-list 
+                  v-if="viewing_mode === 'index' || viewing_mode === 'published' || viewing_mode === 'review' || viewing_mode === 'drafts'">
+                  <button class="button orange-button" 
+                    slot="controls"
+                    v-on:click="new_item()">
+                    New Course
+                  </button>
+
+                  <course-render-small
+                    slot="preview"
+                    v-for="item in model" 
+                    v-bind:key="item.id"
+                    v-bind:schema="schema" 
+                    v-bind:item="item">
+
+                    <button
+                      slot="controls"
+                      v-on:click="show_item(item.id)"
+                      class="button blue-button" >
+                      View
+                    </button>
+
+                  </course-render-small>
+
+                </control-list>
+
+                <control-view 
+                  v-if="viewing_mode === 'show'">
+
+                  <course-render-large
+                    slot="view"
+                    v-bind:schema="schema"
+                    v-bind:item="model">
+                  </course-render-large>
+
+                  <div slot="controls">
+                    <button
+                      class="button blue-button"
+                      v-on:click="published()">
+                      Back
+                    </button>
+                    <button
+                      class="button blue-button"
+                      v-on:click="copylink(model.id)">
+                      Share
+                    </button>
+                    <button class="button orange-button"
+                      v-on:click="edit_item(model.id)">
+                      Edit
+                    </button>
+                  </div>
+                </control-view>
+
+                <control-form 
+                  v-if="viewing_mode === 'new' || viewing_mode === 'edit'" 
+                  v-bind:schema="schema" 
+                  v-bind:item="model" 
+                  v-bind:mode="viewing_mode"
+                  v-on:changed="changed">
+
+                  <course-render-large
+                    slot="preview"
+                    v-bind:schema="schema"
+                    v-bind:item="model">
+                  </course-render-large>
+                  
+                  <div slot="controls">
+                    <span v-if="viewing_mode === 'new'">
+                      <button class="button blue-button" 
+                        v-on:click="published()">
+                        Cancel
+                      </button>
+                      <button class="button orange-button" 
+                        v-on:click="create_item(model)">
+                        Create
+                      </button>
+                    </span>
+
+                    <span v-if="viewing_mode === 'edit'">
+                      <button class="button blue-button" 
+                        v-on:click="show_item(model.id)">
+                        Cancel
+                      </button>
+                      <button class="button orange-button"
+                        v-on:click="update_item(model.id, model)">
+                        Save
+                      </button>
+                      <button class="button orange-button"
+                        v-on:click="delete_item(model.id)">
+                        Delete
+                      </button>
+                    </span>
+                  </div>
                 </control-form>
-                <div class="loading text-center" v-if="viewing_mode === 'load'"><%= fa_icon "spinner", class: "fa-spin fa-lg" %></div>
+
+                <div class="loading text-center"
+                  v-if="viewing_mode === 'load'">
+                  <%= fa_icon "spinner", class: "fa-spin fa-lg" %>
+                </div>
+
               </transition>
             </div>
           </div>
@@ -46,6 +140,43 @@
 
 <script>
 
+/*------------------------------------
+------------ START REFACTOR ------------
+------------------------------------*/
+
+function copy_to_clipboard(string) {
+  const hidden_element = document.createElement('textarea')
+  hidden_element.value = string
+  hidden_element.setAttribute('readonly', '')
+  hidden_element.style.position = 'absolute'
+  hidden_element.style.left = '-9999px'
+  document.body.appendChild(hidden_element)
+  hidden_element.select()
+  document.execCommand('copy')
+  document.body.removeChild(hidden_element)
+}
+
+function wait(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+const StringRender = Vue.component("string-render", {
+  props: ["string", "placeholder"],
+  template: `
+            <span class="string-render">
+              <span v-if="string.match(/^\s*$/) === null">
+                {{ string }}
+              </span>
+              <span v-else-if="placeholder !== undefined" class="string-render-placeholder" style="opacity: 0.5">
+                {{ placeholder }}
+              </span>
+              <span v-else class="string-render-placeholder" style="opacity: 0.5">
+                blank
+              </span>
+            </span>
+            `
+})
+
 const PropertyInput = Vue.component("property-input", {
   props: ["label", "placeholder", "type"],
   data() {
@@ -54,8 +185,14 @@ const PropertyInput = Vue.component("property-input", {
     }
   },
   methods: {
-    changed(event) {
-      this.value = event.target.value
+    changed(event, mod) {
+      let new_value = event.target.value
+      if (mod === "number") {
+        new_value = Number(new_value)
+      } else if (mod === "trim") {
+        new_value = new_value.trim()
+      }
+      this.value = new_value
       this.$emit("changed", this.label, this.value)
     }
   },
@@ -64,12 +201,50 @@ const PropertyInput = Vue.component("property-input", {
   },
   template: `
             <div class="form-group property-input">
-              <label v-bind:for="label">{{ label }}</label>
-              <input v-if="type === 'text'" v-bind:placeholder="value" v-on:input="changed" type="text" class="form-control">
-              <textarea v-if="type === 'textarea'" v-bind:placeholder="value" v-on:input="changed" type="textarea" class="form-control"></textarea>
-              <select v-if="type.constructor === Object" v-on:change="changed" type="enumerable" class="form-control">
-                <option v-for="(num, name) in type" v-if="num === placeholder" v-bind:value="num" selected>{{ name }}</option>
-                <option v-for="(num, name) in type" v-if="num !== placeholder" v-bind:value="num">{{ name }}</option>
+              <label 
+                v-bind:for="label">
+                {{ label }}
+              </label>
+              <input 
+                v-if="type === 'text'" 
+                v-bind:placeholder="label"
+                v-bind:value="value"
+                v-on:input="changed($event, 'trim')" 
+                type="text" 
+                class="form-control">
+              <textarea 
+                v-if="type === 'textarea'" 
+                v-bind:placeholder="label"
+                v-bind:value="value"
+                v-on:input="changed($event, 'trim')" 
+                type="textarea" 
+                class="form-control">
+              </textarea>
+              <input 
+                v-if="type === 'number'" 
+                v-bind:placeholder="label"
+                v-bind:value="value"
+                v-on:input="changed($event, 'number')" 
+                type="number" 
+                class="form-control">
+              <select 
+                v-if="type.constructor === Object" 
+                v-on:change="changed($event, 'number')" 
+                type="enumerable" 
+                class="form-control">
+                <option 
+                  v-for="(num, name) in type" 
+                  v-if="num === placeholder" 
+                  v-bind:value="num" 
+                  selected>
+                  {{ name }}
+                </option>
+                <option 
+                  v-for="(num, name) in type" 
+                  v-if="num !== placeholder" 
+                  v-bind:value="num">
+                  {{ name }}
+                </option>
               </select>
             </div>
             `
@@ -88,9 +263,10 @@ const ModelForm = Vue.component("model-form", {
     }
   },
   created() {
-    for (key in this.item) {
-      Vue.set(this.model, key, this.item[key])
-    }
+    Vue.set(this, "model", JSON.parse(JSON.stringify(this.item)))
+    // for (key in this.item) {
+    //   Vue.set(this.model, key, this.item[key])
+    // }
   },
   template: `
             <form class="model-form">
@@ -115,155 +291,144 @@ const ControlForm = Vue.component("control-form", {
   methods: {
     changed(new_model) {
       Vue.set(this, "model", new_model)
+      this.$emit("changed", this.model)
     }
   },
   created() {
-    for (key in this.item) {
-      Vue.set(this.model, key, this.item[key])
-    }
+    Vue.set(this, "model", JSON.parse(JSON.stringify(this.item)))
+    // for (key in this.item) {
+    //   Vue.set(this.model, key, this.item[key])
+    // }
   },
   template: `
             <div class="control-form row">
               <div class="preview col-lg-6 col-sm-12">
-                <p class="title">
-                  {{ model.title }}
-                </p>
-                <p class="text">
-                  {{ model.description }}
-                </p>
+                <slot name="preview"></slot>
               </div>
 
               <div class="form col-lg-6 col-sm-12">
+              
                 <model-form
                   v-bind:item="item"
                   v-bind:schema="schema"
                   v-on:changed="changed">
                 </model-form>
 
-                <button class="button blue-button" v-if="mode === 'create'" v-on:click="$emit('transition', { viewing_mode: 'list' })">Cancel</button>
-                <button class="button blue-button" v-if="mode === 'edit'" v-on:click="$emit('transition', { viewing_mode: 'view', id: item.id })">Cancel</button>
+                <slot name="controls"></slot>
 
-                <button class="button orange-button" v-if="mode === 'create'" v-on:click="this.$emit('create', this.model)">Create</button>
-                <button class="button orange-button" v-if="mode === 'edit'" v-on:click="this.$emit('update', this.model)">Save</button>
-                <button class="button orange-button" v-if="mode === 'edit'" v-on:click="this.$emit('delete', this.model)">Delete</button>
               </div>
             </div>
             `
 })
 
-const CoursePreview = Vue.component("course-preview", {
-  props: ["schema", "item"],
-  template: `<div class="col-lg-4 col-md-6 col-sm-12 item-preview shadow-box">
-              <p class="title">
-                {{ item.title }}
-              </p>
-              <button class="button blue-button" v-on:click="$emit('transition', { viewing_mode: 'view', id: item.id })">View</button>
-            </div>`
-})
-
-const CourseView = Vue.component("course-view", {
-  props: ["schema", "item"],
-  methods: {
-    copylink(id) {
-      const hidden_element = document.createElement('textarea')
-      const url = window.location.host + "/community/" + id
-      hidden_element.value = url
-      hidden_element.setAttribute('readonly', '')
-      hidden_element.style.position = 'absolute'
-      hidden_element.style.left = '-9999px'
-      document.body.appendChild(hidden_element)
-      hidden_element.select()
-      document.execCommand('copy')
-      document.body.removeChild(hidden_element)
-      Notifications.notify("The course link has been copied to your clipboard")
-    },
-    del(id) {
-      console.log("delete")
-    }
-  },
+const ControlList = Vue.component("control-list", {
   template: `
-            <div class="item-view">
-              <p class="title">
-                {{ item.title }}
-              </p>
-              <p class="text">
-                {{ item.description }}
-              </p>
-              
-              <button class="button blue-button" v-on:click="$emit('transition', { viewing_mode: 'list' })">Back</button>
-              <button class="button blue-button" v-on:click="copylink(item.id)">Share</button>
-              <button class="button orange-button" v-on:click="$emit('transition', { viewing_mode: 'form', id: item.id })">Edit</button>
-
-            </div>
-            `
-})
-
-const CourseList = Vue.component("course-list", {
-  props: ["schema", "items"],
-  template: `
-            <div class="item-list">
-              <button class="button orange-button" v-on:click="$emit('transition', { viewing_mode: 'form' })">New Course</button>
+            <div class="control-list">
+              <slot name="controls"></slot>
               <br> 
               <div class="row">
-                <course-preview v-on:transition="$emit('transition', $event)" class="" v-for="item in items" v-bind:schema="schema" v-bind:item="item" v-bind:key="item.id">
-                </course-preview>
+                <slot name="preview"></slot>
               </div>
             </div>
             `
 })
+
+const ControlView = Vue.component("control-view", {
+  template: `
+            <div class="control-view">
+              <slot name="view"></slot>
+              <slot name="controls"></slot>
+            </div>
+            `
+})
+
+/*------------------------------------
+------------ END REFACTOR ------------
+------------------------------------*/
+
+
+/*--------------------------------------------
+------------ Course Custom Render ------------
+---------------------------------------------*/
+
+
+const CourseRenderLarge = Vue.component("course-render-large", {
+  props: ["schema", "item"],
+  template: `
+            <div class="course-render-large">
+              <p class="title">
+                <string-render 
+                  v-bind:string="item.title"
+                  v-bind:placeholder="'Blank Title'"
+                  >
+                </string-render>
+              </p>
+              <p class="text">
+                <string-render
+                  v-bind:string="item.description"
+                  v-bind:placeholder="'Blank Description'"
+                  >
+                </string-render>
+              </p>
+            </div>
+            `
+})
+
+const CourseRenderSmall = Vue.component("course-render-small", {
+  props: ["schema", "item"],
+  template: `
+            <div class="course-render-small col-lg-4 col-md-6 col-sm-12">
+              <p class="title">
+                <string-render 
+                  v-bind:string="item.title"
+                  v-bind:placeholder="'Blank Title'"
+                  >
+                </string-render>
+              </p>
+              <slot name="controls"></slot>
+            </div>
+            `
+})
+
+
+/*--------------------------------------------
+------------ Course Application ------------
+---------------------------------------------*/
 
 const CourseApp = new Vue({
   el: "#course-app",
   data: {
-    api: CourseModel,
     path: preload_data.subpath,
     schema: undefined,
-    items: [],
-    item: undefined,
+    model: undefined,
     viewing_mode: undefined,
-    action_mode: undefined,
+    permissions: undefined
   },
   methods: {
-    load(promise, viewing_mode) {
+    transition(api_promise, success_viewing_mode) {
+      const last_state = this.viewing_mode
       this.viewing_mode = "blank"
       const load = setTimeout(() => { this.viewing_mode = "load" }, 200)
-      return promise.then(() => {
-        clearTimeout(load)
-        this.viewing_mode = "blank"
-        setTimeout(() => { this.viewing_mode = viewing_mode }, 200)
-      })
-    },
-    transition(state) {
-      console.log(state)
-      if (state.viewing_mode === "view") {
-        this.show(state.id)
-      } else if (state.viewing_mode === "list") {
-        this.published()
-      } else if (state.viewing_mode === "form") {
-        if (state.id === undefined) {
-          this.new()
-          this.action_mode = "create"
-        } else {
-          this.edit(state.id)
-          this.action_mode = "edit"
-        }
-      }
+      return api_promise
+        .then(this.success)
+        .catch(this.error)
+        .then(() => {
+          clearTimeout(load)
+          this.viewing_mode = "blank"
+          return wait(200)
+        }).catch((error) => {
+          clearTimeout(load)
+          this.viewing_mode = last_state
+          throw error     
+        })
+        .then(() => { this.viewing_mode =  success_viewing_mode })
     },
     success(response) {
       if (response.result !== undefined) {
-        if(response.result.constructor === Array) {
-          this.items = response.result
-          this.item = undefined
-        } else if (response.result.constructor === Object) {
-          this.items = undefined
-          this.item = response.result
+        if(response.result.constructor === Array || response.result.constructor === Object) {
+          this.model = response.result
         } else if (response.result.constructor === String) {
-          this.items = undefined
-          this.item = undefined
           Notifications.notify(response.result)
-        } else {
-          this.items = undefined
-          this.item = undefined
         }
       }
       if (response.schema !== undefined && response.schema.constructor === Object) {
@@ -272,20 +437,32 @@ const CourseApp = new Vue({
     },
     error(response) {
       Notifications.error(response.result)
+      throw(new Error(JSON.stringify(response)))
     },
-    index() { return this.load(CourseModel.index().then(this.success).catch(this.error), "list") },
-    drafts() { return this.load(CourseModel.drafts().then(this.success).catch(this.error), "list") },
-    review() { return this.load(CourseModel.review().then(this.success).catch(this.error), "list") },
-    published() { return this.load(CourseModel.published().then(this.success).catch(this.error), "list") },
-    show(id) { return this.load(CourseModel.show(id).then(this.success).catch(this.error), "view") },
-    new() { return this.load(CourseModel.new().then(this.success).catch(this.error), "form") },
-    edit(id) { return this.load(CourseModel.edit(id).then(this.success).catch(this.error), "form") },
-    // create(params) { return CourseModel.delete(id).then(this.success).catch(this.error).then(() => this.published()) },
-    // update(id, params) { return CourseModel.delete(id).then(this.success).catch(this.error).then(() => this.published()) },
-    delete(id) { return CourseModel.delete(id).then(this.success).catch(this.error).then(() => this.published()) },
+    paramsJSON(params) {
+      return JSON.parse(JSON.stringify(params))
+    },
+
+    changed(new_model) {
+      this.model = new_model
+    },
+    copylink(id) {
+      copy_to_clipboard(window.location.host + "/community/" + id)
+      Notifications.notify("The course link has been copied to your clipboard")
+    },
+
+    index_items() { return this.transition(CourseModel.index(), "index") },
+    drafts() { return this.transition(CourseModel.drafts(), "drafts") },
+    review() { return this.transition(CourseModel.review(), "review") },
+    published() { return this.transition(CourseModel.published(), "published") },
+    show_item(id) { return this.transition(CourseModel.show(id), "show") },
+    new_item() { return this.transition(CourseModel.new(), "new") },
+    edit_item(id) { return this.transition(CourseModel.edit(id), "edit") },
+    create_item(params) { return this.transition(CourseModel.create(this.paramsJSON(params)), "blank").then(() => { this.published() }) },
+    update_item(id, params) { return this.transition(CourseModel.update(id, this.paramsJSON(params)), "blank").then(() => { this.published() }) },
+    delete_item(id) { return this.transition(CourseModel.delete(id), "blank").then(() => { this.published() }) },
   },
   created() {
-    console.log("Initializing Course App at path: " + this.path)
     if (this.path.match(/^\d+$/) !== null) {
       let id = this.path.match(/^\d+$/)[0]
       this.show(id)
