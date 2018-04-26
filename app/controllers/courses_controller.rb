@@ -132,7 +132,6 @@ class CoursesController < ApplicationController
     def new
         c_user = current_user()
         return ( render status: 401, json: { result: "Not Authorized" } ) unless logged_in?  # Ensure the user is logged in
-        token = session[:_csrf_token]
         course = Course.new(user_id: c_user.id)
 
         schema = {
@@ -147,7 +146,7 @@ class CoursesController < ApplicationController
             schema[:visibility].delete(:reviewing)
         end
 
-        render status: 200, json: { token: token, result: course, schema: schema }
+        render status: 200, json: { result: course, schema: schema }
     end
 
     # Request: GET /courses/(:course_id)/edit
@@ -162,7 +161,6 @@ class CoursesController < ApplicationController
     def edit
         c_user = current_user()
         return ( render status: 401, json: { result: "Not Authorized" } ) unless logged_in?  # Ensure the user is logged in
-        token = session[:_csrf_token]
         course = Course.where(id: params[:course_id]).first()
 
         # Course Not Found case
@@ -185,11 +183,11 @@ class CoursesController < ApplicationController
 
         # Draft Course case
         if course.visibility == Visibility.draft and course.user_id == c_user.id
-            render status: 200, json: { token: token, result: course, schema: schema }
+            render status: 200, json: { result: course, schema: schema }
 
         # Privledged User case
         elsif c_user.role == Role.admin or c_user.role == Role.moderator
-            render status: 200, json: { token: token, result: course, schema: schema }
+            render status: 200, json: { result: course, schema: schema }
 
         # Course is not (owned by user and editable) AND (user is not privledged)
         else

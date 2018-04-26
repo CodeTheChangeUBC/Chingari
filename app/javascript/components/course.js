@@ -7,7 +7,7 @@ import Vue from 'vue/dist/vue.esm'
 export const CourseRenderLarge = Vue.component("course-render-large", {
   props: ["schema", "item"],
   template: `
-            <div class="course-render-large">
+            <div class="course-render-large" style="padding: 10px">
               <p class="title">
                 <string-render 
                   v-bind:string="item.title"
@@ -35,8 +35,8 @@ export const CourseRenderSmall = Vue.component("course-render-small", {
   props: ["schema", "item"],
   template: `
             <div class="course-render-small col-lg-4 col-md-6 col-sm-12">
-              <div class="material-shadow" style="margin: 5px 0px 5px 0px">
-                <p class="title">
+              <div class="material-shadow" style="margin: 5px 0px 5px 0px; padding: 10px;">
+                <p class="subtitle">
                   <string-render 
                     v-bind:string="item.title"
                     v-bind:placeholder="'Blank Title'"
