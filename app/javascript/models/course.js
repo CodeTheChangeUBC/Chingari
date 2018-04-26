@@ -1,4 +1,6 @@
-class CourseModel {
+import * as $ from "jquery";
+
+export default class CourseModel {
     // If any of these get an error code, the promise should reject with <status: error_code, result: explanation>
 
     static parse_response(response) {

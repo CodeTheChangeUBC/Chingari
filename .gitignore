@@ -225,3 +225,8 @@ GitHub.sublime-settings
 .byebug_history
 
 *unicorn*
+/public/packs
+/public/packs-test
+/node_modules
+yarn-debug.log*
+.yarn-integrity

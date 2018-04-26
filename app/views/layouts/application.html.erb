@@ -4,17 +4,18 @@
     <title><%= full_title(yield(:title)) %></title>
     <%= csrf_meta_tags %>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css?family=Martel:300|Raleway:200|Source+Sans+Pro:200" rel="stylesheet" data-turbolinks-track='reload'> 
+    <link href="https://fonts.googleapis.com/css?family=Martel:300|Raleway:200|Source+Sans+Pro:200" rel="stylesheet"> 
 		<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <!-- Turbolink is loading in our stylesheets after the SASS imports are done -->
+    <%= stylesheet_link_tag 'application', media: 'all'%>
+    <!-- Turbolink is loading in our external JS dependencies -->
+    <%= javascript_include_tag 'application', "data-turbolinks-track": true %>
   </head>
 
-  <body id="app">
+  <body>
   	<!-- Render header -->
     <%= render 'layouts/header' %>
-    <%= render 'layouts/notifications' %>
+    <div id="notifications"></div>
     <!-- Render error messages for forms (if any) -->
 	  <div id="error-container">
 	    <div class="container">
@@ -26,23 +27,17 @@
 	      <% end %>
 	    </div>
 	  </div>
+    
+    <div id='app'>
+      {{message}}
+    </div>
+
     <%= yield %>
     <!-- Render footer -->
     <%= render 'layouts/footer' %>
-    <script>
-      // Turbolinks initial-dom-loaded
-      $(document).on("turbolinks:load", () => {
-        AnchorScroller.scrollToCurrentAnchor(200, 500)
-
-        // Block anchor-jumps when the destination is on current page
-        $("a").click(AnchorScroller.overrideAnchorClick);
-      });
-
-      // Turbolink cached-page
-      $(document).on("turbolinks:visit", () => {
-        AnchorScroller.scrollToCurrentAnchor(200, 500)
-      });
-      console.log("Rails is running in <%= Rails.env %> environment");
-    </script>
+    <!--Convenient message for checking our environment -->
+    <script> console.log("Rails is running in <%= Rails.env %> environment") </script>
+    <!-- Webpacker then loads our Vue app mounts as well as other initializers -->
+    <%= javascript_pack_tag 'mount' %>
   </body>
 </html>

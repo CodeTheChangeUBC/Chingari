@@ -1,4 +1,4 @@
-class AnchorScroller {
+export default class AnchorScroller {
   // Summary: 
   //   Calling this scrolls to the current location hash id (eg. /current/path/#foobar) if one exists.
   // DOM Effects: 

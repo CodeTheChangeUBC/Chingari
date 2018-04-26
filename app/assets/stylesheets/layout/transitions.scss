@@ -16,3 +16,7 @@
 /* .slide-fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
+.fa-spin-fast {
+  -webkit-animation: fa-spin 0.75s infinite linear;
+  animation: fa-spin 0.75s infinite linear;
+}
