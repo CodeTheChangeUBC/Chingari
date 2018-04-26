@@ -30,7 +30,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
     test "no user get index" do
         get courses_path
-        assert_response :redirect
+        assert_response :unauthorized
     end
 
     test "admin user get review" do
@@ -56,7 +56,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
     test "no user get review" do
         get courses_review_path
-        assert_response :redirect
+        assert_response :unauthorized
     end
 
 
@@ -76,7 +76,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
     test "no user get drafts" do
         get courses_drafts_path
-        assert_response :redirect
+        assert_response :unauthorized
     end
 
 
@@ -132,7 +132,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
     test "no user get new" do
         get courses_new_path
-        assert_response :redirect
+        assert_response :unauthorized
     end
 
 
@@ -158,7 +158,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
     test "no user get edit course 314" do
         get "/courses/314/edit"
-        assert_response :redirect
+        assert_response :unauthorized
     end
 
 
@@ -208,7 +208,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
     test "no user get course 406" do
         get "/courses/406"
-        assert_response :redirect
+        assert_response :unauthorized
     end
 
 
@@ -233,7 +233,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
     test "no user unsuccessfully post new" do
         post "/courses", params: { course: { title: "New Course B", description: "Test Description is New", visibility: 2, tier: 0 } }
-        assert_response :redirect
+        assert_response :unauthorized
     end
 
     test "admin user successfully post new" do
@@ -280,7 +280,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
     test "no user unsuccessfully put updated" do
         put "/courses/314", params: { course: { title: "Updated Course B", description: "Test Description is Updated", visibility: 2, tier: 0 } }
-        assert_response :redirect
+        assert_response :unauthorized
     end
 
     test "admin user successfully put updated" do
@@ -336,7 +336,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
     test "no user unsuccessfully delete" do
         delete "/courses/314"
-        assert_response :redirect
+        assert_response :unauthorized
     end
 
     test "admin user successfully delete" do
