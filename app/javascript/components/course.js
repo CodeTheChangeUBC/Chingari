@@ -22,6 +22,11 @@ export const CourseRenderLarge = Vue.component("course-render-large", {
                   >
                 </string-render>
               </p>
+              <div class="row" style="padding: 15px">
+                <div class="col-sm-12">
+                  <slot name="controls"></slot>
+                </div>
+              </div>
             </div>
             `
 })
@@ -30,14 +35,20 @@ export const CourseRenderSmall = Vue.component("course-render-small", {
   props: ["schema", "item"],
   template: `
             <div class="course-render-small col-lg-4 col-md-6 col-sm-12">
-              <p class="title">
-                <string-render 
-                  v-bind:string="item.title"
-                  v-bind:placeholder="'Blank Title'"
-                  >
-                </string-render>
-              </p>
-              <slot name="controls"></slot>
+              <div class="material-shadow" style="margin: 5px 0px 5px 0px">
+                <p class="title">
+                  <string-render 
+                    v-bind:string="item.title"
+                    v-bind:placeholder="'Blank Title'"
+                    >
+                  </string-render>
+                </p>
+                <div class="row" style="padding: 15px">
+                  <div class="col-sm-12">
+                    <slot name="controls"></slot>
+                  </div>
+                </div>
+              </div>
             </div>
             `
 })

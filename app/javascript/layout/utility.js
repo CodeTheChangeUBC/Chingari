@@ -13,3 +13,7 @@ export function copy_to_clipboard(string) {
 export function wait(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+export function capitalize(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}

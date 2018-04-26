@@ -59,6 +59,14 @@ body {
   overflow-x: hidden;
 }
 
+.responsive-container {
+  padding: 3.5vmin 3.5vw 3.5vmin 3.5vw;
+}
+
+.material-shadow {
+  box-shadow: 5px 5px 5px 0px rgba(50,50,50,0.75), 0px 0px 10px 0px rgba(100,100,100,0.75); 
+}
+
 .loading {
   font-size: 50px;
   padding: 50px;

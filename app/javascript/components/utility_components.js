@@ -1,4 +1,5 @@
 import Vue from 'vue/dist/vue.esm'
+import { capitalize } from '../layout/utility'
 
 export const StringRender = Vue.component("string-render", {
   props: ["string", "placeholder"],
@@ -34,6 +35,9 @@ export const PropertyInput = Vue.component("property-input", {
       }
       this.value = new_value
       this.$emit("changed", this.label, this.value)
+    },
+    capitalize(string) {
+      return capitalize(string)
     }
   },
   created() {
@@ -43,7 +47,7 @@ export const PropertyInput = Vue.component("property-input", {
             <div class="form-group property-input">
               <label 
                 v-bind:for="label">
-                {{ label }}
+                {{ capitalize(label) }}
               </label>
               <input 
                 v-if="type === 'text'" 

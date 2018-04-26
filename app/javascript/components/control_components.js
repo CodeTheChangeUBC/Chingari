@@ -50,13 +50,18 @@ export const ControlForm = Vue.component("control-form", {
   },
   template: `
             <div class="control-form row">
-              <div class="preview col-lg-6 col-sm-12">
-                <slot name="preview"></slot>
+              <div class="col-lg-6 col-sm-12">
+
+                <div class="preview material-shadow" 
+                  style="margin:5px 0px 5px 0px">
+                  <slot name="preview"></slot>
+                </div>
+
               </div>
 
-              <div class="form col-lg-6 col-sm-12">
-              
-                <div class="shadow-box">
+              <div class="col-lg-6 col-sm-12">
+  
+                <div class="form shadow-box" style="margin: 5px 0px 5px 0px">
                   <model-form
                     v-bind:item="item"
                     v-bind:schema="schema"
@@ -75,8 +80,11 @@ export const ControlForm = Vue.component("control-form", {
 export const ControlList = Vue.component("control-list", {
   template: `
             <div class="control-list">
-              <slot name="controls"></slot>
-              <br> 
+              <div class="row" style="padding: 15px">
+                <div class="col-sm-12">
+                  <slot name="controls"></slot>
+                </div>
+              </div> 
               <div class="row">
                 <slot name="preview"></slot>
               </div>
@@ -88,8 +96,16 @@ export const ControlList = Vue.component("control-list", {
 export const ControlView = Vue.component("control-view", {
   template: `
             <div class="control-view">
-              <slot name="view"></slot>
-              <slot name="controls"></slot>
+              <div class="row" style="padding: 15px">
+                <div class="col-sm-12">
+                  <slot name="view"></slot>
+                </div>
+              </div> 
+              <div class="row" style="padding: 15px">
+                <div class="col-sm-12">
+                  <slot name="controls"></slot>
+                </div>
+              </div> 
             </div>
             `
 })

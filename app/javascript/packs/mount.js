@@ -24,34 +24,34 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 import { Notifications } from '../views/notifications'
+import { CourseApp } from '../views/course'
+
+window.addEventListener('DOMContentLoaded', () => {
+  let mount_id, mount, notifications;
+
 // Notifications:
 // Usage:
 //   Notifications.notify("my message")
 //   Notifications.error("my error")
 //   Notifications.dismiss(id)
-window.addEventListener('DOMContentLoaded', () => {
-  const mount_id = "app"
-  const mount = document.getElementById(mount_id)
+  mount_id = "notifications"
+  mount = document.getElementById(mount_id)
   if (mount !== null) {
     // This makes Notifications accessible by the window
-    window.Notifications = Notifications(mount)
+    notifications = Notifications(mount)
+    console.log("Notifications Mounted")
   }
-})
 
-import { CourseApp } from '../views/course'
-// CourseApp:
-//    Vue App for manipulating courses
-window.addEventListener('DOMContentLoaded', () => {
-  const mount_id = "course-app"
-  const mount = document.getElementById(mount_id)
+  // CourseApp:
+  //    Vue App for manipulating courses
+  mount_id = "course-app"
+  mount = document.getElementById(mount_id)
   if (mount !== null) {
     // This makes Notifications accessible by the window
-    window.Notifications = CourseApp(mount)
-  } else {
-    console.l
+    window.Notifications = CourseApp(mount, notifications)
+    console.log("CourseApp Mounted")
   }
 })
-
 
 
 

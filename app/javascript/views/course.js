@@ -7,7 +7,7 @@ import { wait, copy_to_clipboard } from '../layout/utility'
 /*--------------------------------------------
 ------------ Course Application ------------
 ---------------------------------------------*/
-export function CourseApp(mount) {
+export function CourseApp(mount, notifications) {
   return new Vue({
     el: mount,
     data: {
@@ -39,7 +39,7 @@ export function CourseApp(mount) {
           if (response.result.constructor === Array || response.result.constructor === Object) {
             this.model = response.result
           } else if (response.result.constructor === String) {
-            Notifications.notify(response.result)
+            notifications.notify(response.result)
           }
         }
         if (response.schema !== undefined && response.schema.constructor === Object) {
@@ -47,7 +47,7 @@ export function CourseApp(mount) {
         }
       },
       error(response) {
-        Notifications.error(response.result)
+        notifications.error(response.result)
         throw (new Error(JSON.stringify(response)))
       },
       paramsJSON(params) {
@@ -59,7 +59,7 @@ export function CourseApp(mount) {
       },
       copylink(id) {
         copy_to_clipboard(window.location.host + "/community/" + id)
-        Notifications.notify("The course link has been copied to your clipboard")
+        notifications.notify("The course link has been copied to your clipboard")
       },
 
       drafts() { return this.transition(CourseModel.drafts(), "drafts") },

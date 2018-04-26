@@ -3,6 +3,10 @@ import * as $ from "jquery";
 export default class CourseModel {
     // If any of these get an error code, the promise should reject with <status: error_code, result: explanation>
 
+    static token() {
+        return document.querySelector('meta[name="csrf-token"]').content
+    }
+
     static parse_response(response) {
         const new_response = response.responseJSON
         new_response.status = response.status
@@ -25,7 +29,7 @@ export default class CourseModel {
             $.ajax({
                 url: url,
                 type: 'POST',
-                data: data,
+                data: { course: data, authenticity_token: CourseModel.token() },
                 success(data, status, xobj) { resolve(CourseModel.parse_response(xobj)) },
                 error(data, status, xobj) { reject(CourseModel.parse_response(data)) }
             });
@@ -37,7 +41,7 @@ export default class CourseModel {
             $.ajax({
                 url: url,
                 type: 'PUT',
-                data: data,
+                data: { course: data, authenticity_token: CourseModel.token() },
                 success(data, status, xobj) { resolve(CourseModel.parse_response(xobj)) },
                 error(data, status, xobj) { reject(CourseModel.parse_response(data)) }
             });
@@ -49,6 +53,7 @@ export default class CourseModel {
             $.ajax({
                 url: url,
                 type: 'DELETE',
+                data: { authenticity_token: CourseModel.token() },
                 success(data, status, xobj) { resolve(CourseModel.parse_response(xobj)) },
                 error(data, status, xobj) { reject(CourseModel.parse_response(data)) }
             });
@@ -90,13 +95,13 @@ export default class CourseModel {
     // .create(<form_params>) => Promise<status: success_code, result: existing_course>]
     // create and update passes the new/edited course as the <form_params> object. The renderer should know how to handle filling in the data based on the schema received from the server.
     static create(params) {
-        return CourseModel.send_post("/courses", { course: params })
+        return CourseModel.send_post("/courses", params)
     }
 
     // .update(id, <form_params>) => Promise<status: success_code, result: existing_course>
     // create and update passes the new/edited course as the <form_params> object. The renderer should know how to handle filling in the data based on the schema received from the server.
     static update(id, params) {
-        return CourseModel.send_put("/courses/" + id, { course: params })
+        return CourseModel.send_put("/courses/" + id, params)
     }
 
     // .delete(id) => Promise<status: success_code, result: message>
