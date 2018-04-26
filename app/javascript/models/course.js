@@ -8,8 +8,15 @@ export default class CourseModel {
     }
 
     static parse_response(response) {
-        const new_response = response.responseJSON
-        new_response.status = response.status
+        let new_response;
+        if (response.responseJSON === undefined) {
+            console.log("Could not parse the following repsonse:")
+            console.log(response)
+            new_response =  { status: 500, result: "Internal Error" }
+        } else {
+            new_response = response.responseJSON
+            new_response.status = response.status
+        }
         return new_response
     }
 
