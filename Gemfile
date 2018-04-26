@@ -18,8 +18,6 @@ gem 'jquery-rails', '4.3.1'
 # Use bootstrap-sass
 gem 'bootstrap', '4.0.0'
 gem "font-awesome-rails", '4.7.0.4'
-# gem 'wow-rails', '0.0.1'
-# gem 'owl_carousel-rails', '0.0.1'
 
 
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -32,7 +30,9 @@ gem 'uglifier', '4.1.9'
 gem 'typescript-rails'
 # User the Babel transpiler to support ES6 import and export syntax
 gem 'babel-transpiler'
+# Use webpacker for dependency management and preprocessing of local JS assets
 gem 'webpacker'
+# Use foreman to streamline starting both the rails server and the webpack dev server
 gem 'foreman'
 
 
@@ -77,20 +77,6 @@ group :development, :test, :stage do
   gem 'capybara', '2.13'
   gem 'selenium-webdriver', '3.11.0'
 end
-
-# ### Ruby version
-# group :development, :test do
-#   # Use Puma as the app server
-#   ruby '2.5.0'
-# end
-
-# group :stage do
-#   ruby '2.3.4'
-# end
-
-# group :production do
-#   ruby '2.4.0'
-# end
 
 ### Database 
 group :development, :test do

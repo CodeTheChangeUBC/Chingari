@@ -56,13 +56,15 @@ export const ControlForm = Vue.component("control-form", {
 
               <div class="form col-lg-6 col-sm-12">
               
-                <model-form
-                  v-bind:item="item"
-                  v-bind:schema="schema"
-                  v-on:changed="changed">
-                </model-form>
+                <div class="shadow-box">
+                  <model-form
+                    v-bind:item="item"
+                    v-bind:schema="schema"
+                    v-on:changed="changed">
+                  </model-form>
 
-                <slot name="controls"></slot>
+                  <slot name="controls"></slot>
+                </div>
 
               </div>
             </div>

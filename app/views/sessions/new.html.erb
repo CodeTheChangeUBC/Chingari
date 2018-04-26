@@ -8,7 +8,7 @@
     <div class="message text-center col-lg-6 col-sm-12">
       <p class="light-text title sans-serif clear-theme">
 
-        <div class="shadow_box">
+        <div class="shadow-box">
           <%= form_for(:session, url: login_path) do |f| %>
 
             <!-- <%= f.label :email, class: "input-label" %> -->
@@ -22,7 +22,7 @@
         </div>
 
         <% if BetaFeatures.released?(:oauth, current_user: current_user) %>
-          <div class="shadow_box login-apis">
+          <div class="shadow-box login-apis">
             Log in through a third-party:
             <br>
             <%= link_to "/auth/facebook" do %>
@@ -34,7 +34,7 @@
           </div>
         <% end %>
 
-        <div class="shadow_box">
+        <div class="shadow-box">
           New user?
           <%= link_to "/signup" do %>
             <button class="button">Sign up now!</button>
