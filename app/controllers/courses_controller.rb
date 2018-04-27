@@ -256,7 +256,7 @@ class CoursesController < ApplicationController
 
       # Draft Course case
       if course.visibility == Visibility.draft and course.user_id == c_user.id
-        if query_permission
+        if query_only
           render status: 200, json: { result: "Authorized" }
         else
           if course.delete
