@@ -2,10 +2,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   include SessionsHelper
   include PaginationHelper
-  include AuthorizationHelper
 
   private 
-
   	# Returns true iff current member is the user associated 
   	# with the current page
   	def correct_member?
@@ -15,5 +13,6 @@ class ApplicationController < ActionController::Base
   			flash[:danger] = "You don't permission to access this page"
   		end
   	end
+
 
 end
