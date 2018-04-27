@@ -25,12 +25,12 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
     test "standard user get index" do
         log_in_user(@user_std, "passwwd")
         get courses_path
-        assert_response :unauthorized  # Unauthorized
+        assert_response :ok  # Unauthorized
     end
 
     test "no user get index" do
         get courses_path
-        assert_response :unauthorized
+        assert_response :ok
     end
 
     test "admin user get review" do

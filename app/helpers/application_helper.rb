@@ -10,6 +10,6 @@ module ApplicationHelper
 		else 
 			return page_title + join + base_title
 		end
-	end
+  end
 
 end
