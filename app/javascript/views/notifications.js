@@ -31,6 +31,9 @@ export function Notifications(mount) {
         setTimeout(() => {
           this.dismiss(id)
         }, this.lifespan)
+      },
+      clear() {
+        Vue.set(this, "notes", [])
       }
     },
     template: `

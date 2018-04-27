@@ -67,12 +67,16 @@ export default class CourseModel {
   }
 
   // .index() => Promise<status: success_code, result: existing_courses>
-  static index(page) {
-    if (page === undefined) {
-      return CourseModel.send_get("/courses")
-    } else {
-      return CourseModel.send_get("/courses?page=" + page)
+  static index(query_params) {
+    let url = "/courses"
+    if (query_params !== undefined) {
+      let params = []
+      for (const key in query_params) {
+        params.push(key + "=" + query_params[key])
+      }
+      url = url + "?" + params.join("&")
     }
+    return CourseModel.send_get(url)
   }
 
   // .show(id) => Promise<status: success_code, result: existing_course>
@@ -110,6 +114,6 @@ export default class CourseModel {
   // .test_delete(id) => Promise<status: success_code, result: message>
   // This only tests to see if delete is permitted, but does not perform the deletion
   static test_delete(id) {
-    return CourseModel.send_delete("/courses/" + id + "?query_permission=true")
+    return CourseModel.send_delete("/courses/" + id + "?query_only=true")
   } 
 }

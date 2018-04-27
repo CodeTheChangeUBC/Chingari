@@ -1,101 +1,20 @@
 class CoursesController < ApplicationController
 
-  @@page_size = 100
-  @@max_page_number = 10
-
-  # Request: GET /courses
-  # Authorization: Only available if the requesting user's @current_user.role is Role.admin or Role.moderator.
-  # Unauthorized access: Should get redirected to root (/)
-  # Authorized access: Return a JSON of all courses { result: [ course1, course2, ...] }
-  def old_index
-    c_user = current_user()
-    return ( render status: 401, json: { result: "Not Authorized" } ) unless logged_in?  # Ensure the user is logged in
-
-    schema = {
-      tier: Tier.schema,
-      visibility: Visibility.schema
-    }       
-
-    # Verify that they can access this API endpoint
-    if c_user.role == Role.admin or c_user.role == Role.moderator
-
-      # return the courses as a JSON file for the API
-      courses = Course.all.order(updated_at: :desc)
-      render status: 200, json: { result: courses, schema: schema }
-    else
-      render status: 401, json: { result: "Not Authorized" }
-    end
-  end
-
-  # Request: GET /courses/review
-  # Authorization: Only available if the requesting user's @current_user.role is Role.admin or Role.moderator.
-  # Unauthorized access: Should get redirected to root (/)
-  # Authorized access: Return a JSON of all courses where course.visibility == Visibility.review in the format { result: [ course1, course2, ...] }
-  def review
-      c_user = current_user()
-      return ( render status: 401, json: { result: "Not Authorized" } ) unless logged_in?  # Ensure the user is logged in
-
-      schema = {
-          tier: Tier.schema,
-          visibility: Visibility.schema
-      }
-
-      # Verify that they can access this API endpoint
-      if c_user.role == Role.admin or c_user.role == Role.moderator
-
-          # return the review courses as a JSON file for the API
-          courses = Course.where(visibility: Visibility.reviewing).order(updated_at: :desc)
-          render status: 200, json: { result: courses, schema: schema }
-      else
-          render status: 401, json: { result: "Not Authorized" }
-      end
-  end
-
-  # Request: GET /courses/drafts
-  # Authorization: Only available to logged in user @current_user.id == course.user_id
-  # Unauthorized access: Should get redirected to root (/)
-  # Authorized access: Return a JSON of all courses where course.visibility == Visibility.draft and @current_user.id == course.user_id in the format { result: [ course1, course2, ...] }
-  def drafts
-      c_user = current_user()
-      return ( render status: 401, json: { result: "Not Authorized" } ) unless logged_in?  # Ensure the user is logged in
-
-      schema = {
-          tier: Tier.schema,
-          visibility: Visibility.schema
-      }
-
-      # return the draft courses as a JSON file for the API
-      courses = Course.where(visibility: Visibility.draft, user_id: c_user.id).order(updated_at: :desc)
-      render status: 200, json: { result: courses, schema: schema }
-  end
-
-  # Request: GET /courses/published
-  # Authorization: Available to public
-  # Unauthorized access: Should get redirected to root (/)
-  # Authorized access: Return a JSON of all courses where course.visibility == Visibility.published in the format { result: [ course1, course2, ...] }
-  def published
-
-      schema = {
-          tier: Tier.schema,
-          visibility: Visibility.schema
-      }
-
-      # return all the published courses as a JSON file for the API
-      courses = Course.where(visibility: Visibility.published).order(updated_at: :desc)
-      render status: 200, json: { result: courses, schema: schema }
-  end
+  @@page_size = 10
+  @@max_page_number = 20
 
   # Request: GET /courses/?page=1
   # After some redesign I've decided to respec the index route to list the first 1000 visible records, is 100-record pages
   # Arbitrary filtering and UI-level pagination should be managed by the client
   def index
-    query_permission = params[:query_permission] || false
+    search_query = params[:search_query]
     page = params[:page] || 1
+    if page < 1 || page > @@max_page_number
+      render status: 400, json: { result: "Invalid Page Number" }
+    end
     query = []
     schema = {
       title: :text,
-      user_id: :reference,
-      updated_at: :datetime,
       tier: Tier.schema,
       visibility: Visibility.schema
     }
@@ -130,9 +49,8 @@ class CoursesController < ApplicationController
 
       schema = {
         title: :text,
-        user_id: :reference,
-        updated_at: :datetime,
         description: :textarea,
+        updated_at: :datetime,
         tier: Tier.schema,
         visibility: Visibility.schema
       }
@@ -251,7 +169,7 @@ class CoursesController < ApplicationController
           if status
               render status: 200, json: { result: course }
           else
-              render status: 400, json: { result: "Bad Request" }
+              render status: 400, json: { result: course.errors }
           end
 
       # Non-priledged user case
@@ -263,7 +181,7 @@ class CoursesController < ApplicationController
               if status
                   render status: 200, json: { result: course }
               else
-                  render status: 400, json: { result: "Bad Request" }
+                  render status: 400, json: { result: course.errors }
               end
 
           else   
@@ -295,22 +213,22 @@ class CoursesController < ApplicationController
           if status
               render status: 200, json: { result: course }
           else
-              render status: 400, json: { result: "Bad Request" }
+              render status: 400, json: { result: course.errors }
           end
 
       # Draft Course case
-      elsif course.visibility == Visibility.draft and course.user_id == c_user.id
+      elsif course.user_id == c_user.id
           # Ensure the data doesn't change visiblity (Standard user cannot publish)
-          if course_params[:visibility].to_i == Visibility.draft
+          if course_params[:visibility].to_i != Visibility.published
               status = course.update(course_params)
               if status
                   render status: 200, json: { result: course }
               else
-                  render status: 400, json: { result: "Bad Request" }
+                  render status: 400, json: { result: course.errors }
               end
 
           else
-              render status: 400, json: { result: "Bad Request" }
+              render status: 400, json: { result: "Not Authorized" }
           end
 
       # Course is not (owned by user and editable) AND (user is not privledged)
@@ -326,7 +244,7 @@ class CoursesController < ApplicationController
   # Unauthorized access: Should get redirected to root (/)
   # Authorized access: Remove the corresponding course from the database. Return message upon completion
   def delete
-      query_permission = params[:query_permission] || false
+      query_only = params[:query_only] || false
       c_user = current_user()
       return ( render status: 401, json: { result: "Not Authorized" } ) unless logged_in?  # Ensure the user is logged in
       course = Course.where(id: params[:course_id]).first()
@@ -344,19 +262,19 @@ class CoursesController < ApplicationController
           if course.delete
               render status: 200, json: { result: "Request Processed" }
           else
-              render status: 400, json: { result: "Bad Request" }
+              render status: 400, json: { result: course.errors }
           end
         end
 
       # Privledged User case
       elsif c_user.role == Role.admin or c_user.role == Role.moderator
-        if query_permission
+        if query_only
           render status: 200, json: { result: "Authorized" }
         else
           if course.delete
               render status: 200, json: { result: "Request Processed" }
           else
-              render status: 400, json: { result: "Bad Request" }
+              render status: 400, json: { result: course.errors }
           end
         end
 

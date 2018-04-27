@@ -3,21 +3,19 @@ import AsyncComputed from 'vue-async-computed'
 import CourseModel from '../models/course'
 import { ControlList, ControlView, ControlForm } from '../components/control_components'
 import { CourseRenderLarge, CourseRenderSmall } from '../components/course'
-import { wait, copy_to_clipboard } from '../layout/utility'
+import { wait, copy_to_clipboard, capitalize } from '../layout/utility'
 
 /*--------------------------------------------
 ------------ Course Application ------------
 ---------------------------------------------*/
-
-// Some work to be done:
-// Dynamic render-small based on index-given schema
-// Dynamic render-large based on given schema
+// API limits
 // Pagination and filtering
 
 export function CourseApp(mount, notifications) {
   return new Vue({
     el: mount,
     data: {
+      validation_errors: {},
       can_create: undefined,
       can_read: {},
       can_update: {},
@@ -29,15 +27,19 @@ export function CourseApp(mount, notifications) {
       permissions: undefined
     },
     methods: {
+      capitalize(string) {
+        return capitalize(string).replace(/_/g, ' ')
+      },
       transition(api_promise, success_viewing_mode) {
         const last_state = this.viewing_mode
         this.viewing_mode = "blank"
-        const load = setTimeout(() => { this.viewing_mode = "load" }, 200)
+        const load = setTimeout(() => { this.viewing_mode = "load" }, 100)
+        Vue.set(this, "validation_errors", {})
         return api_promise.then(this.success).catch(this.error)
           .then(() => {
             clearTimeout(load)
             this.viewing_mode = "blank"
-            return wait(200)
+            return wait(120)
           }).catch((error) => {
             clearTimeout(load)
             this.viewing_mode = last_state
@@ -67,7 +69,7 @@ export function CourseApp(mount, notifications) {
               promises.push(this.test_delete(item.id)) // can defer
             }           
           } else if (response.result.constructor === String) {
-            notifications.notify(response.result)
+            setTimeout(() => notifications.notify(response.result), 100)
           }
         }
         if (response.schema !== undefined && response.schema.constructor === Object) {
@@ -76,8 +78,19 @@ export function CourseApp(mount, notifications) {
         return Promise.all(promises)
       },
       error(response) {
-        notifications.error(response.result)
         console.log(response)
+        if (response.status === 400 && response.result.constructor === Object) {
+          for (const property in response.result) {
+            const errors = response.result[property]
+            Vue.set(this.validation_errors, property, errors)
+            for (const error of errors) {
+              setTimeout(() => notifications.error(capitalize(property) + " " + error), 100)
+            }
+          }
+        } else {
+          setTimeout(() => notifications.error(response.result), 100)
+        }
+        // Need to throw an error to signal roll-back in transition
         throw (new Error(JSON.stringify(response)))
       },
       paramsJSON(params) {
@@ -95,9 +108,9 @@ export function CourseApp(mount, notifications) {
       show_item(id) { return this.transition(CourseModel.show(id), "show") },
       new_item() { return this.transition(CourseModel.new(), "new") },
       edit_item(id) { return this.transition(CourseModel.edit(id), "edit") },
-      create_item(params) { return this.transition(CourseModel.create(this.paramsJSON(params)), "blank").then(() => { this.index() }) },
-      update_item(id, params) { return this.transition(CourseModel.update(id, this.paramsJSON(params)), "blank").then(() => { this.index() }) },
-      delete_item(id) { return this.transition(CourseModel.delete(id), "blank").then(() => { this.index() }) },
+      create_item(params) { return this.transition(CourseModel.create(this.paramsJSON(params)), "blank").then(() => { this.index_items() }) },
+      update_item(id, params) { return this.transition(CourseModel.update(id, this.paramsJSON(params)), "blank").then(() => { this.index_items() }) },
+      delete_item(id) { return this.transition(CourseModel.delete(id), "blank").then(() => { this.index_items() }) },
       test_create() {
         this.can_create = undefined
         return CourseModel.new()
@@ -119,7 +132,7 @@ export function CourseApp(mount, notifications) {
       test_delete(id) {
         Vue.set(this, "can_delete", {})
         return CourseModel.test_delete(id)
-          .then(() => { return Vue.set(this.can_delete, id, false) })
+          .then(() => { return Vue.set(this.can_delete, id, true) })
           .catch(() => { return Vue.set(this.can_delete, id, false) })     
       }
     },
@@ -196,6 +209,7 @@ export function CourseApp(mount, notifications) {
                     v-bind:schema="schema" 
                     v-bind:item="model" 
                     v-bind:mode="viewing_mode"
+                    v-bind:errors="validation_errors"
                     v-on:changed="changed">
 
                     <course-render-large

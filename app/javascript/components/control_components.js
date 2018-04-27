@@ -1,9 +1,9 @@
 import Vue from 'vue/dist/vue.esm'
-import { StringRender, PropertyInput } from '../components/utility_components'
+import { StringRender, PropertyInput, PropertyOutput } from '../components/utility_components'
 
 // Model Form, applies property-input for complex item and schema and emits the input as an item state
 export const ModelForm = Vue.component("model-form", {
-  props: ["item", "schema"],
+  props: ["item", "schema", "errors"],
   data() {
     return {
       model: {}
@@ -25,15 +25,33 @@ export const ModelForm = Vue.component("model-form", {
                 v-bind:label="label" 
                 v-bind:placeholder="item[label]" 
                 v-bind:type="type"
+                v-bind:error="errors[label]"
                 v-on:changed="changed">
               </property-input>
             </form>
             `
 })
 
+// Model View, applies property-output for complex item and schema and emits the input as an item state
+export const ModelView = Vue.component("model-view", {
+  props: ["item", "schema"],
+  template: `
+            <div class="model-view">
+              <slot name="header"></slot>
+              <property-output v-for="(type, label) in schema" 
+                v-bind:key="label"
+                v-bind:label="label" 
+                v-bind:value="item[label]"
+                v-bind:type="type">
+              </property-output>
+              <slot name="footer"></slot>
+            </div>
+            `
+})
+
 // A template containing a model-form plus placement slots for control buttons and a preview
 export const ControlForm = Vue.component("control-form", {
-  props: ["schema", "item", "mode"],
+  props: ["schema", "item", "mode", "errors"],
   data() {
     return {
       model: {}
@@ -65,6 +83,7 @@ export const ControlForm = Vue.component("control-form", {
                   <model-form
                     v-bind:item="item"
                     v-bind:schema="schema"
+                    v-bind:errors="errors"
                     v-on:changed="changed">
                   </model-form>
 
