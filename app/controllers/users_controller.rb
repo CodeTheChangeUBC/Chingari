@@ -22,7 +22,7 @@ class UsersController < ApplicationController
       log_in(@user)
   		flash[:success] = "Account created!"
       # redirect_to @user
-      redirect_to root
+      redirect_to "/"
   	else 
   		render 'new'
   	end
