@@ -300,12 +300,6 @@ class CoursesController < ApplicationController
     c_user = current_user()
     course = Course.where(id: params[:course_id]).first()
 
-    schema = {
-      id: :text, 
-      title: :text, 
-      user_id: :text,
-    }
-
     # Course not found case
     if course.nil?
         return ( render status: 404, json: { result: "Not Found" } )
@@ -317,18 +311,18 @@ class CoursesController < ApplicationController
     e_list = Embed.where(attachable_id: course.id).as_json
     e_list.each { |x| x["type"] = "Embed"}
     a_list = d_list + e_list
-    a_list.sort! { |x,y| x.display_index <=> y.display_index }
+    a_list.sort! { |x,y| x["display_index"] <=> y["display_index"] }
 
     # Public case:
     if course.visibility == Visibility.published  
-      render status: 200, json: { result: a_list, schema: schema }
+      render status: 200, json: { result: a_list}
 
     # Authenticated case:
     elsif logged_in?  # Ensure that the user is logged in
       # Checks IF user is privledged or owns the course, ELSE return unauthorized
       if c_user.role == Role.admin or c_user.role == Role.moderator or
           c_user.id == course.user_id then
-        render status: 200, json: { result: a_list, schema: schema }
+        render status: 200, json: { result: a_list}
       else
         render status: 401, json: { result: "Not Authorized" }
       end
@@ -349,12 +343,6 @@ class CoursesController < ApplicationController
     c_user = current_user()
     course = Course.where(id: params[:course_id]).first()
 
-    schema = {
-      id: :text, 
-      title: :text, 
-      user_id: :text,
-    }
-
     # Course not found case
     if course.nil?
         return ( render status: 404, json: { result: "Course Not Found" } )
@@ -374,14 +362,14 @@ class CoursesController < ApplicationController
 
     # Public case:
     if course.visibility == Visibility.published  
-      render status: 200, json: { result: attache, schema: schema }
+      render status: 200, json: { result: attache}
 
     # Authenticated case:
     elsif logged_in?  # Ensure that the user is logged in
       # Checks IF user is privledged or owns the course, ELSE return unauthorized
       if c_user.role == Role.admin or c_user.role == Role.moderator or
           c_user.id == course.user_id then
-        render status: 200, json: { result: attache, schema: schema }
+        render status: 200, json: { result: attache }
       else
         render status: 401, json: { result: "Not Authorized" }
       end
@@ -403,12 +391,6 @@ class CoursesController < ApplicationController
     return ( render status: 401, json: { result: "Not Authorized" } ) unless logged_in?  # Ensure the user is logged in
     course = Course.where(id: params[:course_id]).first()
 
-    schema = {
-      id: :text, 
-      title: :text, 
-      user_id: :text,
-    }
-
     # Course not found case
     if course.nil?
       return ( render status: 404, json: { result: "Course Not Found" } )
@@ -429,7 +411,7 @@ class CoursesController < ApplicationController
       status = insert_attachable(attache, course.id)
 
       if status
-        render status: 200, json: { result: attache, schema: schema }
+        render status: 200, json: { result: attache }
       else
         render status: 400, json: { result: attache.errors }
       end
@@ -473,7 +455,7 @@ class CoursesController < ApplicationController
         course.user_id == c_user.id
 
       status = attache.update(attach_params)
-      status = status and squash_indexes
+      status = status and squash_indexes(course.id)
 
       if status
         render status: 200, json: { result: attache }
@@ -521,7 +503,7 @@ class CoursesController < ApplicationController
       if query_only
         render status: 200, json: { result: "Authorized" }
       else
-        if attache.delete and squash_indexes
+        if attache.delete and squash_indexes(course_id)
           render status: 200, json: { result: "Request Processed" }
         else
           render status: 400, json: { result: attache.errors }
@@ -533,7 +515,7 @@ class CoursesController < ApplicationController
       if query_only
         render status: 200, json: { result: "Authorized" }
       else
-        if attache.delete and squash_indexes
+        if attache.delete and squash_indexes(course.id)
           render status: 200, json: { result: "Request Processed" }
         else
           render status: 400, json: { result: attache.errors }

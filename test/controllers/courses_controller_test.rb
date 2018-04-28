@@ -442,7 +442,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
         response = JSON.parse(@response.body)
         assert_not_nil response["result"]
-        assert_equal "test document", response["result"][0]["title"]
+        assert_equal "test document", response["result"][1]["title"]
     end
 
     test "admin user post embed for 410" do
@@ -478,7 +478,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
         response = JSON.parse(@response.body)
         assert_not_nil response["result"]
-        assert_equal 47, response["result"]["display_index"]
+        assert_equal 1, response["result"]["display_index"]
     end
 
     test "admin user put embed for 410" do
@@ -494,7 +494,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
         response = JSON.parse(@response.body)
         assert_not_nil response["result"]
-        assert_equal 47, response["result"]["display_index"]
+        assert_equal 0, response["result"]["display_index"]
     end
 
 
