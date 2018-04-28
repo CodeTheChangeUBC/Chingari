@@ -406,7 +406,7 @@ class CoursesController < ApplicationController
 
     # Course not found case
     if course.nil?
-      return ( render status: 404, json: { result: "Not Found" } )
+      return ( render status: 404, json: { result: "Course Not Found" } )
     end
 
     # Authenticated User case
@@ -442,6 +442,43 @@ class CoursesController < ApplicationController
   # Unauthorized access: Should get redirected to root (/)
   # Authorized access: Should edit the attachment, perhaps moving the index as well
   def attachment_edit
+    c_user = current_user()
+    return ( render status: 401, json: { result: "Not Authorized" } ) unless logged_in?  # Ensure the user is logged in
+    course = Course.where(id: params[:course_id]).first()
+
+    # Course Not Found case
+    if course.nil?
+      return ( render status: 404, json: { result: "Course Not Found" } )
+    end
+
+    # Course found case
+    if attach_type_params[:type] == "Document"
+      attache = Document.where(id: params[:attach_id], attachable_id: course.id).first()
+    elsif attach_type_params[:type] == "Embed"
+      attache = Embed.where(id: params[:attach_id], attachable_id: course.id).first()
+    end
+
+    # Attachment not found case
+    if attache.nil?
+        return ( render status: 404, json: { result: "Attachable Not Found" } )
+    end
+
+    # Authenticated User case
+    if c_user.role == Role.admin or c_user.role == Role.moderator or
+        course.user_id == c_user.id
+
+      status = attache.update(attach_params)
+
+      if status
+        render status: 200, json: { result: attache }
+      else
+        render status: 400, json: { result: attache.errors }
+      end
+
+    # Course is not (owned by user and editable) AND (user is not privledged)
+    else
+      render status: 401, json: { result: "Not Authorized" }
+    end
   end
 
   # Request: DELETE /courses/(:course_id)/attachments/(:attach_id)
@@ -452,6 +489,7 @@ class CoursesController < ApplicationController
   # Authorized access: Should delete the attachment specified
   def attachment_delete
   end
+
 
   private 
     def course_params
