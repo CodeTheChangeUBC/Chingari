@@ -54,4 +54,4 @@ vuejs:
   attachable_type: courses
   attachable_id: 410
   content: <iframe width="560" height="315" src="https://www.youtube.com/embed/6HRPbh5fCVA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-  display_index: 1
+  display_index: 5
