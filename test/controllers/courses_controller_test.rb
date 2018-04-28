@@ -368,20 +368,39 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
     # ########################################################################
     # Tests for GET /courses/(:course_id)/attachments
 
-    test "admin user get attachements for 410" do
+    test "admin user get attachments for 314" do
         log_in_user(@user_admin, "passwwd")
-        get '/courses/410/attachments'
+        get '/courses/314/attachments'
         assert_response :ok
 
         response = JSON.parse(@response.body)
         assert_not_nil response["result"]
     end
 
+    test "admin user get attachments for 322" do
+        log_in_user(@user_admin, "passwwd")
+        get '/courses/322/attachments'
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_not_nil response["result"]
+    end
+
+    test "standard user get attachments for 322" do
+        log_in_user(@user_std, "passwwd")
+        get '/courses/322/attachments'
+        assert_response :unauthorized
+    end
+
+    test "no user get attachments for 322" do
+        get '/courses/322/attachments'
+        assert_response :unauthorized
+    end
 
     # ########################################################################
     # Tests for GET /courses/(:course_id)/attachments/documents/(:attach_id)
 
-    test "admin user get document 1 for 314 " do
+    test "admin user get document 1 for 314" do
         log_in_user(@user_admin, "passwwd")
         get '/courses/314/attachments/documents/1'
         assert_response :ok
@@ -395,7 +414,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
     # ########################################################################
     # Tests for GET /courses/(:course_id)/attachments/embeds/(:attach_id)
 
-    test "admin user get embeds 314 for 314 " do
+    test "admin user get embed 314 for 314" do
         log_in_user(@user_admin, "passwwd")
         get '/courses/314/attachments/embeds/314'
         assert_response :ok
@@ -409,7 +428,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
     # ########################################################################
     # Tests for POST /courses/(:course_id)/attachments
 
-    test "admin user post document for 410 " do
+    test "admin user post document for 410" do
         log_in_user(@user_admin, "passwwd")
         post '/courses/410/attachments', params: { attachment: { title: "test document", display_index: 88, type: "Document"} }
         assert_response :ok
@@ -425,7 +444,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_equal "test document", response["result"][0]["title"]
     end
 
-    test "admin user post embed for 410 " do
+    test "admin user post embed for 410" do
         log_in_user(@user_admin, "passwwd")
         post '/courses/410/attachments', params: { attachment: { content: '<iframe src="test"></iframe>', display_index: 88, type: "Embed"} }
         assert_response :ok
@@ -439,5 +458,41 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         response = JSON.parse(@response.body)
         assert_not_nil response["result"]
         assert_equal "<iframe src=\"test\"></iframe>", response["result"][1]["content"]
+    end
+
+
+    # ########################################################################
+    # Tests for PUT /courses/(:course_id)/attachments/(:attach_id)
+
+    test "admin user put document for 314" do
+        log_in_user(@user_admin, "passwwd")
+        put '/courses/314/attachments/1', params: { attachment: { display_index: 47, type: "Document"} }
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_not_nil response["result"]
+
+        get '/courses/314/attachments/documents/1'
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_not_nil response["result"]
+        assert_equal 47, response["result"]["display_index"]
+    end
+
+    test "admin user put embed for 410" do
+        log_in_user(@user_admin, "passwwd")
+        put '/courses/410/attachments/6', params: { attachment: { display_index: 47, type: "Embed"} }
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_not_nil response["result"]
+
+        get '/courses/410/attachments/embeds/6'
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_not_nil response["result"]
+        assert_equal 47, response["result"]["display_index"]
     end
 end
