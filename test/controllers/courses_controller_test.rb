@@ -33,76 +33,76 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :ok
     end
 
-    test "admin user get review" do
-        log_in_user(@user_admin, "passwwd")
-        get courses_review_path
-        assert_response :ok
+    # test "admin user get review" do
+    #     log_in_user(@user_admin, "passwwd")
+    #     get courses_review_path
+    #     assert_response :ok
 
-        response = JSON.parse(@response.body)
-        response["result"].each do |course|
-            assert_equal Visibility.reviewing, course['visibility'].to_i
-        end
-    end
+    #     response = JSON.parse(@response.body)
+    #     response["result"].each do |course|
+    #         assert_equal Visibility.reviewing, course['visibility'].to_i
+    #     end
+    # end
 
 
     # ########################################################################
     # Tests for get /courses/review
 
-    test "standard user get review" do
-        log_in_user(@user_std, "passwwd")
-        get courses_review_path
-        assert_response :unauthorized  # Unauthorized
-    end
+    # test "standard user get review" do
+    #     log_in_user(@user_std, "passwwd")
+    #     get courses_review_path
+    #     assert_response :unauthorized  # Unauthorized
+    # end
 
-    test "no user get review" do
-        get courses_review_path
-        assert_response :unauthorized
-    end
+    # test "no user get review" do
+    #     get courses_review_path
+    #     assert_response :unauthorized
+    # end
 
 
-    # ########################################################################
-    # Tests for get /courses/drafts
+    # # ########################################################################
+    # # Tests for get /courses/drafts
 
-    test "standard user get drafts" do
-        log_in_user(@user_std, "passwwd")
-        get courses_drafts_path
-        assert_response :ok
+    # test "standard user get drafts" do
+    #     log_in_user(@user_std, "passwwd")
+    #     get courses_drafts_path
+    #     assert_response :ok
 
-        response = JSON.parse(@response.body)
-        response["result"].each do |course|
-            assert_equal Visibility.draft, course["visibility"].to_i
-        end
-    end
+    #     response = JSON.parse(@response.body)
+    #     response["result"].each do |course|
+    #         assert_equal Visibility.draft, course["visibility"].to_i
+    #     end
+    # end
 
-    test "no user get drafts" do
-        get courses_drafts_path
-        assert_response :unauthorized
-    end
+    # test "no user get drafts" do
+    #     get courses_drafts_path
+    #     assert_response :unauthorized
+    # end
 
 
     # ########################################################################
     # Tests for get /courses/published
 
-    test "standard user get published" do
-        log_in_user(@user_std, "passwwd")
-        get courses_published_path
-        assert_response :ok
+    # test "standard user get published" do
+    #     log_in_user(@user_std, "passwwd")
+    #     get courses_published_path
+    #     assert_response :ok
 
-        response = JSON.parse(@response.body)
-        response["result"].each do |course|
-            assert_equal Visibility.published, course["visibility"].to_i
-        end
-    end
+    #     response = JSON.parse(@response.body)
+    #     response["result"].each do |course|
+    #         assert_equal Visibility.published, course["visibility"].to_i
+    #     end
+    # end
 
-    test "no user get published" do
-        get courses_published_path
-        assert_response :ok
+    # test "no user get published" do
+    #     get courses_published_path
+    #     assert_response :ok
 
-        response = JSON.parse(@response.body)
-        response["result"].each do |course|
-            assert_equal Visibility.published, course["visibility"].to_i
-        end
-    end
+    #     response = JSON.parse(@response.body)
+    #     response["result"].each do |course|
+    #         assert_equal Visibility.published, course["visibility"].to_i
+    #     end
+    # end
 
 
     # ########################################################################

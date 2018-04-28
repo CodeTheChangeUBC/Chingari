@@ -27,9 +27,6 @@ Rails.application.routes.draw do
     # Courses API
     get '/courses', to: 'courses#index'
     post '/courses', to: 'courses#create'
-    get '/courses/review', to: 'courses#review'
-    get '/courses/drafts', to: 'courses#drafts'
-    get '/courses/published', to: 'courses#published'
     get '/courses/new', to: 'courses#new'
     get '/courses/:course_id', to: 'courses#show'  # Should go last as it also catches most of the other routes
     put '/courses/:course_id', to: 'courses#update' # ^^^^
@@ -61,9 +58,6 @@ Rails.application.routes.draw do
     # Courses API
     get '/courses', to: 'courses#index'
     post '/courses', to: 'courses#create'
-    get '/courses/review', to: 'courses#review'
-    get '/courses/drafts', to: 'courses#drafts'
-    get '/courses/published', to: 'courses#published'
     get '/courses/new', to: 'courses#new'
     get '/courses/:course_id', to: 'courses#show'  # Should go last as it also catches most of the other routes
     put '/courses/:course_id', to: 'courses#update' # ^^^^
