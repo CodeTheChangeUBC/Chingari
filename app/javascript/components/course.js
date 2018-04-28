@@ -25,11 +25,6 @@ export const CourseRenderLarge = Vue.component("course-render-large", {
                 </string-render>
               </p>
 
-              <model-view
-                v-bind:item="item"
-                v-bind:schema="schema">
-              </model-view>
-
               <div class="row" style="padding: 15px">
                 <div class="col-sm-12">
                   <slot name="controls"></slot>
@@ -52,11 +47,6 @@ export const CourseRenderSmall = Vue.component("course-render-small", {
                     >
                   </string-render>
                 </p>
-
-                <model-view
-                  v-bind:item="item"
-                  v-bind:schema="schema">
-                </model-view>
 
                 <div class="row" style="padding: 15px">
                   <div class="col-sm-12">

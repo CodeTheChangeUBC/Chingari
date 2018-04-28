@@ -66,6 +66,60 @@ export default class CourseModel {
     })
   }
 
+  // url = /courses/:course_id/attachments
+  // response = { result: [ { id: 3, type: 'Document', title: '' } ] }
+  static index_attachments(course_id) {
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        url: "/courses/" + course_id + "/attachments",
+        type: 'GET',
+        success(data, status, xobj) { resolve(CourseModel.parse_response(xobj)) },
+        error(data, status, xobj) { reject(CourseModel.parse_response(data)) }
+      });
+    })
+  }
+
+  // url = /courses/:course_id/attachments
+  // resquest = { attachment: { type: 'Document', title: '' } }
+  static create_attachment(course_id, data) {
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        url: "/courses/" + course_id + "/attachments",
+        type: 'POST',
+        data: { attachment: data, authenticity_token: CourseModel.token() },
+        success(data, status, xobj) { resolve(CourseModel.parse_response(xobj)) },
+        error(data, status, xobj) { reject(CourseModel.parse_response(data)) }
+      });
+    })
+  }
+
+  // url = /courses/:course_id/attachments
+  // resquest = { attachment: { id: 3, type: 'Document', title: '' } }
+  static update_attachment(course_id, data) {
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        url: "/courses/" + course_id + "/attachments",
+        type: 'PUT',
+        data: { attachment: data, authenticity_token: CourseModel.token() },
+        success(data, status, xobj) { resolve(CourseModel.parse_response(xobj)) },
+        error(data, status, xobj) { reject(CourseModel.parse_response(data)) }
+      });
+    })
+  }
+
+  // url = /courses/:course_id/attachments/:attachment_id
+  static delete_attachment(course_id, attachment_type, attachment_id) {
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        url: "/courses/" + course_id + "/attachments/" + attachment_type + "/" + attachment_id,
+        type: 'DELETE',
+        data: { authenticity_token: CourseModel.token() },
+        success(data, status, xobj) { resolve(CourseModel.parse_response(xobj)) },
+        error(data, status, xobj) { reject(CourseModel.parse_response(data)) }
+      });
+    })
+  }
+
   // .index() => Promise<status: success_code, result: existing_courses>
   static index(query_params) {
     let url = "/courses"
@@ -115,5 +169,22 @@ export default class CourseModel {
   // This only tests to see if delete is permitted, but does not perform the deletion
   static test_delete(id) {
     return CourseModel.send_delete("/courses/" + id + "?query_only=true")
-  } 
+  }
+
+  static attachments(id) {
+    return CourseModel.send_get('/courses/' + id + "/attachments")
+  }
+
+  static create_attachment(id, params) {
+    return CourseModel.send_post('/courses/' + id + "/attachments", params)
+  }
+
+  static update_attachment(id) {
+    return CourseModel.send_put('/courses/' + id + "/attachments", params)
+  }
+
+  static delete_attachment(id) {
+    return CourseModel.send_delete('/courses/' + id + "/attachments/" + params., params)
+  }
+
 }
