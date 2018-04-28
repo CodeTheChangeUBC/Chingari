@@ -9,6 +9,7 @@
     <%= stylesheet_link_tag 'application', media: 'all'%>
     <!-- Turbolink is loading in our external JS dependencies -->
     <%= javascript_include_tag 'application', "data-turbolinks-track": true %>
+    <%= javascript_pack_tag 'mount' %>
   </head>
 
   <body>
@@ -33,6 +34,5 @@
     <!--Convenient message for checking our environment -->
     <script> console.log("Rails is running in <%= Rails.env %> environment") </script>
     <!-- Webpacker then loads our Vue app mounts as well as other initializers -->
-    <%= javascript_pack_tag 'mount' %>
   </body>
 </html>
