@@ -1,4 +1,4 @@
-.shadow_box {
+.shadow-box {
   @include light();
   @include sans-serif();
   @include text();
@@ -22,7 +22,7 @@
   .button {
     @include light();
     margin: 10px 5px 10px 5px;
-    padding: 5px 50px 5px 50px;
+    padding: 5px 30px 5px 30px;
     background-color: inherit;
     border: 1px solid rgb(250, 250, 250);
     &:hover {

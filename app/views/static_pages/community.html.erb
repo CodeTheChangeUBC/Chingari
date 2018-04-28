@@ -1,0 +1,25 @@
+<% provide(:title, "Community") %>
+
+<a data-anchor-id="feature">
+	<div class="banner-sm" style="background-image: url(<%= asset_path('backgrounds/home.jpg') %>)">
+		<div class="row d-flex align-items-center">
+			<div class="message text-center col-sm-7">
+				<p class="light-text title serif clear-theme">Community</p>
+			</div>
+		</div>
+	</div>
+</a>
+
+<a data-anchor-id="courses">
+	<div class="responsive-container">
+
+            <div id="course-app"></div>
+
+	</div>
+</a>
+<script>
+  let preload_data = {
+    subpath: "<%= @subpath.to_s %>"
+
+  }
+</script>

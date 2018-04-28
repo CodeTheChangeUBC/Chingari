@@ -3,9 +3,9 @@ class Visibility
 
   def self.schema
     {
-      published: 2,
+      draft: 0,
       reviewing: 1,
-      draft: 0
+      published: 2
     }
   end
 

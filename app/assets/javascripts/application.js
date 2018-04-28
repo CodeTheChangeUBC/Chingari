@@ -10,13 +10,8 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+// Our list of external dependencies
 //= require jquery
 //= require popper
-//= require wow
-//= require owl.carousel
-
 //= require bootstrap
 //= require rails-ujs
-//= require turbolinks
-
-//= require anchor_scroller

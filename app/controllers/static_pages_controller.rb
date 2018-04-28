@@ -17,6 +17,10 @@ class StaticPagesController < ApplicationController
   def public_speaking
   end
 
+  def community
+    @subpath = params[:subpath]
+  end
+
   def events
   end
 

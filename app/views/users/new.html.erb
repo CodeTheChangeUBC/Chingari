@@ -8,7 +8,7 @@
     <div class="message text-center col-lg-6 col-sm-12">
       <p class="light-text title sans-serif clear-theme">
 
-        <div class="shadow_box">
+        <div class="shadow-box">
 					<%= form_for(@user) do |f| %>
 						<%= render 'shared/error_messages', object: @user %>
 
@@ -26,7 +26,7 @@
 					<% end %>
         </div>
 
-        <div class="shadow_box">
+        <div class="shadow-box">
           Already have an account?
           <%= link_to "/login" do %>
             <button class="button">Log in here!</button>
