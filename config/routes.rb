@@ -45,7 +45,9 @@ Rails.application.routes.draw do
     get '/stories',         to: 'static_pages#stories'
     get '/public_speaking', to: 'static_pages#public_speaking'
     get '/policies',        to: 'static_pages#policies'
-  
+    get '/community/*subpath',       to: 'static_pages#community'
+    get '/community',       to: 'static_pages#community'
+
     # Session routes
     get    '/login',   to: 'sessions#new'
     post   '/login',   to: 'sessions#create'
@@ -75,15 +77,31 @@ Rails.application.routes.draw do
     # get '/resources',       to: 'static_pages#resources'
     get '/stories',         to: 'static_pages#stories'
     get '/public_speaking', to: 'static_pages#public_speaking'
+    get '/policies',        to: 'static_pages#policies'
+    # get '/community/*subpath',       to: 'static_pages#community'
+    # get '/community',       to: 'static_pages#community'
 
     # Session routes
     get    '/login',   to: 'sessions#new'
     post   '/login',   to: 'sessions#create'
     delete '/logout',  to: 'sessions#destroy'
 
+     # Users API
+    get '/signup', to: 'users#new' # Nicer route name than /users/new
+    resources :users   
+
+    # Courses API
+    # get '/courses', to: 'courses#index'
+    # post '/courses', to: 'courses#create'
+    # get '/courses/new', to: 'courses#new'
+    # get '/courses/:course_id', to: 'courses#show'  # Should go last as it also catches most of the other routes
+    # put '/courses/:course_id', to: 'courses#update' # ^^^^
+    # delete '/courses/:course_id', to: 'courses#delete' # ^^^^
+    # get '/courses/:course_id/edit', to: 'courses#edit'  # ^^^^
+
     # OAuth API routes
-    get '/auth/:provider/callback', to: 'sessions#create_with_api'
-    get '/auth/failure', to: redirect('/')
+    # get '/auth/:provider/callback', to: 'sessions#create_with_api'
+    # get '/auth/failure', to: redirect('/')
   end
 
   # Catch-all route
