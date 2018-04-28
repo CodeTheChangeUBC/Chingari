@@ -67,7 +67,7 @@ export function CourseApp(mount, notifications) {
             if (should_transition) {
               clearTimeout(loading_screen)
               this.viewing_mode = "blank"
-              return wait(120)
+              return wait(100)
             } else {
               return
             }
@@ -103,7 +103,8 @@ export function CourseApp(mount, notifications) {
             })
           } else if (response.result.constructor === Object) {
             let promises = []
-            const item = this.model
+            const item = response.result
+            console.log(item)
             if (item.id !== undefined && item.id !== null) {
               promises.push(this.test_update(item.id))
               promises.push(this.test_delete(item.id))
