@@ -461,19 +461,26 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_equal "<iframe src=\"test\"></iframe>", response["result"][1]["content"]
     end
 
+    test "standard user post embed for 410" do
+        log_in_user(@user_std, "passwwd")
+
+        put '/courses/410/attachments/6', params: { attachment: { display_index: 47, type: "Embed"} }
+        assert_response :unauthorized
+    end
 
     # ########################################################################
     # Tests for PUT /courses/(:course_id)/attachments/(:attach_id)
 
     test "admin user put document for 314" do
         log_in_user(@user_admin, "passwwd")
-        put '/courses/314/attachments/1', params: { attachment: { display_index: 47, type: "Document"} }
+        post '/courses/410/attachments', params: { attachment: { content: '<iframe src="test"></iframe>', display_index: 88, type: "Embed"} }
         assert_response :ok
 
         response = JSON.parse(@response.body)
         assert_not_nil response["result"]
+        cid = response["result"]["id"].to_s
 
-        get '/courses/314/attachments/documents/1'
+        get '/courses/410/attachments/embeds/'+cid
         assert_response :ok
 
         response = JSON.parse(@response.body)
@@ -495,6 +502,13 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         response = JSON.parse(@response.body)
         assert_not_nil response["result"]
         assert_equal 0, response["result"]["display_index"]
+    end
+
+    test "standard user put embed for 410" do
+        log_in_user(@user_std, "passwwd")
+
+        put '/courses/410/attachments/6', params: { attachment: { display_index: 47, type: "Embed"} }
+        assert_response :unauthorized
     end
 
 
@@ -535,6 +549,24 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
         get "/courses/410/attachments/embeds/"+cid
         assert_response :not_found  
+    end
+
+    test "standard user delete embed for 410" do
+        log_in_user(@user_admin, "passwwd")
+
+        post '/courses/410/attachments', params: { attachment: { content: "test delete document", display_index: 88, type: "Embed"} }
+        assert_response :ok
+        response = JSON.parse(@response.body)
+        cid = response["result"]["id"].to_s
+        
+        get "/courses/410/attachments/embeds/"+cid
+        assert_response :ok
+
+        log_out_user()
+        log_in_user(@user_std, "passwwd")
+
+        delete "/courses/410/attachments/embeds/"+cid
+        assert_response :unauthorized
     end
 
 

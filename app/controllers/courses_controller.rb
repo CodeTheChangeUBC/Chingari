@@ -288,7 +288,6 @@ class CoursesController < ApplicationController
 
   ####=====================================================================####
   #### => Attachments Api Calls
-  # - Embeds Should be admin only
 
   # Request: GET /courses/(:course_id)/attachments
   # Authorization:
@@ -396,18 +395,26 @@ class CoursesController < ApplicationController
       return ( render status: 404, json: { result: "Course Not Found" } )
     end
 
-    # Authenticated User case
-    if c_user.role == Role.admin or c_user.role == Role.moderator or
-        course.user_id == c_user.id
+    if attach_type_params[:type] == "Document"
+      attache = Document.new(attach_params.merge(user_id: c_user.id, attachable_id: course.id, attachable_type: "Course"))
+    elsif attach_type_params[:type] == "Embed"
+      attache = Embed.new(attach_params.merge(user_id: c_user.id, attachable_id: course.id, attachable_type: "Course"))
+    else
+      render status: 400, json: { result: "Invalid Type" }
+    end
 
-      if attach_type_params[:type] == "Document"
-        attache = Document.new(attach_params.merge(user_id: c_user.id, attachable_id: course.id, attachable_type: "Course"))
-      elsif attach_type_params[:type] == "Embed"
-        attache = Embed.new(attach_params.merge(user_id: c_user.id, attachable_id: course.id, attachable_type: "Course"))
+    # Draft Course case
+    if course.visibility == Visibility.draft and course.user_id == c_user.id and attache.class != Embed
+      status = insert_attachable(attache, course.id)
+
+      if status
+        render status: 200, json: { result: attache }
       else
-        render status: 400, json: { result: "Invalid Type" }
+        render status: 400, json: { result: attache.errors }
       end
 
+    # Privledged User case
+    elsif c_user.role == Role.admin or c_user.role == Role.moderator
       status = insert_attachable(attache, course.id)
 
       if status
@@ -450,10 +457,19 @@ class CoursesController < ApplicationController
         return ( render status: 404, json: { result: "Attachable Not Found" } )
     end
 
-    # Authenticated User case
-    if c_user.role == Role.admin or c_user.role == Role.moderator or
-        course.user_id == c_user.id
+    # Draft Course case
+    if course.visibility == Visibility.draft and course.user_id == c_user.id and attache.class != Embed
+      status = attache.update(attach_params)
+      status = status and squash_indexes(course.id)
 
+      if status
+        render status: 200, json: { result: attache }
+      else
+        render status: 400, json: { result: attache.errors }
+      end
+
+    # Privledged User case
+    elsif c_user.role == Role.admin or c_user.role == Role.moderator
       status = attache.update(attach_params)
       status = status and squash_indexes(course.id)
 
@@ -499,7 +515,7 @@ class CoursesController < ApplicationController
     end
 
     # Draft Course case
-    if course.visibility == Visibility.draft and course.user_id == c_user.id
+    if course.visibility == Visibility.draft and course.user_id == c_user.id and attache.class != Embed
       if query_only
         render status: 200, json: { result: "Authorized" }
       else
