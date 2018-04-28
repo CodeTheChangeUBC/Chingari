@@ -33,6 +33,15 @@ Rails.application.routes.draw do
     delete '/courses/:course_id', to: 'courses#delete' # ^^^^
     get '/courses/:course_id/edit', to: 'courses#edit'  # ^^^^
 
+    # Attachments API
+    get '/courses/(:course_id)/attachments', to: 'courses#attachment_index'
+    post '/courses/(:course_id)/attachments', to: 'courses#attachment_create'
+    get '/courses/(:course_id)/attachments/documents/(:attach_id)', to: 'courses#attachment_get', defaults: { type: 'documents' }
+    get '/courses/(:course_id)/attachments/embeds/(:attach_id)', to: 'courses#attachment_get', defaults: { type: 'embeds' }
+    put '/courses/(:course_id)/attachments/(:attach_id)', to: 'courses#attachment_edit'
+    delete "/courses/(:course_id)/attachments/(:attach_id)", to: 'courses#attachment_delete'
+
+
   # Staged routes
   elsif Rails.env == 'stage'
     # Set root of application

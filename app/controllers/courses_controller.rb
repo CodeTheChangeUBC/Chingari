@@ -284,9 +284,218 @@ class CoursesController < ApplicationController
       end
   end
 
+
+
+  ####=====================================================================####
+  #### => Attachments Api Calls
+
+  # Request: GET /courses/(:course_id)/attachments
+  # Authorization:
+  # - If the course is still a draft then only available to course creator
+  # - If the course is not a draft then only available to moderator and admin
+  # Unauthorized access: Should get redirected to root (/)
+  # Authorized access: Returns a JSON list of the attachments of the course
+  def attachment_index
+    c_user = current_user()
+    course = Course.where(id: params[:course_id]).first()
+
+    schema = {
+      id: :text, 
+      title: :text, 
+      user_id: :text,
+    }
+
+    # Course not found case
+    if course.nil?
+        return ( render status: 404, json: { result: "Not Found" } )
+    end
+
+    # Course found case
+    a_list = Document.where(attachable_id: course.id)
+    a_list += Embed.where(attachable_id: course.id)
+
+    # Public case:
+    if course.visibility == Visibility.published  
+      render status: 200, json: { result: a_list, schema: schema }
+
+    # Authenticated case:
+    elsif logged_in?  # Ensure that the user is logged in
+      # Checks IF user is privledged or owns the course, ELSE return unauthorized
+      if c_user.role == Role.admin or c_user.role == Role.moderator or
+          c_user.id == course.user_id then
+        render status: 200, json: { result: a_list, schema: schema }
+      else
+        render status: 401, json: { result: "Not Authorized" }
+      end
+
+    # Course is not (public) AND (owned by user and editable) AND (user is not privledged)
+    else
+        render status: 401, json: { result: "Not Authorized" }
+    end
+  end
+
+  # Request: GET /courses/(:course_id)/attachments/documents/(:attach_id)
+  # Authorization:
+  # - If the course is still a draft then only available to course creator
+  # - If the course is not a draft then only available to moderator and admin
+  # Unauthorized access: Should get redirected to root (/)
+  # Authorized access: Returns a single attachment based on the id
+  def attachment_get
+    c_user = current_user()
+    course = Course.where(id: params[:course_id]).first()
+
+    schema = {
+      id: :text, 
+      title: :text, 
+      user_id: :text,
+    }
+
+    # Course not found case
+    if course.nil?
+        return ( render status: 404, json: { result: "Course Not Found" } )
+    end
+
+    # Course found case
+    if params[:type] == "documents"
+      attache = Document.where(id: params[:attach_id], attachable_id: course.id).first()
+    elsif params[:type] == "embeds"
+      attache = Embed.where(id: params[:attach_id], attachable_id: course.id).first()
+    end
+
+    # Attachment not found case
+    if attache.nil?
+        return ( render status: 404, json: { result: "Attachable Not Found" } )
+    end
+
+    # Public case:
+    if course.visibility == Visibility.published  
+      render status: 200, json: { result: attache, schema: schema }
+
+    # Authenticated case:
+    elsif logged_in?  # Ensure that the user is logged in
+      # Checks IF user is privledged or owns the course, ELSE return unauthorized
+      if c_user.role == Role.admin or c_user.role == Role.moderator or
+          c_user.id == course.user_id then
+        render status: 200, json: { result: attache, schema: schema }
+      else
+        render status: 401, json: { result: "Not Authorized" }
+      end
+
+    # Course is not (public) AND (owned by user and editable) AND (user is not privledged)
+    else
+        render status: 401, json: { result: "Not Authorized" }
+    end
+  end
+
+  # Request: POST /courses/(:course_id)/attachments
+  # Authorization:
+  # - If the course is still a draft then only available to course creator
+  # - If the course is not a draft then only available to moderator and admin
+  # Unauthorized access: Should get redirected to root (/)
+  # Authorized access: Should create the attachment at the index specified, or appended if not specified
+  def attachment_create
+    c_user = current_user()
+    return ( render status: 401, json: { result: "Not Authorized" } ) unless logged_in?  # Ensure the user is logged in
+    course = Course.where(id: params[:course_id]).first()
+
+    schema = {
+      id: :text, 
+      title: :text, 
+      user_id: :text,
+    }
+
+    # Course not found case
+    if course.nil?
+      return ( render status: 404, json: { result: "Not Found" } )
+    end
+
+    # Authenticated User case
+    if c_user.role == Role.admin or c_user.role == Role.moderator or
+        course.user_id == c_user.id
+
+      if attach_type_params[:type] == "Document"
+        attache = Document.new(attach_params.merge(user_id: c_user.id, attachable_id: course.id, attachable_type: "Course"))
+      elsif attach_type_params[:type] == "Embed"
+        attache = Embed.new(attach_params.merge(user_id: c_user.id, attachable_id: course.id, attachable_type: "Course"))
+      else
+        render status: 400, json: { result: "Invalid Type" }
+      end
+
+      status = insert_attachable(attache, course.id)
+
+      if status
+        render status: 200, json: { result: attache, schema: schema }
+      else
+        render status: 400, json: { result: attache.errors }
+      end
+
+    # Course is not (owned by user and editable) AND (user is not privledged)
+    else
+      render status: 401, json: { result: "Not Authorized" }
+    end
+  end
+
+  # Request: PUT /courses/(:course_id)/attachments/(:attach_id)
+  # Authorization:
+  # - If the course is still a draft then only available to course creator
+  # - If the course is not a draft then only available to moderator and admin
+  # Unauthorized access: Should get redirected to root (/)
+  # Authorized access: Should edit the attachment, perhaps moving the index as well
+  def attachment_edit
+  end
+
+  # Request: DELETE /courses/(:course_id)/attachments/(:attach_id)
+  # Authorization:
+  # - If the course is still a draft then only available to course creator
+  # - If the course is not a draft then only available to moderator and admin
+  # Unauthorized access: Should get redirected to root (/)
+  # Authorized access: Should delete the attachment specified
+  def attachment_delete
+  end
+
   private 
     def course_params
         params.require(:course).permit(:title, :description, :tier, :visibility)
     end
 
+    def attach_params
+        params.require(:attachment).permit(:title, :display_index)
+    end
+
+    def attach_type_params
+      params.require(:attachment).permit(:type)
+    end
+
+    # WARNING: This method assumes that the user is already authorized
+    def insert_attachable(attache, c_id)
+      a_list = Document.where(id: c_id)
+      a_list += Embed.where(id: c_id)
+
+      a_list.sort! { |x,y| x.display_index <=> y.display_index }
+
+      a_id = attache.display_index
+      if a_id.nil? or a_id > a_list.length
+        a_list.push(attache)
+      else
+        a_list.insert(a_id, attache)
+      end
+
+      # Update the indices
+      a_list.each_with_index {|attache, index| attache.display_index = index }
+
+      # Split and rewite
+      begin
+        d_list = a_list.find_all { |x| x.class == Document }
+        d_list.each(&:save!)
+
+        e_list = a_list.find_all { |x| x.class == Embed }
+        e_list.each(&:save!)
+      rescue
+        status = false
+      else
+        status = true
+      end
+
+      return status
+    end
 end
