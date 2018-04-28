@@ -18,13 +18,13 @@
 @mixin dark(){ color: rgb(10, 10, 10); }
 
 @mixin serif(){ font-family: 'Martel', serif; }
-@mixin wide-sans-serif(){ font-family: 'Raleway', sans-serif; }
+@mixin wide-sans-serif(){ font-family: 'Monserrat', sans-serif; }
 @mixin sans-serif(){ font-family: 'Source Sans Pro', sans-serif; }
 
-@mixin super-title(){ font-size: 30px; }
-@mixin title(){ font-size: 30px; }
-@mixin subtitle(){ font-size: 20px; }
-@mixin super-text(){ font-size: 18px; }
+@mixin super-title(){ font-size: 34px; }
+@mixin title(){ font-size: 26px; }
+@mixin subtitle(){ font-size: 18px; }
+@mixin super-text(){ font-size: 16px }
 @mixin text(){ font-size: 16px; }
 @mixin subtext(){ font-size: 14px; }
 
@@ -55,6 +55,7 @@ body {
   @include light-bg();
   @include dark();
   @include wide-sans-serif();
+  font-weight: 300;
   @include transition(background-color 0.2s ease-in-out 0s);
   overflow-x: hidden;
 }

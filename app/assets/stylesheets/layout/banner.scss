@@ -20,7 +20,20 @@
   background-repeat: no-repeat;
   .row{
     .message {
-      padding: 15vw 50px 15vw 50px;
+      padding: 12vw 50px 12vw 50px;
+    }
+  }
+}
+
+.banner-md {
+  // min-height: 30vh;
+  background-attachment: scroll;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  .row{
+    .message {
+      padding: 8vw 50px 8vw 50px;
     }
   }
 }
@@ -33,7 +46,7 @@
   background-size: cover;
   .row{
     .message {
-      padding: 5vw 50px 5vw 50px;
+      padding: 4vw 50px 4vw 50px;
     }
   }
 }
