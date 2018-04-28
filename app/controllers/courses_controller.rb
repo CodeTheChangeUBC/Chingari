@@ -356,9 +356,9 @@ class CoursesController < ApplicationController
     end
 
     # Course found case
-    if params[:type] == "documents"
+    if params[:type] == "Document"
       attache = Document.where(id: params[:attach_id], attachable_id: course.id).first()
-    elsif params[:type] == "embeds"
+    elsif params[:type] == "Embed"
       attache = Embed.where(id: params[:attach_id], attachable_id: course.id).first()
     end
 
@@ -488,6 +488,56 @@ class CoursesController < ApplicationController
   # Unauthorized access: Should get redirected to root (/)
   # Authorized access: Should delete the attachment specified
   def attachment_delete
+    query_only = params[:query_only] || false
+    c_user = current_user()
+    return ( render status: 401, json: { result: "Not Authorized" } ) unless logged_in?  # Ensure the user is logged in
+    course = Course.where(id: params[:course_id]).first()
+
+    # Course Not Found case
+    if course.nil?
+      return ( render status: 404, json: { result: "Not Found" } )
+    end
+
+    # Course found case
+    if params[:type] == "Document"
+      attache = Document.where(id: params[:attach_id], attachable_id: course.id).first()
+    elsif params[:type] == "Embed"
+      attache = Embed.where(id: params[:attach_id], attachable_id: course.id).first()
+    end
+
+    # Attachment not found case
+    if attache.nil?
+      return ( render status: 404, json: { result: "Attachable Not Found" } )
+    end
+
+    # Draft Course case
+    if course.visibility == Visibility.draft and course.user_id == c_user.id
+      if query_only
+        render status: 200, json: { result: "Authorized" }
+      else
+        if attache.delete
+          render status: 200, json: { result: "Request Processed" }
+        else
+          render status: 400, json: { result: attache.errors }
+        end
+      end
+
+    # Privledged User case
+    elsif c_user.role == Role.admin or c_user.role == Role.moderator
+      if query_only
+        render status: 200, json: { result: "Authorized" }
+      else
+        if attache.delete
+          render status: 200, json: { result: "Request Processed" }
+        else
+          render status: 400, json: { result: attache.errors }
+        end
+      end
+
+    # Course is not (owned by user and editable) AND (user is not privledged)
+    else
+      render status: 401, json: { result: "Not Authorized" }
+    end
   end
 
 

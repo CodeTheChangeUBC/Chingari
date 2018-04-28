@@ -397,6 +397,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :unauthorized
     end
 
+
     # ########################################################################
     # Tests for GET /courses/(:course_id)/attachments/documents/(:attach_id)
 
@@ -494,5 +495,45 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         response = JSON.parse(@response.body)
         assert_not_nil response["result"]
         assert_equal 47, response["result"]["display_index"]
+    end
+
+
+    # ########################################################################
+    # Tests for delete /courses/(:course_id)/attachments/(:attach_id)
+
+    test "admin user delete document for 410" do
+        log_in_user(@user_admin, "passwwd")
+
+        post '/courses/410/attachments', params: { attachment: { title: "test delete document", display_index: 88, type: "Document"} }
+        assert_response :ok
+        response = JSON.parse(@response.body)
+        cid = response["result"]["id"].to_s
+
+        get "/courses/410/attachments/documents/"+cid
+        assert_response :ok
+
+        delete "/courses/410/attachments/documents/"+cid
+        assert_response :ok
+
+        get "/courses/410/attachments/documents/"+cid
+        assert_response :not_found  
+    end
+
+    test "admin user delete embed for 410" do
+        log_in_user(@user_admin, "passwwd")
+
+        post '/courses/410/attachments', params: { attachment: { content: "test delete document", display_index: 88, type: "Embed"} }
+        assert_response :ok
+        response = JSON.parse(@response.body)
+        cid = response["result"]["id"].to_s
+
+        get "/courses/410/attachments/embeds/"+cid
+        assert_response :ok
+
+        delete "/courses/410/attachments/embeds/"+cid
+        assert_response :ok
+
+        get "/courses/410/attachments/embeds/"+cid
+        assert_response :not_found  
     end
 end
