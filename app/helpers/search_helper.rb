@@ -1,5 +1,8 @@
 module SearchHelper
-  def search_filter(relation, query, keys, word_junction: "OR", property_junction: "OR")
+  def search(relation, query, keys, word_junction: "OR", property_junction: "OR")
+    if query.nil? || query.blank?
+      return relation
+    end
     if query.match(/^[a-zA-Z0-9_\s-]+$/)
       words = query.scan(/[a-zA-Z0-9_-]+/)
       query_template = ""
@@ -8,7 +11,7 @@ module SearchHelper
       keys.each do |key|
         key_constraints = []
         words.each do |word|
-          key_word_constraint = key.to_s + " LIKE `%#{word}%`" 
+          key_word_constraint = key.to_s + " LIKE '%#{word}%'" 
           key_constraints << key_word_constraint
         end  
         constraints << key_constraints.join(" #{word_junction} ") # match ANY word vs match ALL words

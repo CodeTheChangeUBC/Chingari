@@ -15,6 +15,7 @@
 .fade-in-out-enter, .fade-in-out-leave-to, .fade-in-out-leave-active 
 /* .slide-fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+  display: none;
 }
 .fa-spin-fast {
   -webkit-animation: fa-spin 0.75s infinite linear;

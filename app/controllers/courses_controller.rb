@@ -7,8 +7,8 @@ class CoursesController < ApplicationController
   # After some redesign I've decided to respec the index route to list the first 1000 visible records, is 100-record pages
   # Arbitrary filtering and UI-level pagination should be managed by the client
   def index
-    search_query = params[:search_query]
-    page = params[:page] || 1
+    search_query = params[:search]
+    page = (params[:page] || 1).to_i
     if page < 1 || page > @@max_page_number
       render status: 400, json: { result: "Invalid Page Number" }
     end
@@ -32,7 +32,7 @@ class CoursesController < ApplicationController
       elsif user.role == Role.moderator || user.role == Role.admin
           query = Course.all
       end
-      query = paginate(query.order(updated_at: :desc), page: 1)
+      query = paginate(search(query.order(updated_at: :desc), search_query, [:title, :description]), page: page, page_size: @@page_size, page_max: @@max_page_number)
     end
     return render status: 200, json: { result: query, schema: schema }
   end
