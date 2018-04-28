@@ -288,6 +288,7 @@ class CoursesController < ApplicationController
 
   ####=====================================================================####
   #### => Attachments Api Calls
+  # - Embeds Should be admin only
 
   # Request: GET /courses/(:course_id)/attachments
   # Authorization:
@@ -316,6 +317,7 @@ class CoursesController < ApplicationController
     e_list = Embed.where(attachable_id: course.id).as_json
     e_list.each { |x| x["type"] = "Embed"}
     a_list = d_list + e_list
+    a_list.sort! { |x,y| x.display_index <=> y.display_index }
 
     # Public case:
     if course.visibility == Visibility.published  
@@ -471,6 +473,7 @@ class CoursesController < ApplicationController
         course.user_id == c_user.id
 
       status = attache.update(attach_params)
+      status = status and squash_indexes
 
       if status
         render status: 200, json: { result: attache }
@@ -518,7 +521,7 @@ class CoursesController < ApplicationController
       if query_only
         render status: 200, json: { result: "Authorized" }
       else
-        if attache.delete
+        if attache.delete and squash_indexes
           render status: 200, json: { result: "Request Processed" }
         else
           render status: 400, json: { result: attache.errors }
@@ -530,7 +533,7 @@ class CoursesController < ApplicationController
       if query_only
         render status: 200, json: { result: "Authorized" }
       else
-        if attache.delete
+        if attache.delete and squash_indexes
           render status: 200, json: { result: "Request Processed" }
         else
           render status: 400, json: { result: attache.errors }
@@ -563,16 +566,19 @@ class CoursesController < ApplicationController
 
     # WARNING: This method assumes that the user is already authorized
     def insert_attachable(attache, c_id)
-      a_list = Document.where(id: c_id)
-      a_list = a_list + Embed.where(id: c_id)
+      a_list = Document.where(attachable_id: c_id)
+      a_list = a_list + Embed.where(attachable_id: c_id)
 
       a_list.sort! { |x,y| x.display_index <=> y.display_index }
 
-      a_id = attache.display_index
-      if a_id.nil? or a_id > a_list.length
+      # Update the indices
+      a_list.each_with_index {|x, index| x.display_index = index }
+
+      d_idx = attache.display_index
+      if d_idx > a_list.length
         a_list.push(attache)
       else
-        a_list.insert(a_id, attache)
+        a_list.insert(d_idx, attache)
       end
 
       # Update the indices
@@ -593,4 +599,30 @@ class CoursesController < ApplicationController
 
       return status
     end
+
+    # WARNING: This method assumes that the user is already authorized
+    def squash_indexes(c_id)
+      a_list = Document.where(attachable_id: c_id)
+      a_list = a_list + Embed.where(attachable_id: c_id)
+
+      a_list.sort! { |x,y| x.display_index <=> y.display_index }
+
+      # Update the indices
+      a_list.each_with_index {|x, index| x.display_index = index }
+
+      # Split and rewite
+      begin
+        d_list = a_list.find_all { |x| x.class == Document }
+        d_list.each(&:save!)
+
+        e_list = a_list.find_all { |x| x.class == Embed }
+        e_list.each(&:save!)
+      rescue
+        status = false
+      else
+        status = true
+      end
+      return status
+    end
+
 end

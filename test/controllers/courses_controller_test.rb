@@ -536,4 +536,39 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         get "/courses/410/attachments/embeds/"+cid
         assert_response :not_found  
     end
+
+
+    # ########################################################################
+    # Tests that check the auto adjustment of the display_index for attachments
+
+    test "check that high display_index gets reduced" do
+        log_in_user(@user_admin, "passwwd")
+
+        get '/courses/410/attachments'
+        assert_response :ok
+
+        print("\n=-----=\n")
+        response = JSON.parse(@response.body)
+        assert_not_nil response["result"]
+        print(response)
+        print("\n-----\n")
+
+        post '/courses/410/attachments', params: { attachment: { content: '<iframe src="test"></iframe>', display_index: 3, type: "Embed"} }
+        assert_response :ok
+
+        print("\n+-----+\n")
+        response = JSON.parse(@response.body)
+        assert_not_nil response["result"]
+        print(response)
+
+        get '/courses/410/attachments'
+        assert_response :ok
+
+        print("\n-----\n")
+        response = JSON.parse(@response.body)
+        assert_not_nil response["result"]
+        print(response)
+        print("\n+-----+\n")
+    end
+
 end
