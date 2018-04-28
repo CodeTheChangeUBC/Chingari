@@ -368,9 +368,9 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
     # ########################################################################
     # Tests for GET /courses/(:course_id)/attachments
 
-    test "admin user get attachements for 314" do
+    test "admin user get attachements for 410" do
         log_in_user(@user_admin, "passwwd")
-        get '/courses/314/attachments'
+        get '/courses/410/attachments'
         assert_response :ok
 
         response = JSON.parse(@response.body)
@@ -423,5 +423,21 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         response = JSON.parse(@response.body)
         assert_not_nil response["result"]
         assert_equal "test document", response["result"][0]["title"]
+    end
+
+    test "admin user post embed for 410 " do
+        log_in_user(@user_admin, "passwwd")
+        post '/courses/410/attachments', params: { attachment: { content: '<iframe src="test"></iframe>', display_index: 88, type: "Embed"} }
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_not_nil response["result"]
+
+        get '/courses/410/attachments'
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_not_nil response["result"]
+        assert_equal "<iframe src=\"test\"></iframe>", response["result"][1]["content"]
     end
 end

@@ -455,11 +455,15 @@ class CoursesController < ApplicationController
 
   private 
     def course_params
-        params.require(:course).permit(:title, :description, :tier, :visibility)
+      params.require(:course).permit(:title, :description, :tier, :visibility)
     end
 
     def attach_params
-        params.require(:attachment).permit(:title, :display_index)
+      if params[:attachment][:type] == "Document"
+        return params.require(:attachment).permit(:title, :display_index)
+      elsif params[:attachment][:type] == "Embed"
+        return params.require(:attachment).permit(:content, :display_index)
+      end
     end
 
     def attach_type_params
@@ -469,7 +473,7 @@ class CoursesController < ApplicationController
     # WARNING: This method assumes that the user is already authorized
     def insert_attachable(attache, c_id)
       a_list = Document.where(id: c_id)
-      a_list += Embed.where(id: c_id)
+      a_list = a_list + Embed.where(id: c_id)
 
       a_list.sort! { |x,y| x.display_index <=> y.display_index }
 
@@ -481,7 +485,7 @@ class CoursesController < ApplicationController
       end
 
       # Update the indices
-      a_list.each_with_index {|attache, index| attache.display_index = index }
+      a_list.each_with_index {|x, index| x.display_index = index }
 
       # Split and rewite
       begin
