@@ -18,24 +18,28 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
     test "admin user get index" do
         log_in_user(@user_admin, "passwwd")
-        get courses_path
+        get "/courses"
         assert_response :ok
     end
 
     test "standard user get index" do
         log_in_user(@user_std, "passwwd")
-        get courses_path
+        get "/courses"
         assert_response :ok  # Unauthorized
     end
 
     test "no user get index" do
-        get courses_path
+        get "/courses"
         assert_response :ok
     end
 
+
+    # # ########################################################################
+    # # Tests for get /courses/review
+
     # test "admin user get review" do
     #     log_in_user(@user_admin, "passwwd")
-    #     get courses_review_path
+    #     get "/courses/review"
     #     assert_response :ok
 
     #     response = JSON.parse(@response.body)
@@ -44,18 +48,14 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
     #     end
     # end
 
-
-    # ########################################################################
-    # Tests for get /courses/review
-
     # test "standard user get review" do
     #     log_in_user(@user_std, "passwwd")
-    #     get courses_review_path
+    #     get "/courses/review"
     #     assert_response :unauthorized  # Unauthorized
     # end
 
     # test "no user get review" do
-    #     get courses_review_path
+    #     get "/courses/review"
     #     assert_response :unauthorized
     # end
 
@@ -65,7 +65,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
     # test "standard user get drafts" do
     #     log_in_user(@user_std, "passwwd")
-    #     get courses_drafts_path
+    #     get "/courses/drafts"
     #     assert_response :ok
 
     #     response = JSON.parse(@response.body)
@@ -75,17 +75,17 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
     # end
 
     # test "no user get drafts" do
-    #     get courses_drafts_path
+    #     get "/courses/drafts"
     #     assert_response :unauthorized
     # end
 
 
-    # ########################################################################
-    # Tests for get /courses/published
+    # # ########################################################################
+    # # Tests for get /courses/published
 
     # test "standard user get published" do
     #     log_in_user(@user_std, "passwwd")
-    #     get courses_published_path
+    #     get "/courses/published"
     #     assert_response :ok
 
     #     response = JSON.parse(@response.body)
@@ -95,7 +95,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
     # end
 
     # test "no user get published" do
-    #     get courses_published_path
+    #     get "/courses/published"
     #     assert_response :ok
 
     #     response = JSON.parse(@response.body)
@@ -110,7 +110,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
     test "admin user get new" do
         log_in_user(@user_admin, "passwwd")
-        get courses_new_path
+        get "/courses/new"
         assert_response :ok
 
         response = JSON.parse(@response.body)
@@ -121,7 +121,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
     test "standard user get new" do
         log_in_user(@user_std, "passwwd")
-        get courses_new_path
+        get "/courses/new"
         assert_response :ok
 
         response = JSON.parse(@response.body)
@@ -131,7 +131,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "no user get new" do
-        get courses_new_path
+        get "/courses/new"
         assert_response :unauthorized
     end
 
@@ -362,5 +362,66 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
         delete "/courses/999"
         assert_response :not_found      
+    end
+
+
+    # ########################################################################
+    # Tests for GET /courses/(:course_id)/attachments
+
+    test "admin user get attachements for 314" do
+        log_in_user(@user_admin, "passwwd")
+        get '/courses/314/attachments'
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_not_nil response["result"]
+    end
+
+
+    # ########################################################################
+    # Tests for GET /courses/(:course_id)/attachments/documents/(:attach_id)
+
+    test "admin user get document 1 for 314 " do
+        log_in_user(@user_admin, "passwwd")
+        get '/courses/314/attachments/documents/1'
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_equal 314, response["result"]["attachable_id"]
+        assert_equal 1, response["result"]["id"]
+    end
+
+
+    # ########################################################################
+    # Tests for GET /courses/(:course_id)/attachments/embeds/(:attach_id)
+
+    test "admin user get embeds 314 for 314 " do
+        log_in_user(@user_admin, "passwwd")
+        get '/courses/314/attachments/embeds/314'
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_equal 314, response["result"]["attachable_id"]
+        assert_equal 314, response["result"]["id"]
+    end
+
+
+    # ########################################################################
+    # Tests for POST /courses/(:course_id)/attachments
+
+    test "admin user post document for 410 " do
+        log_in_user(@user_admin, "passwwd")
+        post '/courses/410/attachments', params: { attachment: { title: "test document", display_index: 88, type: "Document"} }
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_not_nil response["result"]
+
+        get '/courses/410/attachments'
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_not_nil response["result"]
+        assert_equal "test document", response["result"][0]["title"]
     end
 end
