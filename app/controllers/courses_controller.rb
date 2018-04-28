@@ -311,8 +311,11 @@ class CoursesController < ApplicationController
     end
 
     # Course found case
-    a_list = Document.where(attachable_id: course.id)
-    a_list += Embed.where(attachable_id: course.id)
+    d_list = Document.where(attachable_id: course.id).as_json
+    d_list.each { |x| x["type"] = "Document"}
+    e_list = Embed.where(attachable_id: course.id).as_json
+    e_list.each { |x| x["type"] = "Embed"}
+    a_list = d_list + e_list
 
     # Public case:
     if course.visibility == Visibility.published  
