@@ -33,6 +33,11 @@ Rails.application.routes.draw do
     delete '/courses/:course_id', to: 'courses#delete' # ^^^^
     get '/courses/:course_id/edit', to: 'courses#edit'  # ^^^^
 
+    # Temporary route for testing document upload
+    get '/documents', to: 'documents#index'
+    post '/documents', to: 'documents#create'
+    delete '/documents/:document_id', to: 'documents#delete'
+
   # Staged routes
   elsif Rails.env == 'stage'
     # Set root of application

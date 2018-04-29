@@ -116,4 +116,5 @@ export default class CourseModel {
   static test_delete(id) {
     return CourseModel.send_delete("/courses/" + id + "?query_only=true")
   } 
+
 }
