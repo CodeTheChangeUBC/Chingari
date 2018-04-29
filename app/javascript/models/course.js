@@ -115,5 +115,5 @@ export default class CourseModel {
   // This only tests to see if delete is permitted, but does not perform the deletion
   static test_delete(id) {
     return CourseModel.send_delete("/courses/" + id + "?query_only=true")
-  } 
+  }
 }

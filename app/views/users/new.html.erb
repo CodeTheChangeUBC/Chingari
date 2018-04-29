@@ -2,6 +2,9 @@
 <%= stylesheet_link_tag 'pages/login', media: 'all', 'data-turbolinks-track': 'reload' %>
 <div class="banner-sm" style="background-image: url(<%= asset_path('backgrounds/anton-darius-thesollers-271293-unsplash.jpg') %>)">
   <div class="row d-flex align-items-center">
+    <div class="message text-center d-lg-none col-sm-12">
+      <p class="light-text title serif clear-theme">New Account</p>
+    </div>
     <div class="message text-center col-lg-6 col-sm-12">
       <p class="light-text title sans-serif clear-theme">
 
@@ -32,7 +35,7 @@
 
       </p>
     </div>
-    <div class="message text-center col-lg-6 col-sm-12">
+    <div class="message text-center d-sm-none d-lg-block col-lg-6">
       <p class="light-text title serif clear-theme">New Account</p>
     </div>
   </div>

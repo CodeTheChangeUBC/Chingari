@@ -121,11 +121,6 @@ export const ControlView = Vue.component("control-view", {
                   <slot name="view"></slot>
                 </div>
               </div> 
-              <div class="row" style="padding: 15px">
-                <div class="col-sm-12">
-                  <slot name="controls"></slot>
-                </div>
-              </div> 
             </div>
             `
 })
