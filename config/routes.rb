@@ -41,6 +41,11 @@ Rails.application.routes.draw do
     put '/courses/(:course_id)/attachments/(:attach_id)', to: 'courses#attachment_edit'
     delete "/courses/(:course_id)/attachments/(:attach_id)", to: 'courses#attachment_delete'
 
+    # Temporary route for testing document upload
+    get '/documents', to: 'documents#index'
+    post '/documents', to: 'documents#create'
+    delete '/documents/:document_id', to: 'documents#delete'
+
 
   # Staged routes
   elsif Rails.env == 'stage'

@@ -3,7 +3,7 @@ import AsyncComputed from 'vue-async-computed'
 import _ from 'lodash';
 import CourseModel from '../models/course'
 import { ControlList, ControlView, ControlForm } from '../components/control_components'
-import { CourseRenderLarge, CourseRenderSmall } from '../components/course'
+import { CourseRenderLarge, CourseRenderSmall, DocumentRender, EmbedRender, TextRender } from '../components/course'
 import { wait, copy_to_clipboard, capitalize } from '../layout/utility'
 
 /*--------------------------------------------
@@ -29,7 +29,7 @@ export function CourseApp(mount, notifications) {
       schema: undefined,
       model: undefined,
       viewing_mode: undefined,
-      permissions: undefined
+      attachments:[]
     },
     watch: {
       search(newSearch, oldSearch) {
@@ -109,6 +109,7 @@ export function CourseApp(mount, notifications) {
               promises.push(this.test_update(item.id))
               promises.push(this.test_delete(item.id))
             }
+            promises.push(this.list_attachments(item.id))
             return Promise.all(promises).then(() => {
               this.model = response.result
               if (response.schema !== undefined && response.schema.constructor === Object) {
@@ -190,7 +191,43 @@ export function CourseApp(mount, notifications) {
           this.page -= 1
           this.index_items()
         }
-      }
+      },
+      list_attachments(course_id) {
+        CourseModel.index_attachments(course_id)
+          .then((response) => {
+            this.attachments = response.result
+          })
+          .catch(() => {
+            notifications.error(response.result)
+          })
+      },
+      create_attachment(course_id, attachment) {
+        CourseModel.create_attachment(course_id, attachment)
+          .then((response) => {
+            this.list_attachments(course_id)
+          })
+          .catch(() => {
+            notifications.error(response.result)
+          })
+      },
+      update_attachment(course_id, attachment) {
+        CourseModel.update_attachment(course_id, attachment)
+          .then((response) => {
+            this.list_attachments(course_id)
+          })
+          .catch(() => {
+            notifications.error(response.result)
+          })
+      },
+      delete_attachment(course_id, attachment) {
+        CourseModel.delete_attachment(course_id, attachment.type, attachment.id)
+          .then((response) => {
+            this.list_attachments(course_id)
+          })
+          .catch(() => {
+            notifications.error(response.result)
+          })
+      },
     },
     created() {
       if (this.path.match(/^\d+$/) !== null) {
@@ -269,6 +306,12 @@ export function CourseApp(mount, notifications) {
 
                   </control-list>
 
+
+
+
+
+
+
                   <control-view 
                     v-if="viewing_mode === 'show'">
 
@@ -276,26 +319,52 @@ export function CourseApp(mount, notifications) {
                       slot="view"
                       v-bind:schema="schema"
                       v-bind:item="model">
-                    </course-render-large>
 
-                    <div slot="controls">
-                      <button
-                        class="button blue-button"
-                        v-on:click="index_items()">
-                        Back
-                      </button>
-                      <button
-                        class="button blue-button"
-                        v-on:click="copylink(model.id)">
-                        Share
-                      </button>
-                      <button class="button orange-button"
-                        v-if="can_update[model.id] === true"
-                        v-on:click="edit_item(model.id)">
-                        Edit
-                      </button>
-                    </div>
+                      <div slot="controls">
+                        <button
+                          class="button blue-button"
+                          v-on:click="index_items()">
+                          Back
+                        </button>
+                        <button
+                          class="button blue-button"
+                          v-on:click="copylink(model.id)">
+                          Share
+                        </button>
+                        <button class="button orange-button"
+                          v-if="can_update[model.id] === true"
+                          v-on:click="edit_item(model.id)">
+                          Edit
+                        </button>
+
+                      </div>
+
+                      <div slot="attachments">
+                        <span v-for="(attachment, index) in attachments">
+                          <document-render
+                            v-if="attachment.type === 'Document'"
+                            v-bind:item="attachment">
+                          </document-render>
+                          <embed-render
+                            v-if="attachment.type === 'Embed'"
+                            v-bind:item="attachment">
+                          </embed-render>
+                          <text-render
+                            v-if="attachment.type === 'Text'"
+                            v-bind:item="attachment">
+                          </text-render>
+                        </span>
+                      </div>
+
+                    </course-render-large>
+                    
                   </control-view>
+
+
+
+
+
+
 
                   <control-form 
                     v-if="viewing_mode === 'new' || viewing_mode === 'edit'" 
@@ -309,8 +378,59 @@ export function CourseApp(mount, notifications) {
                       slot="preview"
                       v-bind:schema="schema"
                       v-bind:item="model">
+
+                      <div v-if="viewing_mode === 'edit'" slot="attachments">
+                        <span v-for="(attachment, index) in attachments">
+                          <document-render
+                            v-if="attachment.type === 'Document'"
+                            v-bind:item="attachment">
+                          </document-render>
+                          <embed-render
+                            v-if="attachment.type === 'Embed'"
+                            v-bind:item="attachment">
+                          </embed-render>
+                          <text-render
+                            v-if="attachment.type === 'Text'"
+                            v-bind:item="attachment">
+                          </text-render>
+
+                          <div slot="controls"
+                            v-if="can_update[model.id] === true">
+
+                            <button
+                              class="button orange-button"
+                              v-if="index >= 1"
+                              v-on:click="update_attachment(model.id, { type: attachment.type, display_index: attachment.display_index - 1 })">
+                              Move Up
+                            </button>
+
+                            <button
+                              class="button orange-button"
+                              v-if="index <= attachments.length"
+                              v-on:click="update_attachment(model.id, { type: attachment.type, display_index: attachment.display_index + 1 })">
+                              Move Down
+                            </button>
+
+                            <button class="button orange-button"
+                              v-on:click="alert('edit')">
+                              Edit
+                            </button>
+
+                            <button class="button orange-button"
+                              v-on:click="delete_attachment(model.id, attachment.id)">
+                              Delete
+                            </button>
+
+                          </div>
+                          
+                        </span>
+                      </div>
+
                     </course-render-large>
+
+
                     
+
                     <div slot="controls">
                       <span v-if="viewing_mode === 'new'">
                         <button class="button blue-button" 
