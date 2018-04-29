@@ -170,21 +170,4 @@ export default class CourseModel {
   static test_delete(id) {
     return CourseModel.send_delete("/courses/" + id + "?query_only=true")
   }
-
-  static attachments(id) {
-    return CourseModel.send_get('/courses/' + id + "/attachments")
-  }
-
-  static create_attachment(id, params) {
-    return CourseModel.send_post('/courses/' + id + "/attachments", params)
-  }
-
-  static update_attachment(id) {
-    return CourseModel.send_put('/courses/' + id + "/attachments", params)
-  }
-
-  static delete_attachment(id) {
-    return CourseModel.send_delete('/courses/' + id + "/attachments/" + params., params)
-  }
-
 }

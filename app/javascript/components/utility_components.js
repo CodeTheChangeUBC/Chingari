@@ -5,13 +5,37 @@ export const StringRender = Vue.component("string-render", {
   props: ["string", "placeholder"],
   template: `
             <span class="string-render">
-              <span v-if="string !== undefined && string !== null && string.match(/^\s*$/) === null">
+              <span 
+                v-if="string !== undefined && string !== null && string.match(/^\s*$/) === null">
                 {{ string }}
               </span>
-              <span v-else-if="placeholder !== undefined" class="string-render-placeholder" style="opacity: 0.5">
+              <span 
+                v-else-if="placeholder !== undefined"
+                class="string-render-placeholder" style="opacity: 0.5">
                 {{ placeholder }}
               </span>
-              <span v-else class="string-render-placeholder" style="opacity: 0.5">
+              <span v-else 
+                class="string-render-placeholder" style="opacity: 0.5">
+                blank
+              </span>
+            </span>
+            `
+})
+
+export const RawRender = Vue.component("raw-render", {
+  props: ["string", "placeholder"],
+  template: `
+            <span class="raw-render">
+              <span 
+                v-if="string !== undefined && string !== null && string.match(/^\s*$/) === null"
+                v-html="string">
+              </span>
+              <span v-else-if="placeholder !== undefined"
+                v-html="placeholder"
+                class="raw-render-placeholder" style="opacity: 0.5">
+              </span>
+              <span v-else 
+                class="string-render-placeholder" style="opacity: 0.5">
                 blank
               </span>
             </span>
