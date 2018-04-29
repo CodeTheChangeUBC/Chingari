@@ -450,6 +450,8 @@ class CoursesController < ApplicationController
       attache = Document.where(id: params[:attach_id], attachable_id: course.id).first()
     elsif attach_type_params[:type] == "Embed"
       attache = Embed.where(id: params[:attach_id], attachable_id: course.id).first()
+    else
+      render status: 400, json: { result: "Invalid Type" }
     end
 
     # Attachment not found case
@@ -459,9 +461,7 @@ class CoursesController < ApplicationController
 
     # Draft Course case
     if course.visibility == Visibility.draft and course.user_id == c_user.id and attache.class != Embed
-      status = attache.update(attach_params)
-      status = status and squash_indexes(course.id)
-
+      status = update_attachable(params[:attach_id], course.id, attach_params)
       if status
         render status: 200, json: { result: attache }
       else
@@ -470,9 +470,7 @@ class CoursesController < ApplicationController
 
     # Privledged User case
     elsif c_user.role == Role.admin or c_user.role == Role.moderator
-      status = attache.update(attach_params)
-      status = status and squash_indexes(course.id)
-
+      status = update_attachable(params[:attach_id], course.id, attach_params)      
       if status
         render status: 200, json: { result: attache }
       else
@@ -564,14 +562,18 @@ class CoursesController < ApplicationController
 
     # WARNING: This method assumes that the user is already authorized
     def insert_attachable(attache, c_id)
-      a_list = Document.where(attachable_id: c_id)
-      a_list = a_list + Embed.where(attachable_id: c_id)
+      status = true
+      d_list = Document.where(attachable_id: c_id)
+      e_list = Embed.where(attachable_id: c_id)
+      a_list = d_list + e_list
 
+      # Sort original list
       a_list.sort! { |x,y| x.display_index <=> y.display_index }
 
       # Update the indices
-      a_list.each_with_index {|x, index| x.display_index = index }
+      a_list.each_with_index {|x, index| x.display_index = index}
 
+      # insert the new attachable
       d_idx = attache.display_index
       if d_idx > a_list.length
         a_list.push(attache)
@@ -579,20 +581,92 @@ class CoursesController < ApplicationController
         a_list.insert(d_idx, attache)
       end
 
-      # Update the indices
-      a_list.each_with_index {|x, index| x.display_index = index }
+      # Re-Update the indices ( With offset )
+      a_list.each_with_index {|x, index| x.display_index = index + a_list.length}
 
-      # Split and rewite
+      # Split the list and rewite without collision
       begin
         d_list = a_list.find_all { |x| x.class == Document }
         d_list.each(&:save!)
 
         e_list = a_list.find_all { |x| x.class == Embed }
         e_list.each(&:save!)
-      rescue
-        status = false
+      rescue Exception => eek
+        print(eek)
+        status and false
+      end
+
+      # Remove the offset from the indexes
+      a_list.each_with_index {|x, index| x.display_index = index}
+
+      # Split the list and rewite final version
+      begin
+        d_list = a_list.find_all { |x| x.class == Document }
+        d_list.each(&:save!)
+
+        e_list = a_list.find_all { |x| x.class == Embed }
+        e_list.each(&:save!)
+      rescue Exception => eek
+        print(eek)
+        status and false
+      end
+
+      return status
+    end
+
+    # WARNING: This method assumes that the user is already authorized
+    def update_attachable(a_id, c_id, a_params)
+      status = true
+      sd_list = Document.where(attachable_id: c_id)
+      se_list = Embed.where(attachable_id: c_id)
+      a_list = sd_list + se_list
+
+      # Sort original list
+      a_list.sort! { |x,y| x.display_index <=> y.display_index }
+
+      # Find and update the appropriate attribute
+      a_idx = a_list.index{ |x| x.id == a_id.to_i }
+      a_list[a_idx].assign_attributes(a_params)
+      nd_idx = a_list[a_idx].display_index
+
+      # Edge case resolving because of the way ruby sorts
+      if nd_idx > a_idx
+        a_list[a_idx].display_index = a_list[a_idx].display_index + 1
       else
-        status = true
+        a_list[a_idx].display_index = a_list[a_idx].display_index - 1
+      end
+      
+      # ReSort the list so that the updated indexes are correct
+      a_list.sort! { |x,y| x.display_index <=> y.display_index }
+
+      # Re-Update the indices ( With large offset )
+      a_list.each_with_index {|x, index| x.display_index = index + a_list.length}
+
+      # Split the list and rewite without collision
+      begin
+        d_list = a_list.find_all { |x| x.class == Document }
+        d_list.each(&:save!)
+
+        e_list = a_list.find_all { |x| x.class == Embed }
+        e_list.each(&:save!)
+      rescue Exception => eek
+        print(eek)
+        status and false
+      end
+
+      # Remove the offset from the indexes
+      a_list.each_with_index {|x, index| x.display_index = index}
+
+      # Split the list and rewite final version
+      begin
+        d_list = a_list.find_all { |x| x.class == Document }
+        d_list.each(&:save!)
+
+        e_list = a_list.find_all { |x| x.class == Embed }
+        e_list.each(&:save!)
+      rescue Exception => eek
+        print(eek)
+        status and false
       end
 
       return status
