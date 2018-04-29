@@ -68,14 +68,6 @@ export const ControlForm = Vue.component("control-form", {
   },
   template: `
             <div class="control-form row">
-              <div class="col-lg-6 col-sm-12">
-
-                <div class="preview material-shadow" 
-                  style="margin:5px 0px 5px 0px">
-                  <slot name="preview"></slot>
-                </div>
-
-              </div>
 
               <div class="col-lg-6 col-sm-12">
   
@@ -88,6 +80,15 @@ export const ControlForm = Vue.component("control-form", {
                   </model-form>
 
                   <slot name="controls"></slot>
+                </div>
+
+              </div>
+
+              <div class="col-lg-6 col-sm-12">
+
+                <div class="preview material-shadow" 
+                  style="margin:5px 0px 5px 0px">
+                  <slot name="preview"></slot>
                 </div>
 
               </div>
