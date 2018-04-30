@@ -18,24 +18,28 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
     test "admin user get index" do
         log_in_user(@user_admin, "passwwd")
-        get courses_path
+        get "/courses"
         assert_response :ok
     end
 
     test "standard user get index" do
         log_in_user(@user_std, "passwwd")
-        get courses_path
+        get "/courses"
         assert_response :ok  # Unauthorized
     end
 
     test "no user get index" do
-        get courses_path
+        get "/courses"
         assert_response :ok
     end
 
+
+    # # ########################################################################
+    # # Tests for get /courses/review
+
     # test "admin user get review" do
     #     log_in_user(@user_admin, "passwwd")
-    #     get courses_review_path
+    #     get "/courses/review"
     #     assert_response :ok
 
     #     response = JSON.parse(@response.body)
@@ -44,18 +48,14 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
     #     end
     # end
 
-
-    # ########################################################################
-    # Tests for get /courses/review
-
     # test "standard user get review" do
     #     log_in_user(@user_std, "passwwd")
-    #     get courses_review_path
+    #     get "/courses/review"
     #     assert_response :unauthorized  # Unauthorized
     # end
 
     # test "no user get review" do
-    #     get courses_review_path
+    #     get "/courses/review"
     #     assert_response :unauthorized
     # end
 
@@ -65,7 +65,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
     # test "standard user get drafts" do
     #     log_in_user(@user_std, "passwwd")
-    #     get courses_drafts_path
+    #     get "/courses/drafts"
     #     assert_response :ok
 
     #     response = JSON.parse(@response.body)
@@ -75,17 +75,17 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
     # end
 
     # test "no user get drafts" do
-    #     get courses_drafts_path
+    #     get "/courses/drafts"
     #     assert_response :unauthorized
     # end
 
 
-    # ########################################################################
-    # Tests for get /courses/published
+    # # ########################################################################
+    # # Tests for get /courses/published
 
     # test "standard user get published" do
     #     log_in_user(@user_std, "passwwd")
-    #     get courses_published_path
+    #     get "/courses/published"
     #     assert_response :ok
 
     #     response = JSON.parse(@response.body)
@@ -95,7 +95,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
     # end
 
     # test "no user get published" do
-    #     get courses_published_path
+    #     get "/courses/published"
     #     assert_response :ok
 
     #     response = JSON.parse(@response.body)
@@ -110,7 +110,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
     test "admin user get new" do
         log_in_user(@user_admin, "passwwd")
-        get courses_new_path
+        get "/courses/new"
         assert_response :ok
 
         response = JSON.parse(@response.body)
@@ -121,7 +121,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
     test "standard user get new" do
         log_in_user(@user_std, "passwwd")
-        get courses_new_path
+        get "/courses/new"
         assert_response :ok
 
         response = JSON.parse(@response.body)
@@ -131,7 +131,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "no user get new" do
-        get courses_new_path
+        get "/courses/new"
         assert_response :unauthorized
     end
 
@@ -362,5 +362,399 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
         delete "/courses/999"
         assert_response :not_found      
+    end
+
+
+    # ########################################################################
+    # Tests for GET /courses/(:course_id)/attachments
+
+    test "admin user get attachments for 314" do
+        log_in_user(@user_admin, "passwwd")
+        get '/courses/314/attachments'
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_not_nil response["result"]
+    end
+
+    test "admin user get attachments for 322" do
+        log_in_user(@user_admin, "passwwd")
+        get '/courses/322/attachments'
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_not_nil response["result"]
+    end
+
+    test "standard user get attachments for 322" do
+        log_in_user(@user_std, "passwwd")
+        get '/courses/322/attachments'
+        assert_response :unauthorized
+    end
+
+    test "no user get attachments for 322" do
+        get '/courses/322/attachments'
+        assert_response :unauthorized
+    end
+
+
+    # ########################################################################
+    # Tests for GET /courses/(:course_id)/attachments/documents/(:attach_id)
+
+    test "admin user get document 1 for 314" do
+        log_in_user(@user_admin, "passwwd")
+        get '/courses/314/attachments/documents/1'
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_equal 314, response["result"]["attachable_id"]
+        assert_equal 1, response["result"]["id"]
+    end
+
+
+    # ########################################################################
+    # Tests for GET /courses/(:course_id)/attachments/embeds/(:attach_id)
+
+    test "admin user get embed 314 for 314" do
+        log_in_user(@user_admin, "passwwd")
+        get '/courses/314/attachments/embeds/314'
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_equal 314, response["result"]["attachable_id"]
+        assert_equal 314, response["result"]["id"]
+    end
+
+
+    # ########################################################################
+    # Tests for POST /courses/(:course_id)/attachments
+
+    test "admin user post document for 410" do
+        log_in_user(@user_admin, "passwwd")
+        post '/courses/410/attachments', params: { attachment: { title: "test document", display_index: 88, type: "Document"} }
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_not_nil response["result"]
+
+        get '/courses/410/attachments'
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_not_nil response["result"]
+        assert_equal "test document", response["result"][1]["title"]
+    end
+
+    test "admin user post embed for 410" do
+        log_in_user(@user_admin, "passwwd")
+        post '/courses/410/attachments', params: { attachment: { content: '<iframe src="test"></iframe>', display_index: 88, type: "Embed"} }
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_not_nil response["result"]
+
+        get '/courses/410/attachments'
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_not_nil response["result"]
+        assert_equal "<iframe src=\"test\"></iframe>", response["result"][1]["content"]
+    end
+
+    test "standard user post embed for 410" do
+        log_in_user(@user_std, "passwwd")
+
+        put '/courses/410/attachments/6', params: { attachment: { display_index: 47, type: "Embed"} }
+        assert_response :unauthorized
+    end
+
+    # ########################################################################
+    # Tests for PUT /courses/(:course_id)/attachments/(:attach_id)
+
+    test "admin user put document for 314" do
+        log_in_user(@user_admin, "passwwd")
+        post '/courses/410/attachments', params: { attachment: { content: '<iframe src="test"></iframe>', display_index: 88, type: "Embed"} }
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_not_nil response["result"]
+        cid = response["result"]["id"].to_s
+
+        get '/courses/410/attachments/embeds/'+cid
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_not_nil response["result"]
+        assert_equal 1, response["result"]["display_index"]
+    end
+
+    test "admin user put embed for 410" do
+        log_in_user(@user_admin, "passwwd")
+        put '/courses/410/attachments/6', params: { attachment: { display_index: 47, type: "Embed"} }
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_not_nil response["result"]
+
+        get '/courses/410/attachments/embeds/6'
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_not_nil response["result"]
+        assert_equal 0, response["result"]["display_index"]
+    end
+
+    test "standard user put embed for 410" do
+        log_in_user(@user_std, "passwwd")
+
+        put '/courses/410/attachments/6', params: { attachment: { display_index: 47, type: "Embed"} }
+        assert_response :unauthorized
+    end
+
+
+    # ########################################################################
+    # Tests for delete /courses/(:course_id)/attachments/(:attach_id)
+
+    test "admin user delete document for 410" do
+        log_in_user(@user_admin, "passwwd")
+
+        post '/courses/410/attachments', params: { attachment: { title: "test delete document", display_index: 88, type: "Document"} }
+        assert_response :ok
+        response = JSON.parse(@response.body)
+        cid = response["result"]["id"].to_s
+
+        get "/courses/410/attachments/documents/"+cid
+        assert_response :ok
+
+        delete "/courses/410/attachments/documents/"+cid
+        assert_response :ok
+
+        get "/courses/410/attachments/documents/"+cid
+        assert_response :not_found  
+    end
+
+    test "admin user delete embed for 410" do
+        log_in_user(@user_admin, "passwwd")
+
+        post '/courses/410/attachments', params: { attachment: { content: "test delete document", display_index: 88, type: "Embed"} }
+        assert_response :ok
+        response = JSON.parse(@response.body)
+        cid = response["result"]["id"].to_s
+
+        get "/courses/410/attachments/embeds/"+cid
+        assert_response :ok
+
+        delete "/courses/410/attachments/embeds/"+cid
+        assert_response :ok
+
+        get "/courses/410/attachments/embeds/"+cid
+        assert_response :not_found  
+    end
+
+    test "standard user delete embed for 410" do
+        log_in_user(@user_admin, "passwwd")
+
+        post '/courses/410/attachments', params: { attachment: { content: "test delete document", display_index: 88, type: "Embed"} }
+        assert_response :ok
+        response = JSON.parse(@response.body)
+        cid = response["result"]["id"].to_s
+        
+        get "/courses/410/attachments/embeds/"+cid
+        assert_response :ok
+
+        log_out_user()
+        log_in_user(@user_std, "passwwd")
+
+        delete "/courses/410/attachments/embeds/"+cid
+        assert_response :unauthorized
+    end
+
+
+    # ########################################################################
+    # Tests that check the auto adjustment of the display_index for attachments
+
+    test "check that high display_index gets reduced" do
+        log_in_user(@user_admin, "passwwd")
+
+        get '/courses/410/attachments'
+        assert_response :ok
+        response = JSON.parse(@response.body)
+        assert_equal 5, response["result"][0]['display_index']
+
+        post '/courses/410/attachments', params: { attachment: { title: 'Test Doc', display_index: 3, type: "Document"} }
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_equal 1, response["result"]['display_index']
+
+        get '/courses/410/attachments'
+        assert_response :ok
+        response = JSON.parse(@response.body)
+        assert_equal 0, response["result"][0]['display_index']
+        assert_equal "Embed", response["result"][0]['type']
+        assert_equal 1, response["result"][1]['display_index']
+        assert_equal "Document", response["result"][1]['type']
+    end
+
+    test "check that low display_index pushes stack" do
+        log_in_user(@user_admin, "passwwd")
+
+        get '/courses/410/attachments'
+        assert_response :ok
+        response = JSON.parse(@response.body)
+        assert_equal 5, response["result"][0]['display_index']
+
+        post '/courses/410/attachments', params: { attachment: { title: 'Test Doc', display_index: 0, type: "Document"} }
+        assert_response :ok
+
+        response = JSON.parse(@response.body)
+        assert_equal 0, response["result"]['display_index']
+
+        get '/courses/410/attachments'
+        assert_response :ok
+        response = JSON.parse(@response.body)
+        assert_equal 0, response["result"][0]['display_index']
+        assert_equal "Document", response["result"][0]['type']
+        assert_equal 1, response["result"][1]['display_index']
+        assert_equal "Embed", response["result"][1]['type']
+
+    end
+
+    test "check that the stack is pushed correctly" do
+        log_in_user(@user_admin, "passwwd")
+
+        post '/courses/410/attachments', params: { attachment: { title: 'Test Doc 0', display_index: 0, type: "Document"} }
+        assert_response :ok
+        post '/courses/410/attachments', params: { attachment: { title: 'Test Doc 1', display_index: 1, type: "Document"} }
+        assert_response :ok
+        post '/courses/410/attachments', params: { attachment: { title: 'Test Doc 2', display_index: 2, type: "Document"} }
+        assert_response :ok
+        post '/courses/410/attachments', params: { attachment: { title: 'Test Doc 3', display_index: 3, type: "Document"} }
+        assert_response :ok
+        post '/courses/410/attachments', params: { attachment: { title: 'Test Doc 4', display_index: 4, type: "Document"} }
+        assert_response :ok
+
+        get '/courses/410/attachments'
+        assert_response :ok
+        response = JSON.parse(@response.body)
+        assert_equal 0, response["result"][0]['display_index']
+        assert_equal "Test Doc 0", response["result"][0]['title']
+        assert_equal 1, response["result"][1]['display_index']
+        assert_equal "Test Doc 1", response["result"][1]['title']
+        assert_equal 2, response["result"][2]['display_index']
+        assert_equal "Test Doc 2", response["result"][2]['title']
+        assert_equal 3, response["result"][3]['display_index']
+        assert_equal "Test Doc 3", response["result"][3]['title']
+        assert_equal 4, response["result"][4]['display_index']
+        assert_equal "Test Doc 4", response["result"][4]['title']
+        assert_equal 5, response["result"][5]['display_index']
+        assert_equal "Embed", response["result"][5]['type']
+
+        post '/courses/410/attachments', params: { attachment: { title: 'Test Doc X', display_index: 2, type: "Document"} }
+        assert_response :ok
+        response = JSON.parse(@response.body)
+        c_id = response["result"]["id"].to_s
+
+        get '/courses/410/attachments'
+        assert_response :ok
+        response = JSON.parse(@response.body)
+        assert_equal 0, response["result"][0]['display_index']
+        assert_equal "Test Doc 0", response["result"][0]['title']
+        assert_equal 1, response["result"][1]['display_index']
+        assert_equal "Test Doc 1", response["result"][1]['title']
+        assert_equal 2, response["result"][2]['display_index']
+        assert_equal "Test Doc X", response["result"][2]['title']
+        assert_equal 3, response["result"][3]['display_index']
+        assert_equal "Test Doc 2", response["result"][3]['title']
+        assert_equal 4, response["result"][4]['display_index']
+        assert_equal "Test Doc 3", response["result"][4]['title']
+        assert_equal 5, response["result"][5]['display_index']
+        assert_equal "Test Doc 4", response["result"][5]['title']
+        assert_equal 6, response["result"][6]['display_index']
+        assert_equal "Embed", response["result"][6]['type']
+
+        put '/courses/410/attachments/'+c_id, params: { attachment: { display_index: 0, type: "Document"} }
+        assert_response :ok
+
+        get '/courses/410/attachments'
+        assert_response :ok
+        response = JSON.parse(@response.body)
+        assert_equal 0, response["result"][0]['display_index']
+        assert_equal "Test Doc X", response["result"][0]['title']
+        assert_equal 1, response["result"][1]['display_index']
+        assert_equal "Test Doc 0", response["result"][1]['title']
+        assert_equal 2, response["result"][2]['display_index']
+        assert_equal "Test Doc 1", response["result"][2]['title']
+        assert_equal 3, response["result"][3]['display_index']
+        assert_equal "Test Doc 2", response["result"][3]['title']
+        assert_equal 4, response["result"][4]['display_index']
+        assert_equal "Test Doc 3", response["result"][4]['title']
+        assert_equal 5, response["result"][5]['display_index']
+        assert_equal "Test Doc 4", response["result"][5]['title']
+        assert_equal 6, response["result"][6]['display_index']
+        assert_equal "Embed", response["result"][6]['type']
+
+        put '/courses/410/attachments/'+c_id, params: { attachment: { display_index: 3, type: "Document"} }
+        assert_response :ok
+
+        get '/courses/410/attachments'
+        assert_response :ok
+        response = JSON.parse(@response.body)
+        assert_equal 0, response["result"][0]['display_index']
+        assert_equal "Test Doc 0", response["result"][0]['title']
+        assert_equal 1, response["result"][1]['display_index']
+        assert_equal "Test Doc 1", response["result"][1]['title']
+        assert_equal 2, response["result"][2]['display_index']
+        assert_equal "Test Doc 2", response["result"][2]['title']
+        assert_equal 3, response["result"][3]['display_index']
+        assert_equal "Test Doc X", response["result"][3]['title']
+        assert_equal 4, response["result"][4]['display_index']
+        assert_equal "Test Doc 3", response["result"][4]['title']
+        assert_equal 5, response["result"][5]['display_index']
+        assert_equal "Test Doc 4", response["result"][5]['title']
+        assert_equal 6, response["result"][6]['display_index']
+        assert_equal "Embed", response["result"][6]['type']
+
+        put '/courses/410/attachments/'+c_id, params: { attachment: { display_index: 1, type: "Document"} }
+        assert_response :ok
+
+        get '/courses/410/attachments'
+        assert_response :ok
+        response = JSON.parse(@response.body)
+        assert_equal 0, response["result"][0]['display_index']
+        assert_equal "Test Doc 0", response["result"][0]['title']
+        assert_equal 1, response["result"][1]['display_index']
+        assert_equal "Test Doc X", response["result"][1]['title']
+        assert_equal 2, response["result"][2]['display_index']
+        assert_equal "Test Doc 1", response["result"][2]['title']
+        assert_equal 3, response["result"][3]['display_index']
+        assert_equal "Test Doc 2", response["result"][3]['title']
+        assert_equal 4, response["result"][4]['display_index']
+        assert_equal "Test Doc 3", response["result"][4]['title']
+        assert_equal 5, response["result"][5]['display_index']
+        assert_equal "Test Doc 4", response["result"][5]['title']
+        assert_equal 6, response["result"][6]['display_index']
+        assert_equal "Embed", response["result"][6]['type']
+
+        put '/courses/410/attachments/'+c_id, params: { attachment: { display_index: 4, type: "Document"} }
+        assert_response :ok
+
+        get '/courses/410/attachments'
+        assert_response :ok
+        response = JSON.parse(@response.body)
+        assert_equal 0, response["result"][0]['display_index']
+        assert_equal "Test Doc 0", response["result"][0]['title']
+        assert_equal 1, response["result"][1]['display_index']
+        assert_equal "Test Doc 1", response["result"][1]['title']
+        assert_equal 2, response["result"][2]['display_index']
+        assert_equal "Test Doc 2", response["result"][2]['title']
+        assert_equal 3, response["result"][3]['display_index']
+        assert_equal "Test Doc 3", response["result"][3]['title']
+        assert_equal 4, response["result"][4]['display_index']
+        assert_equal "Test Doc X", response["result"][4]['title']
+        assert_equal 5, response["result"][5]['display_index']
+        assert_equal "Test Doc 4", response["result"][5]['title']
+        assert_equal 6, response["result"][6]['display_index']
+        assert_equal "Embed", response["result"][6]['type']
     end
 end

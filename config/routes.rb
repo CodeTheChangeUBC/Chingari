@@ -33,6 +33,15 @@ Rails.application.routes.draw do
     delete '/courses/:course_id', to: 'courses#delete' # ^^^^
     get '/courses/:course_id/edit', to: 'courses#edit'  # ^^^^
 
+    # Attachments API
+    get '/courses/(:course_id)/attachments', to: 'courses#attachment_index'
+    post '/courses/(:course_id)/attachments', to: 'courses#attachment_create'
+    get '/courses/(:course_id)/attachments/documents/(:attach_id)', to: 'courses#attachment_get', defaults: { type: 'Document' }
+    get '/courses/(:course_id)/attachments/embeds/(:attach_id)', to: 'courses#attachment_get', defaults: { type: 'Embed' }
+    put '/courses/(:course_id)/attachments/(:attach_id)', to: 'courses#attachment_edit'
+    delete "/courses/(:course_id)/attachments/documents/(:attach_id)", to: 'courses#attachment_delete', defaults: { type: 'Document' }
+    delete "/courses/(:course_id)/attachments/embeds/(:attach_id)", to: 'courses#attachment_delete', defaults: { type: 'Embed' }
+
     # Temporary route for testing document upload
     get '/documents', to: 'documents#index'
     post '/documents', to: 'documents#create'
@@ -70,6 +79,15 @@ Rails.application.routes.draw do
     put '/courses/:course_id', to: 'courses#update' # ^^^^
     delete '/courses/:course_id', to: 'courses#delete' # ^^^^
     get '/courses/:course_id/edit', to: 'courses#edit'  # ^^^^
+
+    # Attachments API
+    get '/courses/(:course_id)/attachments', to: 'courses#attachment_index'
+    post '/courses/(:course_id)/attachments', to: 'courses#attachment_create'
+    get '/courses/(:course_id)/attachments/documents/(:attach_id)', to: 'courses#attachment_get', defaults: { type: 'Document' }
+    get '/courses/(:course_id)/attachments/embeds/(:attach_id)', to: 'courses#attachment_get', defaults: { type: 'Embed' }
+    put '/courses/(:course_id)/attachments/(:attach_id)', to: 'courses#attachment_edit'
+    delete "/courses/(:course_id)/attachments/documents/(:attach_id)", to: 'courses#attachment_delete', defaults: { type: 'Document' }
+    delete "/courses/(:course_id)/attachments/embeds/(:attach_id)", to: 'courses#attachment_delete', defaults: { type: 'Embed' }
 
   # Released routes
   elsif Rails.env == 'production'

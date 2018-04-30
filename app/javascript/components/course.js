@@ -31,11 +31,6 @@ export const CourseRenderLarge = Vue.component("course-render-large", {
                 </string-render>
               </p>
 
-              <model-view
-                v-bind:item="item"
-                v-bind:schema="schema">
-              </model-view>
-
               <div class="row" style="padding: 15px">
                 <div class="col-sm-12">
                   <slot name="attachments"></slot>
@@ -59,10 +54,53 @@ export const CourseRenderSmall = Vue.component("course-render-small", {
                   </string-render>
                 </p>
 
-                <model-view
-                  v-bind:item="item"
-                  v-bind:schema="schema">
-                </model-view>
+                <div class="row" style="padding: 15px">
+                  <div class="col-sm-12">
+                    <slot name="controls"></slot>
+                  </div>
+                </div>
+              </div>
+            </div>
+            `
+})
+
+export const DocumentRender = Vue.component("document-render", {
+  props: ["schema", "item"],
+  template: `
+            <div class="course-render-small col-lg-4 col-md-6 col-sm-12">
+              <div class="material-shadow" style="margin: 5px 0px 5px 0px; padding: 10px;">
+              
+                <p class="subtitle">
+                  <string-render 
+                    v-bind:string="item.title"
+                    v-bind:placeholder="'Blank Title'"
+                    >
+                  </string-render>
+                </p>
+
+                <div class="row" style="padding: 15px">
+                  <div class="col-sm-12">
+                    <slot name="controls"></slot>
+                  </div>
+                </div>
+              </div>
+            </div>
+            `
+})
+
+export const EmbedRender = Vue.component("embed-render", {
+  props: ["schema", "item"],
+  template: `
+            <div class="course-render-small col-lg-4 col-md-6 col-sm-12">
+              <div class="material-shadow" style="margin: 5px 0px 5px 0px; padding: 10px;">
+              
+                <p class="subtitle">
+                  <raw-render 
+                    v-bind:string="item.content"
+                    v-bind:placeholder="'No content'"
+                    >
+                  </raw-render>
+                </p>
 
                 <div class="row" style="padding: 15px">
                   <div class="col-sm-12">
