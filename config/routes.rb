@@ -42,6 +42,7 @@ Rails.application.routes.draw do
     delete "/courses/(:course_id)/attachments/documents/(:attach_id)", to: 'courses#attachment_delete', defaults: { type: 'Document' }
     delete "/courses/(:course_id)/attachments/embeds/(:attach_id)", to: 'courses#attachment_delete', defaults: { type: 'Embed' }
 
+    get "/authorize/:user_id", to: "users#authorize"
   # Staged routes
   elsif Rails.env == 'stage'
     # Set root of application
@@ -84,6 +85,7 @@ Rails.application.routes.draw do
     delete "/courses/(:course_id)/attachments/documents/(:attach_id)", to: 'courses#attachment_delete', defaults: { type: 'Document' }
     delete "/courses/(:course_id)/attachments/embeds/(:attach_id)", to: 'courses#attachment_delete', defaults: { type: 'Embed' }
 
+    get "/authorize/:user_id", to: "users#authorize"
   # Released routes
   elsif Rails.env == 'production'
     # Set root of application
@@ -125,7 +127,8 @@ Rails.application.routes.draw do
     put '/courses/(:course_id)/attachments/(:attach_id)', to: 'courses#attachment_edit'
     delete "/courses/(:course_id)/attachments/documents/(:attach_id)", to: 'courses#attachment_delete', defaults: { type: 'Document' }
     delete "/courses/(:course_id)/attachments/embeds/(:attach_id)", to: 'courses#attachment_delete', defaults: { type: 'Embed' }
-    
+
+    get "/authorize/:user_id", to: "users#authorize"
   end
 
   # Catch-all route
