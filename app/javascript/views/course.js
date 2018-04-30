@@ -29,7 +29,8 @@ export function CourseApp(mount, notifications) {
       schema: undefined,
       model: undefined,
       viewing_mode: undefined,
-      attachments:[]
+      attachments:[],
+      files: []
     },
     watch: {
       search(newSearch, oldSearch) {
@@ -384,44 +385,90 @@ export function CourseApp(mount, notifications) {
                           <document-render
                             v-if="attachment.type === 'Document'"
                             v-bind:item="attachment">
+
+                            <div slot="controls"
+                              v-if="can_update[model.id] === true">
+
+                              <button
+                                class="button orange-button"
+                                v-if="index >= 1"
+                                v-on:click="update_attachment(model.id, { type: attachment.type, display_index: attachment.display_index - 1 })">
+                                Move Up
+                              </button>
+
+                              <button
+                                class="button orange-button"
+                                v-if="index <= attachments.length"
+                                v-on:click="update_attachment(model.id, { type: attachment.type, display_index: attachment.display_index + 1 })">
+                                Move Down
+                              </button>
+
+                              <button class="button orange-button"
+                                v-on:click="delete_attachment(model.id, attachment.id)">
+                                Delete
+                              </button>
+
+                            </div>    
                           </document-render>
+
+
                           <embed-render
                             v-if="attachment.type === 'Embed'"
                             v-bind:item="attachment">
+
+                            <div slot="controls"
+                              v-if="can_update[model.id] === true">
+
+                              <button
+                                class="button orange-button"
+                                v-if="index >= 1"
+                                v-on:click="update_attachment(model.id, { type: attachment.type, display_index: attachment.display_index - 1 })">
+                                Move Up
+                              </button>
+
+                              <button
+                                class="button orange-button"
+                                v-if="index <= attachments.length"
+                                v-on:click="update_attachment(model.id, { type: attachment.type, display_index: attachment.display_index + 1 })">
+                                Move Down
+                              </button>
+
+                              <button class="button orange-button"
+                                v-on:click="delete_attachment(model.id, attachment.id)">
+                                Delete
+                              </button>
+
+                            </div>
                           </embed-render>
+
+
                           <text-render
                             v-if="attachment.type === 'Text'"
                             v-bind:item="attachment">
+                            <div slot="controls"
+                              v-if="can_update[model.id] === true">
+
+                              <button
+                                class="button orange-button"
+                                v-if="index >= 1"
+                                v-on:click="update_attachment(model.id, { type: attachment.type, display_index: attachment.display_index - 1 })">
+                                Move Up
+                              </button>
+
+                              <button
+                                class="button orange-button"
+                                v-if="index <= attachments.length"
+                                v-on:click="update_attachment(model.id, { type: attachment.type, display_index: attachment.display_index + 1 })">
+                                Move Down
+                              </button>
+
+                              <button class="button orange-button"
+                                v-on:click="delete_attachment(model.id, attachment.id)">
+                                Delete
+                              </button>
+
+                            </div>
                           </text-render>
-
-                          <div slot="controls"
-                            v-if="can_update[model.id] === true">
-
-                            <button
-                              class="button orange-button"
-                              v-if="index >= 1"
-                              v-on:click="update_attachment(model.id, { type: attachment.type, display_index: attachment.display_index - 1 })">
-                              Move Up
-                            </button>
-
-                            <button
-                              class="button orange-button"
-                              v-if="index <= attachments.length"
-                              v-on:click="update_attachment(model.id, { type: attachment.type, display_index: attachment.display_index + 1 })">
-                              Move Down
-                            </button>
-
-                            <button class="button orange-button"
-                              v-on:click="alert('edit')">
-                              Edit
-                            </button>
-
-                            <button class="button orange-button"
-                              v-on:click="delete_attachment(model.id, attachment.id)">
-                              Delete
-                            </button>
-
-                          </div>
                           
                         </span>
                       </div>
@@ -459,8 +506,18 @@ export function CourseApp(mount, notifications) {
                           v-on:click="delete_item(model.id)">
                           Delete
                         </button>
+
+                        <input type="file" v-model:file="file">
                       </span>
+
+                      
+                      
                     </div>
+
+
+                    </div>
+                    
+
                   </control-form>
 
                   <div class="loading text-center"
