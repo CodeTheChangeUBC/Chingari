@@ -389,7 +389,6 @@ class CoursesController < ApplicationController
     c_user = current_user()
     return ( render status: 401, json: { result: "Not Authorized" } ) unless logged_in?  # Ensure the user is logged in
     course = Course.where(id: params[:course_id]).first()
-
     # Course not found case
     if course.nil?
       return ( render status: 404, json: { result: "Course Not Found" } )
@@ -700,4 +699,40 @@ class CoursesController < ApplicationController
       return status
     end
 
+    def attach_type_params
+      params.require(:attachment).permit(:type)
+    end
+
+    # WARNING: This method assumes that the user is already authorized
+    def insert_attachable(attache, c_id)
+      a_list = Document.where(id: c_id)
+      a_list = a_list + Embed.where(id: c_id)
+
+      a_list.sort! { |x,y| x.display_index <=> y.display_index }
+
+      a_id = attache.display_index
+      if a_id.nil? or a_id > a_list.length
+        a_list.push(attache)
+      else
+        a_list.insert(a_id, attache)
+      end
+
+      # Update the indices
+      a_list.each_with_index {|x, index| x.display_index = index }
+
+      # Split and rewite
+      begin
+        d_list = a_list.find_all { |x| x.class == Document }
+        d_list.each(&:save!)
+
+        e_list = a_list.find_all { |x| x.class == Embed }
+        e_list.each(&:save!)
+      rescue
+        status = false
+      else
+        status = true
+      end
+
+      return status
+    end
 end

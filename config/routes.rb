@@ -43,6 +43,7 @@ Rails.application.routes.draw do
     delete "/courses/(:course_id)/attachments/embeds/(:attach_id)", to: 'courses#attachment_delete', defaults: { type: 'Embed' }
 
     get "/authorize/:user_id", to: "users#authorize"
+    
   # Staged routes
   elsif Rails.env == 'stage'
     # Set root of application

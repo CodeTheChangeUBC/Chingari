@@ -397,7 +397,6 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
         assert_response :unauthorized
     end
 
-
     # ########################################################################
     # Tests for GET /courses/(:course_id)/attachments/documents/(:attach_id)
 
