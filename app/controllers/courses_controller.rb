@@ -397,6 +397,9 @@ class CoursesController < ApplicationController
 
     if attach_type_params[:type] == "Document"
       attache = Document.new(attach_params.merge(user_id: c_user.id, attachable_id: course.id, attachable_type: "Course"))
+      if attache.file && attache.file.filename
+        attache.title = attache.file.filename.scan(/^(.+?)(?:\.\w+)?$/)[0][0].gsub(/[._]/, ' ')
+      end
     elsif attach_type_params[:type] == "Embed"
       attache = Embed.new(attach_params.merge(user_id: c_user.id, attachable_id: course.id, attachable_type: "Course"))
     else
@@ -550,7 +553,7 @@ class CoursesController < ApplicationController
 
     def attach_params
       if params[:attachment][:type] == "Document"
-        return params.require(:attachment).permit(:title, :display_index)
+        return params.require(:attachment).permit(:title, :display_index, :file)
       elsif params[:attachment][:type] == "Embed"
         return params.require(:attachment).permit(:content, :display_index)
       end
@@ -575,7 +578,7 @@ class CoursesController < ApplicationController
 
       # insert the new attachable
       d_idx = attache.display_index
-      if d_idx > a_list.length
+      if attache.display_index.nil? or d_idx > a_list.length
         a_list.push(attache)
       else
         a_list.insert(d_idx, attache)

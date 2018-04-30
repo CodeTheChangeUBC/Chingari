@@ -9,7 +9,7 @@ class Course < ApplicationRecord
   validates :title, presence: true, length: { minimum: 1 , maximum: 140 } 
   validates :user_id, presence: true 
   validates_associated :user 
-  validates :description, presence: true, length: { minimum: 1 , maximum: 1000 } 
+  validates :description, presence: true, length: { minimum: 1 , maximum: 10000 } 
   validates :visibility, numericality: true, inclusion: { in: [Visibility.draft, Visibility.reviewing, Visibility.published] } 
   validates :tier, numericality: true, inclusion: { in: [Tier.free, Tier.premium] } 
 end

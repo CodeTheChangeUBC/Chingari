@@ -1,6 +1,15 @@
 class UsersController < ApplicationController
   before_action :correct_member?, only: [:edit, :update, :destroy]
 
+  def authorize
+    user = User.find(params[:user_id]) || current_user
+    if user && user.role == Role.admin || user.role == Role.moderator
+      render status: 200, json: { result: 'authorized' }
+    else
+      render status: 401, json: { result: 'unauthorized' }
+    end
+  end
+
   def index
   	@users = User.all.order(:created_at)
   end

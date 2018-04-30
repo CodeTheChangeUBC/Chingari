@@ -86,19 +86,21 @@ export default class CourseModel {
       $.ajax({
         url: "/courses/" + course_id + "/attachments",
         type: 'POST',
-        data: { attachment: data, authenticity_token: CourseModel.token() },
+        processData: false,
+        contentType: false,
+        data: data,
         success(data, status, xobj) { resolve(CourseModel.parse_response(xobj)) },
         error(data, status, xobj) { reject(CourseModel.parse_response(data)) }
       });
     })
   }
 
-  // url = /courses/:course_id/attachments
+  // url = /courses/:course_id/attachments/:attachment_id
   // resquest = { attachment: { id: 3, type: 'Document', title: '' } }
-  static update_attachment(course_id, data) {
+  static update_attachment(course_id, attachment_id, data) {
     return new Promise(function (resolve, reject) {
       $.ajax({
-        url: "/courses/" + course_id + "/attachments",
+        url: "/courses/" + course_id + "/attachments/" + attachment_id,
         type: 'PUT',
         data: { attachment: data, authenticity_token: CourseModel.token() },
         success(data, status, xobj) { resolve(CourseModel.parse_response(xobj)) },

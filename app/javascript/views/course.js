@@ -36,7 +36,17 @@ export function CourseApp(mount, notifications) {
         this.search_index()
       }
     },
+    computed: {
+      authenticity_token() {
+        return document.querySelector('meta[name="csrf-token"]').content
+      }
+    },
     methods: {
+      upload_document () {
+        const data = document.getElementById('document-upload-form')
+        const form = new FormData(data);
+        this.create_attachment(this.model.id, form)
+      },
       search_index() {
         _.debounce(() => {
         if (this.search.match(/^\s+$/) == null) {
@@ -104,12 +114,15 @@ export function CourseApp(mount, notifications) {
           } else if (response.result.constructor === Object) {
             let promises = []
             const item = response.result
-            console.log(item)
             if (item.id !== undefined && item.id !== null) {
               promises.push(this.test_update(item.id))
               promises.push(this.test_delete(item.id))
             }
-            promises.push(this.list_attachments(item.id))
+
+            if (this.viewing_mode !== 'new') {
+              promises.push(this.list_attachments(item.id))
+            }
+
             return Promise.all(promises).then(() => {
               this.model = response.result
               if (response.schema !== undefined && response.schema.constructor === Object) {
@@ -206,25 +219,25 @@ export function CourseApp(mount, notifications) {
           .then((response) => {
             this.list_attachments(course_id)
           })
-          .catch(() => {
+          .catch((response) => {
             notifications.error(response.result)
           })
       },
-      update_attachment(course_id, attachment) {
-        CourseModel.update_attachment(course_id, attachment)
+      update_attachment(course_id, attachment_id, attachment) {
+        CourseModel.update_attachment(course_id, attachment_id, attachment)
           .then((response) => {
             this.list_attachments(course_id)
           })
-          .catch(() => {
+          .catch((response) => {
             notifications.error(response.result)
           })
       },
-      delete_attachment(course_id, attachment) {
-        CourseModel.delete_attachment(course_id, attachment.type, attachment.id)
+      delete_attachment(course_id, attachment_type, attachment_id) {
+        CourseModel.delete_attachment(course_id, attachment_type, attachment_id)
           .then((response) => {
             this.list_attachments(course_id)
           })
-          .catch(() => {
+          .catch((response) => {
             notifications.error(response.result)
           })
       },
@@ -384,44 +397,90 @@ export function CourseApp(mount, notifications) {
                           <document-render
                             v-if="attachment.type === 'Document'"
                             v-bind:item="attachment">
+
+                            <span slot="controls"
+                              v-if="can_update[model.id] === true">
+
+                              <button
+                                class="button orange-button"
+                                v-if="index >= 1"
+                                v-on:click="update_attachment(model.id, attachment.id, { type: attachment.type, display_index: attachment.display_index - 1 })">
+                                Move Up
+                              </button>
+
+                              <button
+                                class="button orange-button"
+                                v-if="index <= attachments.length"
+                                v-on:click="update_attachment(model.id, attachment.id, { type: attachment.type, display_index: attachment.display_index + 1 })">
+                                Move Down
+                              </button>
+
+                              <button class="button orange-button"
+                                v-on:click="delete_attachment(model.id, attachment.type.toLowerCase() + 's', attachment.id).then(() => list_attachments())">
+                                Delete
+                              </button>
+
+                            </span>    
                           </document-render>
+
+
                           <embed-render
                             v-if="attachment.type === 'Embed'"
                             v-bind:item="attachment">
+
+                            <span slot="controls"
+                              v-if="can_update[model.id] === true">
+
+                              <button
+                                class="button orange-button"
+                                v-if="index >= 1"
+                                v-on:click="update_attachment(model.id, attachment.id, { type: attachment.type, display_index: attachment.display_index - 1 })">
+                                Move Up
+                              </button>
+
+                              <button
+                                class="button orange-button"
+                                v-if="index <= attachments.length"
+                                v-on:click="update_attachment(model.id, attachment.id, { type: attachment.type, display_index: attachment.display_index + 1 })">
+                                Move Down
+                              </button>
+
+                              <button class="button orange-button"
+                                v-on:click="delete_attachment(model.id, attachment.type.toLowerCase() + 's', attachment.id).then(() => list_attachments())">
+                                Delete
+                              </button>
+
+                            </span>
                           </embed-render>
+
+
                           <text-render
                             v-if="attachment.type === 'Text'"
                             v-bind:item="attachment">
+                            <span slot="controls"
+                              v-if="can_update[model.id] === true">
+
+                              <button
+                                class="button orange-button"
+                                v-if="index >= 1"
+                                v-on:click="update_attachment(model.id, attachment.id, { type: attachment.type, display_index: attachment.display_index - 1 }).then(() => list_attachments())">
+                                Move Up
+                              </button>
+
+                              <button
+                                class="button orange-button"
+                                v-if="index <= attachments.length"
+                                v-on:click="update_attachment(model.id, attachment.id, { type: attachment.type, display_index: attachment.display_index + 1 }).then(() => list_attachments())">
+                                Move Down
+                              </button>
+
+                              <button class="button orange-button"
+                                v-on:click="delete_attachment(model.id, attachment.type.toLowerCase() + 's', attachment.id).then(() => list_attachments())">
+                                Delete
+                              </button>
+
+                            </span>
                           </text-render>
-
-                          <div slot="controls"
-                            v-if="can_update[model.id] === true">
-
-                            <button
-                              class="button orange-button"
-                              v-if="index >= 1"
-                              v-on:click="update_attachment(model.id, { type: attachment.type, display_index: attachment.display_index - 1 })">
-                              Move Up
-                            </button>
-
-                            <button
-                              class="button orange-button"
-                              v-if="index <= attachments.length"
-                              v-on:click="update_attachment(model.id, { type: attachment.type, display_index: attachment.display_index + 1 })">
-                              Move Down
-                            </button>
-
-                            <button class="button orange-button"
-                              v-on:click="alert('edit')">
-                              Edit
-                            </button>
-
-                            <button class="button orange-button"
-                              v-on:click="delete_attachment(model.id, attachment.id)">
-                              Delete
-                            </button>
-
-                          </div>
                           
                         </span>
                       </div>
@@ -459,8 +518,23 @@ export function CourseApp(mount, notifications) {
                           v-on:click="delete_item(model.id)">
                           Delete
                         </button>
+
+                        <div>
+                          <form id="document-upload-form">
+                            <input name="authenticity_token" v-bind:value="authenticity_token" type="hidden">
+                            <input name="attachment[course_id]" v-bind:value="model.id" type="hidden">
+                            <input name="attachment[type]" v-bind:value="'Document'" type="hidden">
+                            <label for="file-upload">
+                                <div class="button orange-button"><i class="fa fa-file fa-padded"></i>Attach</div>
+                            </label>
+                            <input id="file-upload" name="attachment[file]" v-on:change="upload_document" type="file" style="display:none">
+                          </form>
+                        </div>
+
                       </span>
+                      
                     </div>
+
                   </control-form>
 
                   <div class="loading text-center"
