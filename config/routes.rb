@@ -46,6 +46,7 @@ Rails.application.routes.draw do
     get '/documents', to: 'documents#index'
     post '/documents', to: 'documents#create'
     delete '/documents/:document_id', to: 'documents#delete'
+    get '/documents/new', to: 'documents#new'
 
   # Staged routes
   elsif Rails.env == 'stage'

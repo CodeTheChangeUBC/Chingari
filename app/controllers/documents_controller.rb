@@ -8,6 +8,11 @@ class DocumentsController < ApplicationController
     @new_document = Document.new # blank document to render form with
   end
 
+  def new
+    @new_document = Document.new # blank document to render form with
+    render :layout => false
+  end
+
   def create
     if !logged_in?
       redirect_to '/login'
