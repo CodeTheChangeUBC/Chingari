@@ -75,10 +75,10 @@ export const DocumentRender = Vue.component("document-render", {
                   </string-render>
                 </a>
               </span>
-
-                <span style="text-align:right">
-                    <slot name="controls"></slot>
-                <span>
+              <br>
+              <span style="text-align:right">
+                  <slot name="controls"></slot>
+              <span>
             </div>
             </div>
             `

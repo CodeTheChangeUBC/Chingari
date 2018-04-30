@@ -42,12 +42,6 @@ Rails.application.routes.draw do
     delete "/courses/(:course_id)/attachments/documents/(:attach_id)", to: 'courses#attachment_delete', defaults: { type: 'Document' }
     delete "/courses/(:course_id)/attachments/embeds/(:attach_id)", to: 'courses#attachment_delete', defaults: { type: 'Embed' }
 
-    # Temporary route for testing document upload
-    get '/documents', to: 'documents#index'
-    post '/documents', to: 'documents#create'
-    delete '/documents/:document_id', to: 'documents#delete'
-    get '/documents/new', to: 'documents#new'
-
   # Staged routes
   elsif Rails.env == 'stage'
     # Set root of application
@@ -98,34 +92,40 @@ Rails.application.routes.draw do
     # Static pages routes
     get '/home',            to: 'static_pages#home'
     get '/about',           to: 'static_pages#about'
-    # get '/resources',       to: 'static_pages#resources'
+    get '/resources',       to: 'static_pages#resources'
     get '/stories',         to: 'static_pages#stories'
     get '/public_speaking', to: 'static_pages#public_speaking'
     get '/policies',        to: 'static_pages#policies'
-    # get '/community/*subpath',       to: 'static_pages#community'
-    # get '/community',       to: 'static_pages#community'
+    get '/community/*subpath',       to: 'static_pages#community'
+    get '/community',       to: 'static_pages#community'
 
     # Session routes
     get    '/login',   to: 'sessions#new'
     post   '/login',   to: 'sessions#create'
     delete '/logout',  to: 'sessions#destroy'
 
-     # Users API
+    # Users API
     get '/signup', to: 'users#new' # Nicer route name than /users/new
     resources :users
 
     # Courses API
-    # get '/courses', to: 'courses#index'
-    # post '/courses', to: 'courses#create'
-    # get '/courses/new', to: 'courses#new'
-    # get '/courses/:course_id', to: 'courses#show'  # Should go last as it also catches most of the other routes
-    # put '/courses/:course_id', to: 'courses#update' # ^^^^
-    # delete '/courses/:course_id', to: 'courses#delete' # ^^^^
-    # get '/courses/:course_id/edit', to: 'courses#edit'  # ^^^^
+    get '/courses', to: 'courses#index'
+    post '/courses', to: 'courses#create'
+    get '/courses/new', to: 'courses#new'
+    get '/courses/:course_id', to: 'courses#show'  # Should go last as it also catches most of the other routes
+    put '/courses/:course_id', to: 'courses#update' # ^^^^
+    delete '/courses/:course_id', to: 'courses#delete' # ^^^^
+    get '/courses/:course_id/edit', to: 'courses#edit'  # ^^^^
 
-    # OAuth API routes
-    # get '/auth/:provider/callback', to: 'sessions#create_with_api'
-    # get '/auth/failure', to: redirect('/')
+    # Attachments API
+    get '/courses/(:course_id)/attachments', to: 'courses#attachment_index'
+    post '/courses/(:course_id)/attachments', to: 'courses#attachment_create'
+    get '/courses/(:course_id)/attachments/documents/(:attach_id)', to: 'courses#attachment_get', defaults: { type: 'Document' }
+    get '/courses/(:course_id)/attachments/embeds/(:attach_id)', to: 'courses#attachment_get', defaults: { type: 'Embed' }
+    put '/courses/(:course_id)/attachments/(:attach_id)', to: 'courses#attachment_edit'
+    delete "/courses/(:course_id)/attachments/documents/(:attach_id)", to: 'courses#attachment_delete', defaults: { type: 'Document' }
+    delete "/courses/(:course_id)/attachments/embeds/(:attach_id)", to: 'courses#attachment_delete', defaults: { type: 'Embed' }
+    
   end
 
   # Catch-all route
