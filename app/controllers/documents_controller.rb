@@ -1,7 +1,7 @@
 class DocumentsController < ApplicationController
 
   def index
-      if !logged_in? 
+      if !logged_in?
       redirect_to '/login'
     end
     @documents = Document.all # list of existing documents
@@ -9,19 +9,19 @@ class DocumentsController < ApplicationController
   end
 
   def create
-    if !logged_in? 
+    if !logged_in?
       redirect_to '/login'
     end
     @new_document = Document.new(params[:document].permit(:title, :file)) # Totally not safe, please don't do this on prod
     @new_document.creator = User.first
     @new_document.attachable = Course.first
-    @new_document.display_index = Document.where(attachable_id: Course.first.id).map{|d| d.display_index}.max + 1
+    #@new_document.display_index = Document.where(attachable_id: Course.first.id).map{|d| d.display_index}.max + 1
     @errors = nil
   	if @new_document.save
   		flash[:success] = "Document Created"
       # redirect_to @user
       redirect_to "/documents/"
-    else 
+    else
       print @new_document.errors.to_s
       @documents = Document.all # list of existing documents
       @errors = @new_document.errors.messages
@@ -31,7 +31,7 @@ class DocumentsController < ApplicationController
   end
 
   def delete
-      if !logged_in? 
+      if !logged_in?
       redirect_to '/login'
     end
     Document.find(params[:document_id]).destroy

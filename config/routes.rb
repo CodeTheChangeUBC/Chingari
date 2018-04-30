@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     get '/policies',        to: 'static_pages#policies'
     get '/community/*subpath',       to: 'static_pages#community'
     get '/community',       to: 'static_pages#community'
-  
+
     # Session routes
     get    '/login',   to: 'sessions#new'
     post   '/login',   to: 'sessions#create'
@@ -111,7 +111,7 @@ Rails.application.routes.draw do
 
      # Users API
     get '/signup', to: 'users#new' # Nicer route name than /users/new
-    resources :users   
+    resources :users
 
     # Courses API
     # get '/courses', to: 'courses#index'
