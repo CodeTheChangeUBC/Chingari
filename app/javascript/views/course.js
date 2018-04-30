@@ -118,9 +118,11 @@ export function CourseApp(mount, notifications) {
               promises.push(this.test_update(item.id))
               promises.push(this.test_delete(item.id))
             }
+
             if (this.viewing_mode !== 'new') {
               promises.push(this.list_attachments(item.id))
             }
+
             return Promise.all(promises).then(() => {
               this.model = response.result
               if (response.schema !== undefined && response.schema.constructor === Object) {
@@ -208,8 +210,8 @@ export function CourseApp(mount, notifications) {
           .then((response) => {
             this.attachments = response.result
           })
-          .catch((response) => {
-            notifications.error(JSON.stringify(response))
+          .catch(() => {
+            notifications.error(response.result)
           })
       },
       create_attachment(course_id, attachment) {
@@ -218,8 +220,7 @@ export function CourseApp(mount, notifications) {
             this.list_attachments(course_id)
           })
           .catch((response) => {
-            console.log(response)
-            notifications.error(JSON.stringify(response))
+            notifications.error(response.result)
           })
       },
       update_attachment(course_id, attachment_id, attachment) {
@@ -228,7 +229,7 @@ export function CourseApp(mount, notifications) {
             this.list_attachments(course_id)
           })
           .catch((response) => {
-            notifications.error(JSON.stringify(response))
+            notifications.error(response.result)
           })
       },
       delete_attachment(course_id, attachment_type, attachment_id) {
@@ -237,7 +238,7 @@ export function CourseApp(mount, notifications) {
             this.list_attachments(course_id)
           })
           .catch((response) => {
-            notifications.error(JSON.stringify(response))
+            notifications.error(response.result)
           })
       },
     },
