@@ -7,7 +7,7 @@
         <div>
           <span><%= doc.title %> </span>
           <% if doc.respond_to?(:file) %>
-            <a href="<%= doc.file %>" download>
+            <a href="<%= doc.file.url %>" download> LINK </a>
           <% end %>
           <%= link_to "/documents/#{doc.id}", method: :delete, class:"btn btn-primary" do %>
             delete
