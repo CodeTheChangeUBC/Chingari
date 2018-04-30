@@ -397,6 +397,7 @@ class CoursesController < ApplicationController
 
     if attach_type_params[:type] == "Document"
       attache = Document.new(attach_params.merge(user_id: c_user.id, attachable_id: course.id, attachable_type: "Course"))
+      attache.title = attache.file.filename.scan(/^(.+?)(?:\.\w+)?$/)[0][0].gsub(/[._]/, ' ')
     elsif attach_type_params[:type] == "Embed"
       attache = Embed.new(attach_params.merge(user_id: c_user.id, attachable_id: course.id, attachable_type: "Course"))
     else

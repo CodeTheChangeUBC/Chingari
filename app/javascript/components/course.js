@@ -65,19 +65,21 @@ export const DocumentRender = Vue.component("document-render", {
   props: ["schema", "item"],
   template: `
             <div>
-              <p class="text">
-                <string-render 
-                  v-bind:string="item.title"
-                  v-bind:placeholder="'Blank Title'"
-                  >
-                </string-render>
-              </p>
+            <div style="margin-top:5px;margin-bottom:5px;">
+              <span class="text">
+                <a v-bind:href="item.file.url" download class="light-blue-theme">
+                  <string-render 
+                    v-bind:string="item.title"
+                    v-bind:placeholder="'Blank Title'"
+                    >
+                  </string-render>
+                </a>
+              </span>
 
-              <div class="row">
-                <div class="col-sm-12">
-                  <slot name="controls"></slot>
-                </div>
-              </div>
+                <span style="text-align:right">
+                    <slot name="controls"></slot>
+                <span>
+            </div>
             </div>
             `
 })
@@ -85,6 +87,7 @@ export const DocumentRender = Vue.component("document-render", {
 export const EmbedRender = Vue.component("embed-render", {
   props: ["schema", "item"],
   template: `
+            <div>
             <div class="course-render-small col-sm-12">
               <div class="material-shadow" style="margin: 5px 0px 5px 0px; padding: 10px;">
               
@@ -95,13 +98,11 @@ export const EmbedRender = Vue.component("embed-render", {
                     >
                   </raw-render>
                 </p>
-
-                <div class="row"
-                  <div class="col-sm-12">
+                <span style="text-align:right">
                     <slot name="controls"></slot>
-                  </div>
-                </div>
+                <span>
               </div>
+            </div>
             </div>
             `
 })
@@ -110,6 +111,7 @@ export const EmbedRender = Vue.component("embed-render", {
 export const TextRender = Vue.component("text-render", {
   props: ["schema", "item"],
   template: `
+            <div>
             <div class="course-render-small col-sm-12">
               <div class="material-shadow" style="margin: 5px 0px 5px 0px; padding: 10px;">
               
@@ -121,12 +123,11 @@ export const TextRender = Vue.component("text-render", {
                   </string-render>
                 </p>
 
-                <div class="row"
-                  <div class="col-sm-12">
+                <span style="text-align:right">
                     <slot name="controls"></slot>
-                  </div>
-                </div>
+                <span>
               </div>
+            </div>
             </div>
             `
 })

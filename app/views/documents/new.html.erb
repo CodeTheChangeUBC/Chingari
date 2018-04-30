@@ -4,8 +4,9 @@
       <%= e.to_s %>
       <% end %>
     <% end %>
-    <%= form_for(:document, url: '/courses/3/attachments') multipart: true do |f| %>
+    <%= form_for(:attachment, url: '/courses/3/attachments', multipart: true ) do |f| %>
       <%= f.text_field :title, placeholder: 'title' %>
+      <%= f.text_field :type, placeholder: 'type' %>
       <br>
       <% if @new_document.respond_to?(:file) %>
         <%= f.file_field :file, placeholder: 'file' %>
