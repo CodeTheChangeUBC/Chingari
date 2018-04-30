@@ -550,7 +550,7 @@ class CoursesController < ApplicationController
 
     def attach_params
       if params[:attachment][:type] == "Document"
-        return params.require(:attachment).permit(:title, :display_index)
+        return params.require(:attachment).permit(:title, :display_index, :file)
       elsif params[:attachment][:type] == "Embed"
         return params.require(:attachment).permit(:content, :display_index)
       end
@@ -575,7 +575,7 @@ class CoursesController < ApplicationController
 
       # insert the new attachable
       d_idx = attache.display_index
-      if d_idx > a_list.length
+      if attache.display_index.nil? or d_idx > a_list.length
         a_list.push(attache)
       else
         a_list.insert(d_idx, attache)
