@@ -43,13 +43,19 @@ gem 'jbuilder', '2.7.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '3.1.11'
 
-# For secure ENV variables 
+# For secure ENV variables
 gem 'figaro', '1.1.1'
 
 # For google oauth
 gem 'omniauth-google-oauth2', '0.5.3'
 # For fb oauth
 gem 'omniauth-facebook', '4.0.0'
+
+
+# To upload files
+gem 'carrierwave', '1.2.2'
+# To store files using AWS
+gem 'fog', '1.42'
 
 
 # Use Capistrano for deployment
@@ -78,7 +84,7 @@ group :development, :test, :stage do
   gem 'selenium-webdriver', '3.11.0'
 end
 
-### Database 
+### Database
 group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3', '1.3.13'

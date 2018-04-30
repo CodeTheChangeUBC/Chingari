@@ -46,7 +46,7 @@ class CourseTest < ActiveSupport::TestCase
   end
 
   test "description should have maximum length 1000" do 
-    @course.description = "a" * 2048
+    @course.description = "a" * 20048
     assert_not @course.valid?
   end
 

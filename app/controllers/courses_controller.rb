@@ -299,31 +299,29 @@ class CoursesController < ApplicationController
     c_user = current_user()
     course = Course.where(id: params[:course_id]).first()
 
-    schema = {
-      id: :text, 
-      title: :text, 
-      user_id: :text,
-    }
-
     # Course not found case
     if course.nil?
         return ( render status: 404, json: { result: "Not Found" } )
     end
 
     # Course found case
-    a_list = Document.where(attachable_id: course.id)
-    a_list += Embed.where(attachable_id: course.id)
+    d_list = Document.where(attachable_id: course.id).as_json
+    d_list.each { |x| x["type"] = "Document"}
+    e_list = Embed.where(attachable_id: course.id).as_json
+    e_list.each { |x| x["type"] = "Embed"}
+    a_list = d_list + e_list
+    a_list.sort! { |x,y| x["display_index"] <=> y["display_index"] }
 
     # Public case:
     if course.visibility == Visibility.published  
-      render status: 200, json: { result: a_list, schema: schema }
+      render status: 200, json: { result: a_list}
 
     # Authenticated case:
     elsif logged_in?  # Ensure that the user is logged in
       # Checks IF user is privledged or owns the course, ELSE return unauthorized
       if c_user.role == Role.admin or c_user.role == Role.moderator or
           c_user.id == course.user_id then
-        render status: 200, json: { result: a_list, schema: schema }
+        render status: 200, json: { result: a_list}
       else
         render status: 401, json: { result: "Not Authorized" }
       end
@@ -344,21 +342,15 @@ class CoursesController < ApplicationController
     c_user = current_user()
     course = Course.where(id: params[:course_id]).first()
 
-    schema = {
-      id: :text, 
-      title: :text, 
-      user_id: :text,
-    }
-
     # Course not found case
     if course.nil?
         return ( render status: 404, json: { result: "Course Not Found" } )
     end
 
     # Course found case
-    if params[:type] == "documents"
+    if params[:type] == "Document"
       attache = Document.where(id: params[:attach_id], attachable_id: course.id).first()
-    elsif params[:type] == "embeds"
+    elsif params[:type] == "Embed"
       attache = Embed.where(id: params[:attach_id], attachable_id: course.id).first()
     end
 
@@ -369,14 +361,14 @@ class CoursesController < ApplicationController
 
     # Public case:
     if course.visibility == Visibility.published  
-      render status: 200, json: { result: attache, schema: schema }
+      render status: 200, json: { result: attache}
 
     # Authenticated case:
     elsif logged_in?  # Ensure that the user is logged in
       # Checks IF user is privledged or owns the course, ELSE return unauthorized
       if c_user.role == Role.admin or c_user.role == Role.moderator or
           c_user.id == course.user_id then
-        render status: 200, json: { result: attache, schema: schema }
+        render status: 200, json: { result: attache }
       else
         render status: 401, json: { result: "Not Authorized" }
       end
@@ -397,34 +389,38 @@ class CoursesController < ApplicationController
     c_user = current_user()
     return ( render status: 401, json: { result: "Not Authorized" } ) unless logged_in?  # Ensure the user is logged in
     course = Course.where(id: params[:course_id]).first()
-
-    schema = {
-      id: :text, 
-      title: :text, 
-      user_id: :text,
-    }
-
     # Course not found case
     if course.nil?
       return ( render status: 404, json: { result: "Course Not Found" } )
     end
 
-    # Authenticated User case
-    if c_user.role == Role.admin or c_user.role == Role.moderator or
-        course.user_id == c_user.id
-
-      if attach_type_params[:type] == "Document"
-        attache = Document.new(attach_params.merge(user_id: c_user.id, attachable_id: course.id, attachable_type: "Course"))
-      elsif attach_type_params[:type] == "Embed"
-        attache = Embed.new(attach_params.merge(user_id: c_user.id, attachable_id: course.id, attachable_type: "Course"))
-      else
-        render status: 400, json: { result: "Invalid Type" }
+    if attach_type_params[:type] == "Document"
+      attache = Document.new(attach_params.merge(user_id: c_user.id, attachable_id: course.id, attachable_type: "Course"))
+      if attache.file && attache.file.filename
+        attache.title = attache.file.filename.scan(/^(.+?)(?:\.\w+)?$/)[0][0].gsub(/[._]/, ' ')
       end
+    elsif attach_type_params[:type] == "Embed"
+      attache = Embed.new(attach_params.merge(user_id: c_user.id, attachable_id: course.id, attachable_type: "Course"))
+    else
+      render status: 400, json: { result: "Invalid Type" }
+    end
 
+    # Draft Course case
+    if course.visibility == Visibility.draft and course.user_id == c_user.id and attache.class != Embed
       status = insert_attachable(attache, course.id)
 
       if status
-        render status: 200, json: { result: attache, schema: schema }
+        render status: 200, json: { result: attache }
+      else
+        render status: 400, json: { result: attache.errors }
+      end
+
+    # Privledged User case
+    elsif c_user.role == Role.admin or c_user.role == Role.moderator
+      status = insert_attachable(attache, course.id)
+
+      if status
+        render status: 200, json: { result: attache }
       else
         render status: 400, json: { result: attache.errors }
       end
@@ -456,6 +452,8 @@ class CoursesController < ApplicationController
       attache = Document.where(id: params[:attach_id], attachable_id: course.id).first()
     elsif attach_type_params[:type] == "Embed"
       attache = Embed.where(id: params[:attach_id], attachable_id: course.id).first()
+    else
+      render status: 400, json: { result: "Invalid Type" }
     end
 
     # Attachment not found case
@@ -463,12 +461,18 @@ class CoursesController < ApplicationController
         return ( render status: 404, json: { result: "Attachable Not Found" } )
     end
 
-    # Authenticated User case
-    if c_user.role == Role.admin or c_user.role == Role.moderator or
-        course.user_id == c_user.id
+    # Draft Course case
+    if course.visibility == Visibility.draft and course.user_id == c_user.id and attache.class != Embed
+      status = update_attachable(params[:attach_id], course.id, attach_params)
+      if status
+        render status: 200, json: { result: attache }
+      else
+        render status: 400, json: { result: attache.errors }
+      end
 
-      status = attache.update(attach_params)
-
+    # Privledged User case
+    elsif c_user.role == Role.admin or c_user.role == Role.moderator
+      status = update_attachable(params[:attach_id], course.id, attach_params)      
       if status
         render status: 200, json: { result: attache }
       else
@@ -488,6 +492,56 @@ class CoursesController < ApplicationController
   # Unauthorized access: Should get redirected to root (/)
   # Authorized access: Should delete the attachment specified
   def attachment_delete
+    query_only = params[:query_only] || false
+    c_user = current_user()
+    return ( render status: 401, json: { result: "Not Authorized" } ) unless logged_in?  # Ensure the user is logged in
+    course = Course.where(id: params[:course_id]).first()
+
+    # Course Not Found case
+    if course.nil?
+      return ( render status: 404, json: { result: "Not Found" } )
+    end
+
+    # Course found case
+    if params[:type] == "Document"
+      attache = Document.where(id: params[:attach_id], attachable_id: course.id).first()
+    elsif params[:type] == "Embed"
+      attache = Embed.where(id: params[:attach_id], attachable_id: course.id).first()
+    end
+
+    # Attachment not found case
+    if attache.nil?
+      return ( render status: 404, json: { result: "Attachable Not Found" } )
+    end
+
+    # Draft Course case
+    if course.visibility == Visibility.draft and course.user_id == c_user.id and attache.class != Embed
+      if query_only
+        render status: 200, json: { result: "Authorized" }
+      else
+        if attache.delete and squash_indexes(course_id)
+          render status: 200, json: { result: "Request Processed" }
+        else
+          render status: 400, json: { result: attache.errors }
+        end
+      end
+
+    # Privledged User case
+    elsif c_user.role == Role.admin or c_user.role == Role.moderator
+      if query_only
+        render status: 200, json: { result: "Authorized" }
+      else
+        if attache.delete and squash_indexes(course.id)
+          render status: 200, json: { result: "Request Processed" }
+        else
+          render status: 400, json: { result: attache.errors }
+        end
+      end
+
+    # Course is not (owned by user and editable) AND (user is not privledged)
+    else
+      render status: 401, json: { result: "Not Authorized" }
+    end
   end
 
 
@@ -498,10 +552,151 @@ class CoursesController < ApplicationController
 
     def attach_params
       if params[:attachment][:type] == "Document"
-        return params.require(:attachment).permit(:title, :display_index)
+        return params.require(:attachment).permit(:title, :display_index, :file)
       elsif params[:attachment][:type] == "Embed"
         return params.require(:attachment).permit(:content, :display_index)
       end
+    end
+
+    def attach_type_params
+      params.require(:attachment).permit(:type)
+    end
+
+    # WARNING: This method assumes that the user is already authorized
+    def insert_attachable(attache, c_id)
+      status = true
+      d_list = Document.where(attachable_id: c_id)
+      e_list = Embed.where(attachable_id: c_id)
+      a_list = d_list + e_list
+
+      # Sort original list
+      a_list.sort! { |x,y| x.display_index <=> y.display_index }
+
+      # Update the indices
+      a_list.each_with_index {|x, index| x.display_index = index}
+
+      # insert the new attachable
+      d_idx = attache.display_index
+      if attache.display_index.nil? or d_idx > a_list.length
+        a_list.push(attache)
+      else
+        a_list.insert(d_idx, attache)
+      end
+
+      # Re-Update the indices ( With offset )
+      a_list.each_with_index {|x, index| x.display_index = index + a_list.length}
+
+      # Split the list and rewite without collision
+      begin
+        d_list = a_list.find_all { |x| x.class == Document }
+        d_list.each(&:save!)
+
+        e_list = a_list.find_all { |x| x.class == Embed }
+        e_list.each(&:save!)
+      rescue Exception => eek
+        print(eek)
+        status and false
+      end
+
+      # Remove the offset from the indexes
+      a_list.each_with_index {|x, index| x.display_index = index}
+
+      # Split the list and rewite final version
+      begin
+        d_list = a_list.find_all { |x| x.class == Document }
+        d_list.each(&:save!)
+
+        e_list = a_list.find_all { |x| x.class == Embed }
+        e_list.each(&:save!)
+      rescue Exception => eek
+        print(eek)
+        status and false
+      end
+
+      return status
+    end
+
+    # WARNING: This method assumes that the user is already authorized
+    def update_attachable(a_id, c_id, a_params)
+      status = true
+      sd_list = Document.where(attachable_id: c_id)
+      se_list = Embed.where(attachable_id: c_id)
+      a_list = sd_list + se_list
+
+      # Sort original list
+      a_list.sort! { |x,y| x.display_index <=> y.display_index }
+
+      # Find and update the appropriate attribute
+      a_idx = a_list.index{ |x| x.id == a_id.to_i }
+      a_list[a_idx].assign_attributes(a_params)
+      nd_idx = a_list[a_idx].display_index
+
+      # Edge case resolving because of the way ruby sorts
+      if nd_idx > a_idx
+        a_list[a_idx].display_index = a_list[a_idx].display_index + 1
+      else
+        a_list[a_idx].display_index = a_list[a_idx].display_index - 1
+      end
+      
+      # ReSort the list so that the updated indexes are correct
+      a_list.sort! { |x,y| x.display_index <=> y.display_index }
+
+      # Re-Update the indices ( With large offset )
+      a_list.each_with_index {|x, index| x.display_index = index + a_list.length}
+
+      # Split the list and rewite without collision
+      begin
+        d_list = a_list.find_all { |x| x.class == Document }
+        d_list.each(&:save!)
+
+        e_list = a_list.find_all { |x| x.class == Embed }
+        e_list.each(&:save!)
+      rescue Exception => eek
+        print(eek)
+        status and false
+      end
+
+      # Remove the offset from the indexes
+      a_list.each_with_index {|x, index| x.display_index = index}
+
+      # Split the list and rewite final version
+      begin
+        d_list = a_list.find_all { |x| x.class == Document }
+        d_list.each(&:save!)
+
+        e_list = a_list.find_all { |x| x.class == Embed }
+        e_list.each(&:save!)
+      rescue Exception => eek
+        print(eek)
+        status and false
+      end
+
+      return status
+    end
+
+    # WARNING: This method assumes that the user is already authorized
+    def squash_indexes(c_id)
+      a_list = Document.where(attachable_id: c_id)
+      a_list = a_list + Embed.where(attachable_id: c_id)
+
+      a_list.sort! { |x,y| x.display_index <=> y.display_index }
+
+      # Update the indices
+      a_list.each_with_index {|x, index| x.display_index = index }
+
+      # Split and rewite
+      begin
+        d_list = a_list.find_all { |x| x.class == Document }
+        d_list.each(&:save!)
+
+        e_list = a_list.find_all { |x| x.class == Embed }
+        e_list.each(&:save!)
+      rescue
+        status = false
+      else
+        status = true
+      end
+      return status
     end
 
     def attach_type_params
