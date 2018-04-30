@@ -1,0 +1,35 @@
+<% provide(:title, "Documents Test Page") %>
+<div>
+  Existing Documents:
+  <ul>
+    <% @documents.each do |doc| %>
+      <li>
+        <div>
+          <span><%= doc.title %> </span>
+          <% if doc.respond_to?(:file) %>
+            <a href="<%= doc.file %>" download>
+          <% end %>
+          <%= link_to "/documents/#{doc.id}", method: :delete, class:"btn btn-primary" do %>
+            delete
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+  <br>
+  Create a new Document:
+  <% if @errors %>
+    <% @errors.each do |e| %>
+     <%= e.to_s %>
+    <% end %>
+  <% end %>
+  <%= form_for @new_document, multipart: true do |f| %>
+    <%= f.text_field :title, placeholder: 'title' %>
+    <br>
+    <% if @new_document.respond_to?(:file) %>
+      <%= f.file_field :file, placeholder: 'file' %>
+    <% end %>
+    <br>
+    <%= f.submit "Submit", class: "btn button border" %>
+  <% end %>
+</div>

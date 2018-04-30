@@ -21,19 +21,6 @@
           <% end %>
         </div>
 
-        <% if BetaFeatures.released?(:oauth, current_user: current_user) %>
-          <div class="shadow-box login-apis">
-            Log in through a third-party:
-            <br>
-            <%= link_to "/auth/facebook" do %>
-              <button class="button"><%= fa_icon "facebook", text: "Facebook" %></button>
-            <% end %>
-            <%= link_to "/auth/google_oauth2" do %>
-              <button class="button"><%= fa_icon "google", text: "Google" %></button>
-            <% end %>
-          </div>
-        <% end %>
-
         <div class="shadow-box">
           New user?
           <%= link_to "/signup" do %>
