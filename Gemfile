@@ -55,7 +55,7 @@ gem 'omniauth-facebook', '4.0.0'
 # To upload files
 gem 'carrierwave', '1.2.2'
 # To store files using AWS
-gem 'fog', '1.42'
+gem 'fog-aws'
 
 
 # Use Capistrano for deployment

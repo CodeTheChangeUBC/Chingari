@@ -586,8 +586,10 @@ class CoursesController < ApplicationController
       # Re-Update the indices ( With offset )
       a_list.each_with_index {|x, index| x.display_index = index + a_list.length}
 
+      
       # Split the list and rewite without collision
       begin
+        logger.debug(a_list.to_json.to_s)
         d_list = a_list.find_all { |x| x.class == Document }
         d_list.each(&:save!)
 
@@ -618,6 +620,8 @@ class CoursesController < ApplicationController
 
     # WARNING: This method assumes that the user is already authorized
     def update_attachable(a_id, c_id, a_params)
+      logger.debug("updating attachments")
+      print "updating attachments\n"
       status = true
       sd_list = Document.where(attachable_id: c_id)
       se_list = Embed.where(attachable_id: c_id)
@@ -642,7 +646,10 @@ class CoursesController < ApplicationController
       a_list.sort! { |x,y| x.display_index <=> y.display_index }
 
       # Re-Update the indices ( With large offset )
-      a_list.each_with_index {|x, index| x.display_index = index + a_list.length}
+      a_list.each_with_index {|x, index| x.display_index = a_list.length + index}
+      if a_list.any?{|a| a.display_index < a_list.length}
+        throw Error.new("This is bad")
+      end
 
       # Split the list and rewite without collision
       begin
