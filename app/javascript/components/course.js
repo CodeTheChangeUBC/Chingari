@@ -37,7 +37,7 @@ export const CourseRenderLarge = Vue.component("course-render-large", {
       .catch(() => this.authorized = false)
   },
   template: `
-            <div class="course-render-large" style="padding: 10px">
+            <div class="material-shadow course-render-large" style="padding: 10px 10px 30px 10px">
 
                <div class="row" style="padding: 15px">
                 <div class="col-sm-12">
@@ -108,7 +108,7 @@ export const DocumentRender = Vue.component("document-render", {
                 </div>
               </span>
 
-              <span class="text" v-else>
+              <span style="padding:5px 5px 5px 30px" class="subtitle font-weight-bold" v-else>
                 <a v-bind:href="item.file.url" download class="light-blue-theme">
                   <string-render 
                     v-bind:string="item.title"

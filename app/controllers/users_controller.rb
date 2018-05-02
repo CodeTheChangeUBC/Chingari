@@ -11,13 +11,20 @@ class UsersController < ApplicationController
   end
 
   def index
+    # temporarily redirect
+    return redirect_to '/'
+
   	@users = User.all.order(:created_at)
   end
 
   def preview_profile
+    # temporarily redirect
+    return redirect_to '/'
   end
 
   def show 
+    # temporarily redirect
+    return redirect_to '/'
   	@user = User.find(params[:id])
   end
 
@@ -38,10 +45,14 @@ class UsersController < ApplicationController
   end
 
   def edit 
+    # temporarily redirect
+    return redirect_to '/'
     @user = User.find(params[:id])
   end
 
   def update 
+    # temporarily redirect
+    return redirect_to '/'
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)
       flash[:success] = "Profile Updated"
@@ -52,6 +63,8 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    # temporarily redirect
+    return redirect_to '/'
     User.find(params[:id]).destroy
     flash[:success] = "Profile Updated Successfully."
     redirect_to root_url

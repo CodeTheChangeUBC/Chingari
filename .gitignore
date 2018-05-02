@@ -224,6 +224,8 @@ GitHub.sublime-settings
 
 .byebug_history
 
+/public/uploads
+
 *unicorn*
 /public/packs
 /public/packs-test
